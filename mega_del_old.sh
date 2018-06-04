@@ -26,7 +26,6 @@
 # Delete files from a folder for a mega.nz account.
 # Created by Paul Moss
 # Created: 2018-05-27
-# Updated: 2018-06-02
 # Version 1.2.1.0
 # File Name: mega_del_old.sh
 #

@@ -26,7 +26,6 @@
 # Script to check and see if a file or folder exist on a mega.nz account
 # Created by Paul Moss
 # Created: 2018-05-27
-# Updated: 2018-06-02
 # Version 1.2.1.0
 #
 # File Name: mega_mkdir.sh

@@ -64,13 +64,13 @@ MEGA_FILES=""
 IN_ROOT=0
 
 # https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
-if ! [ -x /usr/bin/megarm ]; then
+if ! [ -x "$(command -v megarm)" ]; then
     echo "${DATELOG} ${LOG_ID}You have not enabled MEGA remove." >> ${LOG}
     echo "${DATELOG} ${LOG_ID}You need to install megatools from http://megatools.megous.com! Exit Code: 101" >> ${LOG}
     echo "${DATELOG} ${LOG_ID}MEGA remove failed" >> ${LOG}
     exit 101
 fi
-if ! [ -x /usr/bin/megals ]; then
+if ! [ -x "$(command -v megals)" ]; then
     echo "${DATELOG} ${LOG_ID}You have not enabled MEGA list." >> ${LOG}
     echo "${DATELOG} ${LOG_ID}You need to install megatools from http://megatools.megous.com! Exit Code: 102" >> ${LOG}
     echo "${DATELOG} ${LOG_ID}MEGA list failed" >> ${LOG}

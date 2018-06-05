@@ -46,7 +46,7 @@
 #     111 Optional argument two was passed in but the config can not be foud or we do not have read permissions
 #     115 megamkdir not found. Megtools requires installing
 
-if ! [ -x /usr/bin/megamkdir ]; then
+if ! [ -x "$(command -v megamkdir)" ]; then
    exit 115
 fi
 

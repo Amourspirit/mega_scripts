@@ -60,7 +60,7 @@ MEGA_FULL_PATH=""
 HAS_CONFIG=0
 
 # https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
-if ! [ -x /usr/bin/megaput ]; then
+if ! [ -x "$(command -v megaput)" ]; then
     echo "${DATELOG} ${LOG_ID}You have not enabled MEGA put." >> ${LOG}
     echo "${DATELOG} ${LOG_ID}You need to install megatools from http://megatools.megous.com" >> ${LOG}
     echo "${DATELOG} ${LOG_ID}MEGA put failed" >> ${LOG}

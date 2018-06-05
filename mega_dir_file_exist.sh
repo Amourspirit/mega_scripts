@@ -54,7 +54,7 @@ CURRENT_CONFIG=""
 MEGA_FILES=""
 IN_ROOT=0
 
-if ! [ -x /usr/bin/megals ]; then
+if ! [ -x "$(command -v megals)" ]; then
    exit 102
 fi
 if [ -z "$1" ]; then

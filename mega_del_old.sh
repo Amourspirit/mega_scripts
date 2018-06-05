@@ -63,6 +63,21 @@ MAX_AGE=""
 MEGA_FILES=""
 IN_ROOT=0
 
+if [[ ! -z "$4" ]]; then
+    if [[ "$4" = "none" ]]; then
+        LOG=""
+    elif [ "$4" = "silent" ]; then
+        LOG=2>/dev/null
+    else
+        LOG="$4"
+    fi
+fi
+
+# if log is not supplied then redirect to stdout
+if [[ -z $LOG ]]; then
+  LOG=/dev/stdout
+fi
+
 # https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
 if ! [ -x "$(command -v megarm)" ]; then
     echo "${DATELOG} ${LOG_ID}You have not enabled MEGA remove." >> ${LOG}
@@ -117,11 +132,6 @@ if [[ ! -z "$3" ]]; then
         echo "${DATELOG} ${LOG_ID}Config file '${CURRENT_CONFIG}' does not exist or can not gain read access! Exit Code: 111" >> ${LOG}
         exit 111
     fi
-fi
-
-if [[ ! -z "$4" ]]; then
-    # Argument is given for log file
-    LOG="$4"
 fi
 
 if [[ ! -z "$5" ]]; then

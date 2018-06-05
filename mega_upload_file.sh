@@ -59,6 +59,21 @@ CURRENT_SPACE=""
 MEGA_FULL_PATH=""
 HAS_CONFIG=0
 
+if [[ ! -z "$4" ]]; then
+    if [[ "$4" = "none" ]]; then
+        LOG=""
+    elif [ "$4" = "silent" ]; then
+        LOG=2>/dev/null
+    else
+        LOG="$4"
+    fi
+fi
+
+# if log is not supplied then redirect to stdout
+if [[ -z $LOG ]]; then
+  LOG=/dev/stdout
+fi
+
 # https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
 if ! [ -x "$(command -v megaput)" ]; then
     echo "${DATELOG} ${LOG_ID}You have not enabled MEGA put." >> ${LOG}
@@ -96,11 +111,6 @@ if [ ! -z "$CURRENT_CONFIG" ]; then
   HAS_CONFIG=1
 fi
 
-if [[ ! -z "$4" ]]
-then
-    # Argument is given for log file
-    LOG="$4"
-fi
 
 if [[ ! -z "$5" ]]
 then

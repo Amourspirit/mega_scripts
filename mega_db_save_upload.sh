@@ -88,15 +88,22 @@ LOG_ID="MEGA DATABASE: "
 DATELOG=`date +'%Y-%m-%d-%H-%M-%S'`
 LOG_SEP="=========================================${DATELOG}========================================="
 SYS_LOG_DIR="/var/log"
+SYS_LOG="$SYS_LOG_DIR/$LOG_NAME"
 THIS_SCRIPT=`basename "$0"`
+
+# if log is not supplied then redirect to stdout
+if [[ -z $SYS_LOG ]]; then
+  SYS_LOG=/dev/stdout
+fi
+
 if [ -z "$1" ]
   then
-    echo "${LOG_SEP}" >> "$SYS_LOG_DIR/${LOG_NAME}"
-    echo "${DATELOG} ${LOG_ID}No argument for user supplied for user! Exiting! Exit Code 20" >> "$SYS_LOG_DIR/${LOG_NAME}"
-    echo "${LOG_SEP}" >> "$SYS_LOG_DIR/${LOG_NAME}"
-    echo "" >> "$SYS_LOG_DIR/${LOG_NAME}"
+    echo "${LOG_SEP}" >> ${SYS_LOG}
+    echo "${DATELOG} ${LOG_ID}No argument for user supplied for user! Exiting! Exit Code 20" >> ${SYS_LOG}
+    echo "${LOG_SEP}" >> ${SYS_LOG}
+    echo "" >> ${SYS_LOG}
     if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
-        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '$SYS_LOG_DIR/${LOG_NAME}'")
+        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '${SYS_LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
     exit 20
@@ -106,13 +113,13 @@ USER="$1"
 USER_ID=$(id -u "${USER}" &>/dev/null)
 # $? is 0 if found and 1 if not found for id -u user
 if [ $? -ne 0 ]; then
-    echo "${LOG_SEP}" >> "$SYS_LOG_DIR/${LOG_NAME}"
-    echo "${DATELOG} ${LOG_ID}'${USER}' does Not Exit. Unable to continue: Exit Code: 53" >> "$SYS_LOG_DIR/${LOG_NAME}"
-    echo "${LOG_SEP}" >> "$SYS_LOG_DIR/${LOG_NAME}"
-    echo "" >> "$SYS_LOG_DIR/${LOG_NAME}"
+    echo "${LOG_SEP}" >> ${SYS_LOG}
+    echo "${DATELOG} ${LOG_ID}'${USER}' does Not Exit. Unable to continue: Exit Code: 53" >> ${SYS_LOG}
+    echo "${LOG_SEP}" >> ${SYS_LOG}
+    echo "" >> ${SYS_LOG}
 
     if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
-        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '$SYS_LOG_DIR/${LOG_NAME}'")
+        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '${SYS_LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
     exit 53
@@ -121,6 +128,11 @@ fi
 unset USER_ID
 
 LOG="/home/${USER}/logs/${LOG_NAME}"
+
+# if log is not supplied then redirect to stdout
+if [[ -z $LOG ]]; then
+  LOG=/dev/stdout
+fi
 
 echo "${LOG_SEP}" >> ${LOG}
 

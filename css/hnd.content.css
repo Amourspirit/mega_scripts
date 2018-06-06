@@ -123,45 +123,65 @@ span.rvts20
 }
 span.rvts21
 {
- font-size: 12pt;
- font-style: italic;
- color: #008000;
-}
-span.rvts22
-{
  font-size: 14pt;
  font-style: italic;
  font-weight: bold;
  color: #993300;
 }
-span.rvts23
+span.rvts22
 {
  font-size: 12pt;
  font-style: italic;
 }
-a.rvts24, span.rvts24
+a.rvts23, span.rvts23
 {
  font-size: 12pt;
  color: #0000ff;
  text-decoration: none;
  border-bottom: double;
 }
+a.rvts24, span.rvts24
+{
+ font-size: 12pt;
+ font-style: italic;
+ color: #008000;
+ text-decoration: none;
+}
+a.rvts24:hover { text-decoration: none; border-bottom: solid 1px #00ff00; }
 span.rvts25
 {
  font-size: 12pt;
- font-weight: bold;
+ font-style: italic;
 }
 span.rvts26
 {
  font-size: 12pt;
- font-style: italic;
+ font-weight: bold;
 }
-span.rvts27
+a.rvts27, span.rvts27
+{
+ font-size: 12pt;
+ font-style: italic;
+ color: #008000;
+ text-decoration: none;
+}
+a.rvts27:hover { text-decoration: none; border-bottom: solid 1px #00ff00; }
+span.rvts28
+{
+ font-size: 12pt;
+ font-weight: bold;
+}
+span.rvts29
 {
  font-size: 12pt;
  font-style: italic;
 }
-a.rvts28, span.rvts28
+span.rvts30
+{
+ font-size: 12pt;
+ font-style: italic;
+}
+a.rvts31, span.rvts31
 {
  font-size: 16pt;
  font-weight: bold;

@@ -12,7 +12,7 @@
   <link rel="icon" href="favicon.ico"/>
 
   <title>mega_mkdir.sh</title>
-  <meta name="description" content="A few Scripts to with megatools and Mega.nz" /> 
+  <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
   <meta name="keywords" content="">
 
 
@@ -20,12 +20,12 @@
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="mega_mkdir.sh">
-  <meta name="twitter:description" content="A few Scripts to with megatools and Mega.nz">
+  <meta name="twitter:description" content="A few scripts to use with megatools and mega.nz">
 
   <!-- Open Graph data -->
   <meta property="og:title" content="mega_mkdir.sh" />
   <meta property="og:type" content="article" />
-  <meta property="og:description" content="A few Scripts to with megatools and Mega.nz" />
+  <meta property="og:description" content="A few scripts to use with megatools and mega.nz" />
   <meta property="og:site_name" content="Mega Scripts" /> 
 
   <!-- Bootstrap core CSS -->
@@ -171,7 +171,7 @@
                         <li>Linux</li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="mega_dir_file_existsh.html" title="mega_dir_file_exist.sh" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Setupmegarc.html" title="Set up .megarc" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="mega_dir_file_existsh.html" title="mega_dir_file_exist.sh" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="mega_upload_fiilesh.html" title="mega_upload_fiile.sh" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -181,19 +181,23 @@
             <div class="main-content">
                 
 <p></p>
-<h1 class="rvps4"><span class="rvts0"><span class="rvts12">Script Name: </span></span><span class="rvts0"><span class="rvts12">mega_mkdir.sh</span></span></h1>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps10"><span class="rvts0"><span class="rvts22">Description</span></span></h2>
+<h1 class="rvps4"><a name="top"></a>
+<span class="rvts0"><span class="rvts12">Script Name: </span></span><span class="rvts0"><span class="rvts12">mega_mkdir.sh</span></span></h1>
+<h2 class="rvps10"><span class="rvts0"><span class="rvts21">Description</span></span></h2>
 <p class="rvps2"><span class="rvts6">This script will make directories if they do not exist for a path.</span></p>
 <p class="rvps2"><span class="rvts6">This is the </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> equivalent of </span><span class="rvts18">mkdir -p</span><span class="rvts6"> for UNIX.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps5"><span class="rvts0"><span class="rvts14">Parameters</span></span></h3>
-<p class="rvps8"><span class="rvts19">Param 1</span></p>
-<p class="rvps9"><span class="rvts20">The Path to create if it does not exist on </span><a class="rvts24" href="https://mega.nz" target="_blank">Mega.nz</a></p>
-<p class="rvps8"><span class="rvts19">Param 2</span></p>
-<p class="rvps9"><span class="rvts20">Optional: The configuration file to use that contain the credientials for the </span><a class="rvts24" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts20"> account you want to access.</span></p>
+<h3 class="rvps5"><a name="Parameters"></a>
+<span class="rvts0"><span class="rvts14">Parameters</span></span></h3>
+<p class="rvps8"><a name="Param1"></a>
+<span class="rvts19">Param 1</span></p>
+<p class="rvps9"><span class="rvts20">Required: The Path to create if it does not exist on </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a></p>
+<p class="rvps8"><a name="Param2"></a>
+<span class="rvts19">Param 2</span></p>
+<p class="rvps9"><span class="rvts20">Optional: The configuration file to use that contain the credientials for the </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts20"> account you want to access.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps5"><span class="rvts0"><span class="rvts14">Possible Codes returned from Script</span></span></h3>
+<h3 class="rvps5"><a name="ReturnCodes"></a>
+<span class="rvts0"><span class="rvts14">Possible Codes returned from Script</span></span></h3>
 <div class="rvps2"><table width="100%" border="1" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
 <tr valign="top">
 <td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts6">Code</span></p>
@@ -246,23 +250,26 @@
 </table>
 </div>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps5"><span class="rvts0"><span class="rvts14">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">Never pass in the directory Root to </span><span class="rvts23">mega_mkdir.sh</span><span class="rvts6"> as the frist part of the path.</span></p>
-<p class="rvps2"><span class="rvts6">For </span><span class="rvts21">Param 1</span><span class="rvts6"> </span><span class="rvts18">"/MyPath/myfile"</span><span class="rvts6"> is fine; however, </span><span class="rvts18">"/Root/MyPath/myfile"</span><span class="rvts6"> will fail.</span></p>
+<h3 class="rvps5"><a name="Remarks"></a>
+<span class="rvts0"><span class="rvts14">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Never pass in the directory Root to </span><span class="rvts22">mega_mkdir.sh</span><span class="rvts6"> as the frist part of the path.</span></p>
+<p class="rvps2"><span class="rvts6">For </span><a class="rvts24" href="mega_mkdirsh.html#Param1">Param 1</a><span class="rvts6"> </span><span class="rvts18">"/MyPath/myfile"</span><span class="rvts6"> is fine; however, </span><span class="rvts18">"/Root/MyPath/myfile"</span><span class="rvts6"> will fail.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">If </span><span class="rvts21">Param 2</span><span class="rvts6"> is omitted then you must have </span><span class="rvts23">.megarc </span><span class="rvts6">set in the current users home directory.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts24" href="mega_dir_file_existsh.html#Param2">Param 2</a><span class="rvts6"> is omitted then you must have </span><span class="rvts22">.megarc </span><span class="rvts6">set in the current users home directory.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The </span><span class="rvts23">mega_dir_file_exist.sh</span><span class="rvts6"> does not have any logging or output to the terminal. Only the Exit code is set.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts22">mega_dir_file_exist.sh</span><span class="rvts6"> does not have any logging or output to the terminal. Only the Exit code is set.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps5"><span class="rvts0"><span class="rvts14">Example</span></span></h3>
+<h3 class="rvps5"><a name="Example"></a>
+<span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">Script example to create a folder if it does not exist exist on default </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> account on the command line.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps7"><span class="rvts17">/bin/bash</span><span class="rvts17"> /usr/local/bin/</span><span class="rvts17">mega_mkdir.sh</span><span class="rvts17"> '/testdir/2018/bigtest/deep/deeper/bottom'; echo $?</span></p>
+<p class="rvps7"><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_mkdir.sh</span><span class="rvts17"> '/testdir/2018/bigtest/deep/deeper/bottom'; echo $?</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">or to check a non-default account</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps7"><span class="rvts17">/bin/bash</span><span class="rvts17"> /usr/local/bin/</span><span class="rvts17">mega_mkdir.sh</span><span class="rvts17"> '/testdir/2018/bigtest/deep/deeper/bottom' ~/.megarc_other; echo $?</span></p>
-<h3 class="rvps5"><span class="rvts0"><span class="rvts14">Related</span></span></h3>
+<p class="rvps7"><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_mkdir.sh</span><span class="rvts17"> '/testdir/2018/bigtest/deep/deeper/bottom' ~/.megarc_other; echo $?</span></p>
+<h3 class="rvps5"><a name="Related"></a>
+<span class="rvts0"><span class="rvts14">Related</span></span></h3>
 <p class="rvps2"><a class="rvts13" href="Setupmegarc.html">Set up .megarc</a></p>
 <p class="rvps2"><span class="rvts6">mega_dir_file_exist.sh</span><span class="rvts6"> </span><a class="rvts11" href="https://github.com/Amourspirit/mega_scripts/blob/master/mega_mkdir.sh" target="_blank">Latest Source</a><span class="rvts6">.</span></p>
 

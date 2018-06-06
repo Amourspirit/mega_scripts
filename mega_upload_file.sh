@@ -50,9 +50,9 @@
 MEGA_DEFAULT_ROOT="/Root"
 DATELOG=`date +'%Y-%m-%d-%H-%M-%S'`
 LOG_ID="MEGA PUT: "
-LOG="/var/log/mega_put_file.log"
+LOG="/var/log/mega_upload_file.log"
 FILE_TO_UPLOAD=""
-LOCK_FILE="/tmp/mega_put_file_lock"
+LOCK_FILE="/tmp/mega_upload_file_lock"
 CURRENT_MEGA_FOLDER=""
 CURRENT_CONFIG=""
 CURRENT_SPACE=""
@@ -89,7 +89,7 @@ else
     MEGA_FULL_PATH="$MEGA_DEFAULT_ROOT$1"
 fi
 if [ -z "$2" ]; then
-    # No argument for user supplied mega server path
+    # No argument the file to upload to upload
     echo "${DATELOG} ${LOG_ID}You are required pass in the file to upload to Mega." >> ${LOG}
     exit 110
 else
@@ -133,7 +133,7 @@ if [ $? -eq 0 ]; then
 fi
 touch "${LOCK_FILE}" 2> /dev/null
 
-echo "${DATELOG} ${LOG_ID}Uploading backup archive to MEGA.nz." >> ${LOG}
+echo "${DATELOG} ${LOG_ID}Uploading '${FILE_TO_UPLOAD}' to directory '${MEGA_FULL_PATH}' on MEGA.nz." >> ${LOG}
 
 if [[ $HAS_CONFIG -eq 0 ]]; then
     # No argument is given for default configuration for that contains user account and password

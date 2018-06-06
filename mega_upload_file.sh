@@ -59,10 +59,10 @@ CURRENT_SPACE=""
 MEGA_FULL_PATH=""
 HAS_CONFIG=0
 
-if [[ ! -z "$4" ]]; then
+if [[ -n "$4" ]]; then
     if [[ "$4" = "none" ]]; then
         LOG=""
-    elif [ "$4" = "silent" ]; then
+    elif [[ "$4" = "silent" ]]; then
         LOG=2>/dev/null
     else
         LOG="$4"
@@ -96,7 +96,7 @@ else
     FILE_TO_UPLOAD="$2"
 fi
 
-if [[ ! -z "$3" ]]
+if [[ -n "$3" ]]
 then
     # Argument is given for default configuration for that contains user account and password
     CURRENT_CONFIG="$3"
@@ -107,12 +107,12 @@ then
     fi
 fi
 
-if [ ! -z "$CURRENT_CONFIG" ]; then
+if [ -n "$CURRENT_CONFIG" ]; then
   HAS_CONFIG=1
 fi
 
 
-if [[ ! -z "$5" ]]
+if [[ -n "$5" ]]
 then
     # Argument is given for date log
     DATELOG="$5"

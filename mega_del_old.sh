@@ -63,7 +63,7 @@ MAX_AGE=""
 MEGA_FILES=""
 IN_ROOT=0
 
-if [[ ! -z "$4" ]]; then
+if [[ -n "$4" ]]; then
     if [[ "$4" = "none" ]]; then
         LOG=""
     elif [ "$4" = "silent" ]; then
@@ -124,7 +124,7 @@ else
     MAX_AGE=$(date --date="-$2 day" +%s)
 fi
 
-if [[ ! -z "$3" ]]; then
+if [[ -n "$3" ]]; then
     # Argument is given for default configuration for that contains user account and password
     CURRENT_CONFIG="$3"
     test -r "${CURRENT_CONFIG}"
@@ -134,7 +134,7 @@ if [[ ! -z "$3" ]]; then
     fi
 fi
 
-if [[ ! -z "$5" ]]; then
+if [[ -n "$5" ]]; then
     # Argument is given for date log
     DATELOG="$5"
 fi

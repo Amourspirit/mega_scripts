@@ -67,7 +67,7 @@ else
     DIR=$1
 fi
 
-if [[ ! -z "$2" ]]; then
+if [[ -n "$2" ]]; then
     # Argument is given for default configuration for that contains user account and password
     CURRENT_CONFIG="$2"
     test -r "${CURRENT_CONFIG}"
@@ -109,7 +109,7 @@ IFS='/' read -ra PARTS <<< "$DIR"
 for i in "${PARTS[@]}"; do
     # process "$i"
 
-    if [[ ! -z $i ]]; then
+    if [[ -n $i ]]; then
         NEW_DIR="$NEW_DIR/$i"
         if [[ HAS_CONFIG -eq 1 ]]; then
             ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "${NEW_DIR}" "${CURRENT_CONFIG}"

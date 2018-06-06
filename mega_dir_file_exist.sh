@@ -64,7 +64,7 @@ if [ -z "$1" ]; then
 else
     MEGA_SERVER_PATH=$MEGA_DEFAULT_ROOT"$1"
 fi
-if [[ ! -z "$2" ]]; then
+if [[ -n "$2" ]]; then
     # Argument is given for default configuration for that contains user account and password
     CURRENT_CONFIG="$2"
     test -r "${CURRENT_CONFIG}"

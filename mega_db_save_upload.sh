@@ -102,7 +102,7 @@ if [ -z "$1" ]
     echo "${DATELOG} ${LOG_ID}No argument for user supplied for user! Exiting! Exit Code 20" >> ${SYS_LOG}
     echo "${LOG_SEP}" >> ${SYS_LOG}
     echo "" >> ${SYS_LOG}
-    if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+    if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
         EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '${SYS_LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
@@ -118,7 +118,7 @@ if [ $? -ne 0 ]; then
     echo "${LOG_SEP}" >> ${SYS_LOG}
     echo "" >> ${SYS_LOG}
 
-    if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+    if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
         EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '${SYS_LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
@@ -143,7 +143,7 @@ if [ -z "$2" ]
     echo "${DATELOG} ${LOG_ID}No argument for user supplied for database! Exit Code: 21" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
-    if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+    if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
         EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 5 ${LOG}) \n\n Log File: '${LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
@@ -182,7 +182,7 @@ fi
 
 OUTPUT_FILE_NAME=$(basename ${OUTPUT_FILE})
 
-if [[ ! -z "$3" ]]; then
+if [[ -n "$3" ]]; then
     # Argument is given for default configuration for that contains user account and password
     CURRENT_CONFIG="$3"
     test -r "${CURRENT_CONFIG}"
@@ -191,7 +191,7 @@ if [[ ! -z "$3" ]]; then
         echo "${DATELOG} ${LOG_ID}Config file '${CURRENT_CONFIG}' does not exist or can not gain read access! Exit Code: 111" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         echo "" >> ${LOG}
-        if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+        if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
             EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
             ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
         fi
@@ -209,7 +209,7 @@ if [ $? -ne 0 ]; then
     echo "${DATELOG} ${LOG_ID}'$DB_NAME' does Not Exit. Unable to continue: Exit Code: 52" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
-    if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+    if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
         EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
@@ -221,7 +221,7 @@ if [ $? -ne 0 ]; then
     echo "${DATELOG} ${LOG_ID}~/.my.cnf must be set up for MysqlDump to do its job. Unable to continue: Exit Code: 50" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
-    if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+    if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
         EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
@@ -235,7 +235,7 @@ if [[ $MEGA_ENABLED = "yes" && $HAS_CONFIG -eq 0 ]]; then
         echo "${DATELOG} ${LOG_ID}~/.megarc must be set up and readable by current to upload to mega when parameter 3 is omitted. Unable to continue: Exit Code: 51" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         echo "" >> ${LOG}
-        if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+        if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
             EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
             ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
         fi
@@ -250,7 +250,7 @@ if [ $? -eq 0 ];then
     echo "${DATELOG} ${LOG_ID}There is another mega backup database process running! Exit Code: 100" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
-    if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+    if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
         EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
@@ -355,7 +355,7 @@ if [[ $MEGA_ENABLED = "yes" ]]; then
         echo "${DATELOG} ${LOG_ID}There was an issue running script '$MEGA_EXIST_FILE_NAME'. Script exited with code '$EXIT_CODE'! Exit Code: 30" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         rm -f "${LOCK_FILE}"
-        if [[ $SEND_EMAIL_ON_ERROR = "yes" && ! -z SEND_EMAIL_TO ]]; then
+        if [[ $SEND_EMAIL_ON_ERROR = "yes" && -n SEND_EMAIL_TO ]]; then
             EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 3 ${LOG}) \n\n Log File: '${LOG}'")
             ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
         fi

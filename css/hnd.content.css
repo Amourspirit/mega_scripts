@@ -178,10 +178,38 @@ span.rvts29
 }
 span.rvts30
 {
+ font-family: 'Courier New', 'Courier', monospace;
+}
+span.rvts31
+{
+ font-size: 12pt;
+ font-weight: bold;
+ color: #ff0000;
+}
+span.rvts32
+{
  font-size: 12pt;
  font-style: italic;
+ font-weight: bold;
 }
-a.rvts31, span.rvts31
+span.rvts33
+{
+ font-size: 12pt;
+ font-weight: bold;
+}
+span.rvts34
+{
+ font-size: 12pt;
+ font-style: italic;
+ font-weight: bold;
+}
+span.rvts35
+{
+ font-size: 11pt;
+ font-style: italic;
+ font-weight: bold;
+}
+a.rvts36, span.rvts36
 {
  font-size: 16pt;
  font-weight: bold;
@@ -271,9 +299,39 @@ p,ul,ol /* Paragraph Style */
 }
 .rvps11
 {
- border-color: #000000;
+ border-color: #c0c0c0;
  border-style: solid;
  border-width: 1px;
+ background: #e6e6e6;
  padding: 4px 4px 4px 4px;
  margin: 3px 19px 3px 19px;
 }
+.rvps12
+{
+ margin: 0px 0px 0px 24px;
+}
+.rvps13
+{
+ text-align: left;
+ text-indent: 0px;
+ page-break-after: avoid;
+ padding: 0px 0px 0px 0px;
+ margin: 16px 0px 4px 0px;
+}
+.rvps14
+{
+ margin: 0px 0px 0px 48px;
+}
+.rvps15
+{
+ text-align: left;
+ text-indent: 0px;
+ page-break-after: avoid;
+ padding: 0px 0px 0px 0px;
+ margin: 16px 0px 4px 0px;
+}
+/* ========== Lists ========== */
+.list0 {text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;}
+.list1 {text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: circle;}
+.list2 {text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: square;}
+.list3 {text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: disc;}

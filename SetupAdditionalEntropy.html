@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Professional Edition 5.7.1.578">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
+
+  <title>Setup Additional Entropy</title>
+  <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
+  <meta name="keywords" content="">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Setup Additional Entropy">
+  <meta name="twitter:description" content="A few scripts to use with megatools and mega.nz">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="Setup Additional Entropy" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A few scripts to use with megatools and mega.nz" />
+  <meta property="og:site_name" content="Mega Scripts" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-green.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>Mega Scripts</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+      
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+          data-hnd-id="SetupAdditionalEntropy"
+          data-hnd-context="9"
+          data-hnd-title="Setup Additional Entropy"
+        >
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li>Linux</li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="GnuPGEncryptandDecrypt.html" title="GnuPG Encrypt and Decrypt" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+            
+            <div class="main-content">
+                
+<p></p>
+<h1 class="rvps4"><a name="top"></a>
+<span class="rvts0"><span class="rvts12">How to Setup Additional Entropy for Cloud Servers Using Haveged</span></span></h1>
+<h2 class="rvps10"><span class="rvts0"><span class="rvts21">Brief Introduction to Entropy and Randomness</span></span></h2>
+<p class="rvps2"><span class="rvts6">The Linux pseudo random number generator (PRNG) is a special device that generates randomness from hardware interrupts (keyboard, mouse, disk/network I/O) and other operating system sources. This randomness is used mostly for encryption like SSL/TLS, but also has many other uses. Even something as simple as a program to roll a pair of virtual dice depends on entropy for good quality randomness.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts11" href="https://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged" target="_blank">Digital Ocean</a><span class="rvts6"> for more information.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><span class="rvts0"><span class="rvts14">The following instructions are for Debian based systems and assume your are are using root.</span></span></h3>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h4 class="rvps13"><a name="haveged_install"></a>
+<span class="rvts0"><span class="rvts32">Check your system to see if haveged is already installed.</span></span></h4>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># [ -n "$(command -v haveged)" ] &amp;&amp; echo "Installed" || echo "Not Installed"</span><br/><span class="rvts17">Not Installed</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">If haveged is not installed then go ahead and install.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">First run update:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># apt-get update</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Install haveged:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># apt-get install haveged</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h4 class="rvps13"><span class="rvts0"><span class="rvts32">Starting Haveged</span></span></h4>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># /usr/sbin/haveged -w 1024</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h4 class="rvps13"><span class="rvts0"><span class="rvts32">Run on Startup</span></span></h4>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># nano /etc/crontab</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Add following to crontab</span></p>
+<p class="rvps11"><span class="rvts30">@reboot root /usr/sbin/haveged -w 1024</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Save the changes and exit nano.</span></p>
+<p class="rvps2"><span class="rvts6">On the next reboot haveged will start with the system.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h4 class="rvps13"><a name="rng_tools_install"></a>
+<span class="rvts0"><span class="rvts32">Install rng-tools if needed</span></span></h4>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Check your system to see if package rng-tools is already installed:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># dpkg -l rng-tools</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">If not installed the output should look similar to:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># dpkg -l rng-tools</span></p>
+<p class="rvps7"><span class="rvts17">Desired=Unknown/Install/Remove/Purge/Hold</span></p>
+<p class="rvps7"><span class="rvts17">| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend</span></p>
+<p class="rvps7"><span class="rvts17">|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)</span></p>
+<p class="rvps7"><span class="rvts17">||/ Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Version &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Architecture &nbsp; &nbsp; &nbsp;Description</span></p>
+<p class="rvps7"><span class="rvts17">+++-========================-=================-=================-=====================================================</span></p>
+<p class="rvps7"><span class="rvts17">un &nbsp;rng-tools &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;none&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;none&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(no description available)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">If installed the output should look similar to:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># dpkg -l rng-tools</span></p>
+<p class="rvps7"><span class="rvts17">Desired=Unknown/Install/Remove/Purge/Hold</span></p>
+<p class="rvps7"><span class="rvts17">| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend</span></p>
+<p class="rvps7"><span class="rvts17">|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)</span></p>
+<p class="rvps7"><span class="rvts17">||/ Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Version &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Architecture &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Description</span></p>
+<p class="rvps7"><span class="rvts17">+++-=================================-=====================-=====================-=====================================</span></p>
+<p class="rvps7"><span class="rvts17">ii &nbsp;rng-tools &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2-unofficial-mt.14-1+ amd64 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Daemon to use a Hardware TRNG</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">If you require to install rng-tools</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># apt-get update</span><br/><span class="rvts17"># apg-get install rng-tools</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h4 class="rvps13"><a name="test_entropy"></a>
+<span class="rvts0"><span class="rvts32">Testing Availability of Entropy &amp; Quality of Random Data</span></span></h4>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># cat /dev/random | rngtest -c 1000</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Output:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">rngtest: starting FIPS tests...</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: bits received from input: 20000032</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: FIPS 140-2 successes: 1000</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: FIPS 140-2 failures: 0</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: FIPS 140-2(2001-10-10) Monobit: 0</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: FIPS 140-2(2001-10-10) Poker: 0</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: FIPS 140-2(2001-10-10) Runs: 0</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: FIPS 140-2(2001-10-10) Long run: 0</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: FIPS 140-2(2001-10-10) Continuous run: 0</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: input channel speed: (min=2.413; avg=13.646; max=16.629)Mibits/s</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: FIPS tests speed: (min=57.974; avg=73.134; max=79.473)Mibits/s</span></p>
+<p class="rvps7"><span class="rvts17">rngtest: Program run time: 1660174 microseconds</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">You may get an error the first time your run "rngtest"</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">Setting up rng-tools (2-unofficial-mt.14-1+b2) ...</span></p>
+<p class="rvps7"><span class="rvts17">Job for rng-tools.service failed because the control process exited with error code.</span></p>
+<p class="rvps7"><span class="rvts17">See "systemctl status rng-tools.service" and "journalctl -xe" for details.</span></p>
+<p class="rvps7"><span class="rvts17">invoke-rc.d: initscript rng-tools, action "start" failed.</span></p>
+<p class="rvps7"><span class="rvts17">● rng-tools.service</span></p>
+<p class="rvps7"><span class="rvts17"> &nbsp; Loaded: loaded (/etc/init.d/rng-tools; generated; vendor preset: enabled)</span></p>
+<p class="rvps7"><span class="rvts17"> &nbsp; Active: failed (Result: exit-code) since Thu 2018-05-17 02:42:33 UTC; 8ms ago</span></p>
+<p class="rvps7"><span class="rvts17"> &nbsp; &nbsp; Docs: man:systemd-sysv-generator(8)</span></p>
+<p class="rvps7"><span class="rvts17"> &nbsp;Process: 1649 ExecStart=/etc/init.d/rng-tools start (code=exited, status=1/FAILURE)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Don't worry about this error. It is be cause we are running in a VPC.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">A very small amount of failures is acceptable in any random number generator, but you can expect to see 998-1000 successes very often when using hovered.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h5 class="rvps15"><span class="rvts0"><span class="rvts35">To test the amount of available entropy, you can run the following command:</span></span></h5>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># cat /proc/sys/kernel/random/entropy_avail</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The idea of haveged is to fill this pool back up whenever the available bits gets near 1024. So while this number will fluctuate, it shouldn't drop below 1000 or so unless you're really demanding lots of randomness (SSH key generation, etc).</span></p>
+<h3 class="rvps5"><span class="rvts0"><span class="rvts14">Related</span></span></h3>
+<p class="rvps2"><a class="rvts13" href="GnuPGEncryptandDecrypt.html">How to Encrypt Files on Linux using GnuPG</a></p>
+
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2018  by Paul Moss. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+      // Custom JS
+      
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
+</html>
+

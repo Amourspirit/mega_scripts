@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Professional Edition 5.7.1.578">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
+
+  <title>GnuPG Encrypt and Decrypt</title>
+  <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
+  <meta name="keywords" content="Remove Private Key,Import the private key">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="GnuPG Encrypt and Decrypt">
+  <meta name="twitter:description" content="A few scripts to use with megatools and mega.nz">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="GnuPG Encrypt and Decrypt" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A few scripts to use with megatools and mega.nz" />
+  <meta property="og:site_name" content="Mega Scripts" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-green.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>Mega Scripts</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+      
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+          data-hnd-id="GnuPGEncryptandDecrypt"
+          data-hnd-context="10"
+          data-hnd-title="GnuPG Encrypt and Decrypt"
+        >
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li>Linux</li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Setupmegarc.html" title="Set up .megarc" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="SetupAdditionalEntropy.html" title="Setup Additional Entropy" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+            
+            <div class="main-content">
+                
+<p></p>
+<h1 class="rvps4"><a name="top"></a>
+<span class="rvts0"><span class="rvts12">How to Encrypt Files on Linux using GnuPG</span></span></h1>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">You may want to Add Extra Entropy with a headless server. </span></p>
+<p class="rvps12"><a class="rvts13" href="SetupAdditionalEntropy.html">How to Setup Additional Entropy for Cloud Servers Using Haveged</a></p>
+<p class="rvps2"><span class="rvts6"> </span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">In this Document:</span></p>
+<p class="rvps12"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#create_keypair">Create a GPG private/public key-pair</a></p>
+<p class="rvps14"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#export_public_key">Export the public keyfile</a></p>
+<p class="rvps14"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#export_private_key">Export your private key for backup</a></p>
+<p class="rvps14"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#import_public_key">Import Public Key</a></p>
+<p class="rvps12"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#Encryption">Encryption</a></p>
+<p class="rvps14"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#encrypt_file_manually">Encrypt A File Manually</a></p>
+<p class="rvps14"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#trust_key">Trust the key</a></p>
+<p class="rvps12"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#Decryption">Decryption</a></p>
+<p class="rvps12"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#harden_security">Harden Security</a></p>
+<p class="rvps14"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#remove_private_key">Remove Private Key</a><br/><a class="rvts13" href="GnuPGEncryptandDecrypt.html#import_private_key">Import the private key</a></p>
+<p class="rvps12"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#Advantages">Advantages</a></p>
+<p class="rvps12"><a class="rvts13" href="GnuPGEncryptandDecrypt.html#Related">Related</a></p>
+<h2 class="rvps10"><a name="create_keypair"></a>
+<span class="rvts0"><span class="rvts21">Create a GPG private/public key-pair</span></span></h2>
+<p class="rvps2"><span class="rvts6">You will need to create a key pair if you have not done so already.</span></p>
+<p class="rvps2"><span class="rvts6">Choose a password for your private key. This password will be required to decrypt files that have been encrypted with the public key.</span></p>
+<p class="rvps2"><span class="rvts6">If you do not need the private key on your server then you can create the key-pair on a local workstation and then just </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html#export_public_key">export the public key</a><span class="rvts6"> on the local workstation. Then </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html#import_public_key">import the public</a><span class="rvts6"> key to the server.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# gpg --full-generate-key</span><br/><span class="rvts17">gpg (GnuPG) 2.1.18; Copyright (C) 2017 Free Software Foundation, Inc.</span><br/><span class="rvts17">This is free software: you are free to change and redistribute it.</span><br/><span class="rvts17">There is NO WARRANTY, to the extent permitted by law.</span><br/><span class="rvts17"></span><br/><span class="rvts17">Please select what kind of key you want:</span><br/><span class="rvts17"> &nbsp; (1) RSA and RSA (default)</span><br/><span class="rvts17"> &nbsp; (2) DSA and Elgamal</span><br/><span class="rvts17"> &nbsp; (3) DSA (sign only)</span><br/><span class="rvts17"> &nbsp; (4) RSA (sign only)</span><br/><span class="rvts17">Your selection? 1</span><br/><span class="rvts17">RSA keys may be between 1024 and 4096 bits long.</span><br/><span class="rvts17">What keysize do you want? (2048) 4096</span><br/><span class="rvts17">Requested keysize is 4096 bits</span><br/><span class="rvts17">Please specify how long the key should be valid.</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp; &nbsp; 0 = key does not expire</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;&lt;n&gt; &nbsp;= key expires in n days</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;&lt;n&gt;w = key expires in n weeks</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;&lt;n&gt;m = key expires in n months</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;&lt;n&gt;y = key expires in n years</span><br/><span class="rvts17">Key is valid for? (0) 0</span><br/><span class="rvts17">Key does not expire at all</span><br/><span class="rvts17">Is this correct? (y/N) y</span><br/><span class="rvts17"></span><br/><span class="rvts17">GnuPG needs to construct a user ID to identify your key.</span><br/><span class="rvts17"></span><br/><span class="rvts17">Real name: bbserver</span><br/><span class="rvts17">Email address: bbserver@example.com</span><br/><span class="rvts17">Comment: bbserver gpg key</span><br/><span class="rvts17">You selected this USER-ID:</span><br/><span class="rvts17"> &nbsp; &nbsp;"bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;"</span><br/><span class="rvts17"></span><br/><span class="rvts17">Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o</span><br/><span class="rvts17">We need to generate a lot of random bytes. It is a good idea to perform</span><br/><span class="rvts17">some other action (type on the keyboard, move the mouse, utilize the</span><br/><span class="rvts17">disks) during the prime generation; this gives the random number</span><br/><span class="rvts17">generator a better chance to gain enough entropy.</span><br/><span class="rvts17">We need to generate a lot of random bytes. It is a good idea to perform</span><br/><span class="rvts17">some other action (type on the keyboard, move the mouse, utilize the</span><br/><span class="rvts17">disks) during the prime generation; this gives the random number</span><br/><span class="rvts17">generator a better chance to gain enough entropy.</span><br/><span class="rvts17">gpg: key A7F44248C3A03D78 marked as ultimately trusted</span><br/><span class="rvts17">gpg: directory '/root/.gnupg/openpgp-revocs.d' created</span><br/><span class="rvts17">gpg: revocation certificate stored as '/root/.gnupg/openpgp-revocs.d/5296EB83E2DE759654EDA8E5A7F44248C3A03D78.rev'</span><br/><span class="rvts17">public and secret key created and signed.</span><br/><span class="rvts17"></span><br/><span class="rvts17">pub &nbsp; rsa4096 2018-05-18 [SC]</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span><br/><span class="rvts17">uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17">sub &nbsp; rsa4096 2018-05-18 [E]</span></p>
+<h3 class="rvps5"><a name="export_public_key"></a>
+<span class="rvts0"><span class="rvts14">Export the public keyfile</span></span></h3>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# gpg --armor --output bbserver-publickey.txt --export 'bbserver'</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">To Display your public key to copy and paste into your password manager</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# cat bbserver-publickey.txt</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a name="output_public_key"></a>
+<span class="rvts6">Output:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">-----BEGIN PGP PUBLIC KEY BLOCK-----</span><br/><span class="rvts17"></span><br/><span class="rvts17">mQINBFr+8zYBEADBROEt3txqAX0RHUPoqWAgAhPyAL1EFNi8uz2xrwJWc9xK9JIN</span><br/><span class="rvts17">DHtzucH5zD572+pJsnxGOXkb9prf1dSxNVOULecsHRWPxQaq5+sfFpp+bzrc8Z0h</span><br/><span class="rvts17">gzAdJYGicU2Q3H19lF3ccs5dCDRWP4Y4Io3jqY8HiP7A4retDn7jBWqq3MY++9JM</span><br/><span class="rvts17">hDCb6obaVaHpNpF7wj6CUXXNcqbrWYRTr0OAdLktqFZ8OXFWaSzoCkxfvUD7/akQ</span><br/><span class="rvts17">bAQbK5fUUi9INmSVsOn9JvfPPbKplGB9iXGkzhFdvPv6pHK3L6/y5Hh2ctbh4pQ/</span><br/><span class="rvts17">vSudakQEsnuZLABw9rqoCqGhKg1XQR2z9yF0ygUuFbeRchj91jTB5Y2urPAhPwax</span><br/><span class="rvts17">9afit1bJGYRX7UQPxOnTzYNqBkZmLLITHq4P6W/wrjvyGvRsv48OGvYXqzYjJ2yl</span><br/><span class="rvts17">mr/3kgGBoTrQLl7MhBcQ5ncLETjtnNnY7CsMqRV8zynlOVaMiJqk0Av8vUsZ7YMq</span><br/><span class="rvts17">l+Y3XlEcalTpr+Y4SHfQwjf9unkifDxdWeDkxGgJ3ywXgk0VxfwZGxQjTRK+eM09</span><br/><span class="rvts17">xmNgTD+F9QhxB1iZRAFghwaWFNPTLz3/4NNGERd2my5KP8Gz6Lbe4ExWlUVUEGwR</span><br/><span class="rvts17">E8i8r9I4IC2Va54zuzwzr3Z6ZySzPMbZNYkBraVn0deJk/jBwxyv7+TdwwARAQAB</span><br/><span class="rvts17">tDJiYnNlcnZlciAoYmJzZXJ2ZXIgZ3BnIGtleSkgPGJic2VydmVyQGV4YW1wbGUu</span><br/><span class="rvts17">Y29tPokCTgQTAQgAOBYhBFKW64Pi3nWWVO2o5af0QkjDoD14BQJa/vM2AhsDBQsJ</span><br/><span class="rvts17">CAcCBhUICQoLAgQWAgMBAh4BAheAAAoJEKf0QkjDoD14WsAP/jYEl3PCJbqCpYL0</span><br/><span class="rvts17">Lqx8Zv8veWG21eoCd7GelPCtwgyJ1Pakk6xfN6tKJjiNDlRWOf8v2uZC3RhHImPr</span><br/><span class="rvts17">fplvHH6gQs4hqgOKPPN4lnKb5LMCXbPOLX+996eqtc9t/arxKukKl9Osbgy3Yke/</span><br/><span class="rvts17">KwPIglkyGG3DEoSR/rUqtt+D305zK5QIBo4coV/Pt+r5/GnzIsFaFSpdYVaIlbst</span><br/><span class="rvts17">lv4JxM83Ly16949tnBSi0gns95C7EASoPY5glu05RWTGZgcSI6le5psyohGBQyqV</span><br/><span class="rvts17">v3X6j/aspZBCxLxKmJvaIkbUKatK9o+jViinKYKmwbHlzVkpx2ALG5cpvvJZF+4y</span><br/><span class="rvts17">nI9svdi9MYFBX8c8KiIf8lgusgc7pO0mfbPNfQuBwGVuY/PIkJmyeKDMbp5uCtL6</span><br/><span class="rvts17">9iiK0axjOlPfzuKvDxGNwVoceqdFE/iJfmLQIgZs8usiXtM0L1nqmtP+Xx8iwXvp</span><br/><span class="rvts17">wZDiV0x0qpEacjym03EqexaokU6J9YBk0V71Mvci2aq5v06gBVopR3wvsThAMfTT</span><br/><span class="rvts17">8GBr8RakRnqwetT5LfAxRGWibrHUaUDFVxxIR1BAcYU5iF7XCwYcYozmFONUqhnk</span><br/><span class="rvts17">kASl+6toC2D8OrJkbCvwFi7PUIisyxUQtlAtPwcZuHBFAHgvp9K0GOkCwdpKANV7</span><br/><span class="rvts17">TSLzvPbbdhCW2cozryQ1POzjdqHXuQINBFr+8zYBEADIMsro96fZWAGNj8IFdoMn</span><br/><span class="rvts17">6TXxxVyqq+Ya86/bU3uc4GQ51UU5ZSv4k0T71F8Lg4H1vAGJ9CLgQcne2GIVb9eY</span><br/><span class="rvts17">NJUHLVXsu2JaMM+xXzbps8efj2plR3MAaW2tiTi2C8QT3PoXoNTXWM5KgIlm9M21</span><br/><span class="rvts17">X3GCIV8bAZsugUPu8tJ2bBCjyvbnkMhiyp53AuTSR19YCtjKqzmIM/L1PyO4j+23</span><br/><span class="rvts17">qoBYGqBoOQ7pkNQOlgdAWNdk+VFiCbaUW/mBEgxO6CPxCBFssyOD6TyTk5IIILBi</span><br/><span class="rvts17">So9MRphzqzP1US8CUF6kzUSJDFufSAUnZZGVBUz3o1NBypQ/VCS2ImaqEn2ohQOG</span><br/><span class="rvts17">o9RebE6z1YvlxzmS7MFxdQ11eIqFJSeOf88d26mZGlpNbhKiMHhAcJS9bSQR4qrL</span><br/><span class="rvts17">Keq91zUR9BS3SdH+r4eH6G7Y/ksCYELohM0e395ND/VctrAbcP6XrJO4JWEavDCV</span><br/><span class="rvts17">JIJjVd2sBb2+q/TL52EVuReE6kCuolXHcO4LMxWcfYbvoiCA/dNF7AQRiHBjk8xE</span><br/><span class="rvts17">Pu5RLM23mIhRbfz66ZW3YZpF1saRFMoMDhcEn1XaPA3INlY0TAiH1AyNNdRrgNfV</span><br/><span class="rvts17">HUb/Ro/ZcBws/7Rs29Htaa5A1OU1KWrq0go4tFg+kIiUXhMlX/kuWXA1Y34H6BJK</span><br/><span class="rvts17">IAQEI459Jurh/Mk9D8YK5wARAQABiQI2BBgBCAAgFiEEUpbrg+LedZZU7ajlp/RC</span><br/><span class="rvts17">SMOgPXgFAlr+8zYCGwwACgkQp/RCSMOgPXiCbQ/+JDBtclEMRL/HyiCa1Dq+DLvi</span><br/><span class="rvts17">S0LBfTHuUB810Ay8Akrzh5LnoUn+SMecua+T3L60fUDYRVUaQ62pX/i2q4cZeNEm</span><br/><span class="rvts17">N0XA6wjrg29wmxswg9mNvsuQl3FTB6jNNi9eupMqvxKvQqPgajlMjxyUOgktc1vA</span><br/><span class="rvts17">zyxaE3V9xmRbeik/R2lSKUO8AvDZxzaY0wRs66PAfXGeHSOACgnfPmAxIWK4hu1l</span><br/><span class="rvts17">xQhRTjRAiELLUMedgqiP6rv1xGI7Km4Y9MwXtZHuBWm8tpRFqrTOupePv0Ym41FT</span><br/><span class="rvts17">MC0AqjATtL4CZT+6LvPHBaVucnMr3X8t74m4TALLBnCy9IHysm9bTQYZLQlULQHA</span><br/><span class="rvts17">6+w8Cv/mY2rNq6HyUVuDAEuHY/P6OVA9GFM41kAIMfzsY7FIGx0zrtnieAIuyjRN</span><br/><span class="rvts17">fIqJmdV5O6m1G25djtp6FNqTBZ/y0ElbZPFOn5Yzs706oa/aK6rLIxlvFTi6C8jD</span><br/><span class="rvts17">tHibZeCIv40sD7J5x3i/MqAAYnZdcxo6zbvDhAIiDRUKPLbdcoYRyzUqxdbHfovz</span><br/><span class="rvts17">cv/WWNTs0GsGKiOGid0pXIphNvgkZUjZViJm04haIjM8vCFQD8N+g4CrnFK1meL7</span><br/><span class="rvts17">2MU+XxCAzWY4QGtC4yXKhSeyDGvz2fjH3NEsUh4XIWvHq6+V5AQMhTbUQVKYGYUC</span><br/><span class="rvts17">2qKYahgUmoLddvWwVq8=</span><br/><span class="rvts17">=dzcw</span><br/><span class="rvts17">-----END PGP PUBLIC KEY BLOCK-----</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">To List installed public keys</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# gpg --list-keys</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Output:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# gpg --list-keys</span><br/><span class="rvts17">gpg: checking the trustdb</span><br/><span class="rvts17">gpg: marginals needed: 3 &nbsp;completes needed: 1 &nbsp;trust model: pgp</span><br/><span class="rvts17">gpg: depth: 0 &nbsp;valid: &nbsp; 1 &nbsp;signed: &nbsp; 0 &nbsp;trust: 0-, 0q, 0n, 0m, 0f, 1u</span><br/><span class="rvts17">/root/.gnupg/pubring.kbx</span><br/><span class="rvts17">------------------------</span><br/><span class="rvts17">pub &nbsp; dsa1024 2002-02-28 [SCA]</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;1719003ACE3E5A41E2DE70DFD97A3AE911F63C51</span><br/><span class="rvts17">uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [ unknown] Jamie Cameron &lt;jcameron@webmin.com&gt;</span><br/><span class="rvts17">sub &nbsp; elg1024 2002-02-28 [E]</span><br/><span class="rvts17"></span><br/><span class="rvts17">pub &nbsp; rsa4096 2017-04-10 [SC]</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;EC60F3DA9CB79ADCCF560D1F121E166DD9C821AB</span><br/><span class="rvts17">uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [ unknown] Ilia Rostovtsev &lt;ilia@rostovtsev.ru&gt;</span><br/><span class="rvts17">sub &nbsp; rsa4096 2017-04-10 [E]</span><br/><span class="rvts17"></span><br/><span class="rvts17">pub &nbsp; dsa1024 2009-08-13 [SC]</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;D1EAE49036C029DEB7133233B0740C10F9232D77</span><br/><span class="rvts17">uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [ unknown] Virtualmin Script Install Updates (For signing updated Virtualmin script.pl files) &lt;latest-scripts@virtualmin.com&gt;</span><br/><span class="rvts17">ub &nbsp; elg2048 2009-08-13 [E]</span><br/><span class="rvts17"></span><br/><span class="rvts17">pub &nbsp; rsa4096 2018-05-18 [SC]</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span><br/><span class="rvts17">uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [ultimate] bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17">sub &nbsp; rsa4096 2018-05-18 [E]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">To List installed private keys</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# gpg --list-secret-keys</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Output:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">root@bbserver:~# gpg --list-secret-keys</span><br/><span class="rvts17">/root/.gnupg/pubring.kbx</span><br/><span class="rvts17">------------------------</span><br/><span class="rvts17">sec &nbsp; rsa4096 2018-05-18 [SC]</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span><br/><span class="rvts17">uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [ultimate] bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17">ssb &nbsp; rsa4096 2018-05-18 [E]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">It is a good idea to copy the ID / Fingerprint into you password manager as well</span></p>
+<p class="rvps11"><span class="rvts30">5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="export_private_key"></a>
+<span class="rvts0"><span class="rvts14">Export your private key for backup</span></span></h3>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# gpg --export-secret-keys -a 5296EB83E2DE759654EDA8E5A7F44248C3A03D78 &gt; bbserver.asc</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">To display your private key to copy and paste into your password manager</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# cat bbserver.asc</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a name="output_private_key"></a>
+<span class="rvts6">Output:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">-----BEGIN PGP PRIVATE KEY BLOCK-----</span><br/><span class="rvts17"></span><br/><span class="rvts17">lQcYBFr+8zYBEADBROEt3txqAX0RHUPoqWAgAhPyAL1EFNi8uz2xrwJWc9xK9JIN</span><br/><span class="rvts17">DHtzucH5zD572+pJsnxGOXkb9prf1dSxNVOULecsHRWPxQaq5+sfFpp+bzrc8Z0h</span><br/><span class="rvts17">gzAdJYGicU2Q3H19lF3ccs5dCDRWP4Y4Io3jqY8HiP7A4retDn7jBWqq3MY++9JM</span><br/><span class="rvts17">hDCb6obaVaHpNpF7wj6CUXXNcqbrWYRTr0OAdLktqFZ8OXFWaSzoCkxfvUD7/akQ</span><br/><span class="rvts17">bAQbK5fUUi9INmSVsOn9JvfPPbKplGB9iXGkzhFdvPv6pHK3L6/y5Hh2ctbh4pQ/</span><br/><span class="rvts17">vSudakQEsnuZLABw9rqoCqGhKg1XQR2z9yF0ygUuFbeRchj91jTB5Y2urPAhPwax</span><br/><span class="rvts17">9afit1bJGYRX7UQPxOnTzYNqBkZmLLITHq4P6W/wrjvyGvRsv48OGvYXqzYjJ2yl</span><br/><span class="rvts17">mr/3kgGBoTrQLl7MhBcQ5ncLETjtnNnY7CsMqRV8zynlOVaMiJqk0Av8vUsZ7YMq</span><br/><span class="rvts17">l+Y3XlEcalTpr+Y4SHfQwjf9unkifDxdWeDkxGgJ3ywXgk0VxfwZGxQjTRK+eM09</span><br/><span class="rvts17">xmNgTD+F9QhxB1iZRAFghwaWFNPTLz3/4NNGERd2my5KP8Gz6Lbe4ExWlUVUEGwR</span><br/><span class="rvts17">E8i8r9I4IC2Va54zuzwzr3Z6ZySzPMbZNYkBraVn0deJk/jBwxyv7+TdwwARAQAB</span><br/><span class="rvts17">AA/+L+Jufix45OTQhWSAVk1czSFmqq+HNS6LEpu7qeHoDN5w5rtY0lXU4nPUPR1f</span><br/><span class="rvts17">H9X5YuAPjWChAo4jijDTHULOneiPnazpEjFpOP/0D8RMa+YIKgTM/ygfTCFmUIaN</span><br/><span class="rvts17">BsayauJPLRbezUsCmJntmcvp5s20a9QD9mtVwdFVG89UQdgoYCOJU77uwjqlxcOw</span><br/><span class="rvts17">tXT5L7YNQcGIE+qDs8z+jbNfYJzK4qaSIv4ieBvf7e/bQ19DEgwjjreMfuTandbs</span><br/><span class="rvts17">8xHS8wmdt8SnYlfxg7WJAKGEoCYURGrV7aA/8eYlTGNR+1rxpY67V115yGszRgyo</span><br/><span class="rvts17">tecihtqCna7go+sk2gj+oH+q8HNNjyF4KgKkXnZXAtXiZ6L8LxcppuWkriE241iQ</span><br/><span class="rvts17">3ZDW6Uw011xQa4sev6JTMJ8kf0jPcQl0LAbi+Hr/Do4OSrHJ+5FmvCv5o6x8c4F8</span><br/><span class="rvts17">E/WUEWnGtCUphLBcNfVBI69hVIrt+cYGUnYX/bCgAMgfZuhDvUGM9cB7dKCVbeg4</span><br/><span class="rvts17">2D3Zn8LVaGDTar1tfByuDQOJ4XOIx1zf0osaOT7D9CF27JIoOIitsUyWuMWdNOee</span><br/><span class="rvts17">w6AcG94+OtZl/t4FVvs8ikGaHEeKELOdCr+WnXDIY5XqTqhFGZPKVXQuArjkuWat</span><br/><span class="rvts17">qyHrOIG8GUC0MWewk+V6TtUm+2LWtRin8ofVfbeCzqLN330IAMak9TXf4xsoQrcc</span><br/><span class="rvts17">Ff/U9B5sXFoWBuU54PzQYOV3YMAC0APtd5xBdSoB0dEe6wFqRRNurUX3czGhlMr6</span><br/><span class="rvts17">THfr0pIxFLzkMAIbJTlg2l0B0aS9bZyPdS22cQNemKnPx99ka9UBeHoG5CcgvQPQ</span><br/><span class="rvts17">Nv35aFb7fswuH9pakdw1obBX5+3u3jY4htrIfYcU3JMiTtIOgCC1G7aSq2t5utQw</span><br/><span class="rvts17">fR0gGWuReE/Ab21xSPSUyWi1jpZEAXH/Xca9Eqeti4TETUnksVpAEgbV7I7bnyUP</span><br/><span class="rvts17">c5KOb22KvswGadLi+vyTDD7mmzoIFG8TcNkRSSS9XqaLS0s4Vy2bmBgufyd6D+tI</span><br/><span class="rvts17">XqC5B+8IAPkSmXTPf7DvNzxdx2MQr9BdOFnXSrzAJquB9chRg4/I4a0qb2SWVJEv</span><br/><span class="rvts17">izBKyKlwLr12LaTeYT0qxsVgjfA/njawQuMbP0+KPOYH1XxG+MHFxkTCjPV+/ngy</span><br/><span class="rvts17">KLfuX+cyjCvAoqeLQcSkcaFpK4/mXxWaRfc5yyg7BoYGOBjdLQpDYanLhAuXFImQ</span><br/><span class="rvts17">oUmcUe/CvNfxmgdotOfOqM4RB0/xf+1lU2vOtkzGJU5JWYxmYhfJQXTogg0sLTW6</span><br/><span class="rvts17">lyYcn5DRHb3oMA9pGIoVx9X4BldqeeVRiWu4BNEDytiQz5RisGJILSwY8rC5LRFG</span><br/><span class="rvts17">8hyYTPnS6HqhDjEyflCm35yWnXsWU20IAJLADj3SeN9bhLSYpfvgoCMYmHYDEGxd</span><br/><span class="rvts17">cMVqUirIXRHgm5dVECdRLd+v4FwKRtJxjlgMtg1uj33XI6wbXoDrNfgNb/+Rqv12</span><br/><span class="rvts17">clDe+TOI2eYNvAbUu3gxdLtF2hs2ZO/sxGgyE8qZilWxiH+OQ/wzYah0428/AMP7</span><br/><span class="rvts17">ynEkshvaW7bj580mO9Ugrf66+h4Vb5gLKelsZUeODyiI1xzb69z4Zfd5iOGrBKZp</span><br/><span class="rvts17">GnPIkHEJp7tp/AQk4HWk0qUkQyV09fE/JRtqGTI7afbgTvKRfKqQufe/sbLSSchp</span><br/><span class="rvts17">2L2gqEomgJk1WlCkpZ/xIRNCeQwgxHFud/MvRR4VKP4IxJ+GKEVpw0+HK7QyYmJz</span><br/><span class="rvts17">ZXJ2ZXIgKGJic2VydmVyIGdwZyBrZXkpIDxiYnNlcnZlckBleGFtcGxlLmNvbT6J</span><br/><span class="rvts17">Ak4EEwEIADgWIQRSluuD4t51llTtqOWn9EJIw6A9eAUCWv7zNgIbAwULCQgHAgYV</span><br/><span class="rvts17">CAkKCwIEFgIDAQIeAQIXgAAKCRCn9EJIw6A9eFrAD/42BJdzwiW6gqWC9C6sfGb/</span><br/><span class="rvts17">L3lhttXqAnexnpTwrcIMidT2pJOsXzerSiY4jQ5UVjn/L9rmQt0YRyJj636Zbxx+</span><br/><span class="rvts17">oELOIaoDijzzeJZym+SzAl2zzi1/vfenqrXPbf2q8SrpCpfTrG4Mt2JHvysDyIJZ</span><br/><span class="rvts17">MhhtwxKEkf61Krbfg99OcyuUCAaOHKFfz7fq+fxp8yLBWhUqXWFWiJW7LZb+CcTP</span><br/><span class="rvts17">Ny8tevePbZwUotIJ7PeQuxAEqD2OYJbtOUVkxmYHEiOpXuabMqIRgUMqlb91+o/2</span><br/><span class="rvts17">rKWQQsS8Spib2iJG1CmrSvaPo1YopymCpsGx5c1ZKcdgCxuXKb7yWRfuMpyPbL3Y</span><br/><span class="rvts17">vTGBQV/HPCoiH/JYLrIHO6TtJn2zzX0LgcBlbmPzyJCZsnigzG6ebgrS+vYoitGs</span><br/><span class="rvts17">YzpT387irw8RjcFaHHqnRRP4iX5i0CIGbPLrIl7TNC9Z6prT/l8fIsF76cGQ4ldM</span><br/><span class="rvts17">dKqRGnI8ptNxKnsWqJFOifWAZNFe9TL3Itmqub9OoAVaKUd8L7E4QDH00/Bga/EW</span><br/><span class="rvts17">pEZ6sHrU+S3wMURlom6x1GlAxVccSEdQQHGFOYhe1wsGHGKM5hTjVKoZ5JAEpfur</span><br/><span class="rvts17">aAtg/DqyZGwr8BYuz1CIrMsVELZQLT8HGbhwRQB4L6fStBjpAsHaSgDVe00i87z2</span><br/><span class="rvts17">23YQltnKM68kNTzs43ah150HGARa/vM2ARAAyDLK6Pen2VgBjY/CBXaDJ+k18cVc</span><br/><span class="rvts17">qqvmGvOv21N7nOBkOdVFOWUr+JNE+9RfC4OB9bwBifQi4EHJ3thiFW/XmDSVBy1V</span><br/><span class="rvts17">7LtiWjDPsV826bPHn49qZUdzAGltrYk4tgvEE9z6F6DU11jOSoCJZvTNtV9xgiFf</span><br/><span class="rvts17">GwGbLoFD7vLSdmwQo8r255DIYsqedwLk0kdfWArYyqs5iDPy9T8juI/tt6qAWBqg</span><br/><span class="rvts17">aDkO6ZDUDpYHQFjXZPlRYgm2lFv5gRIMTugj8QgRbLMjg+k8k5OSCCCwYkqPTEaY</span><br/><span class="rvts17">c6sz9VEvAlBepM1EiQxbn0gFJ2WRlQVM96NTQcqUP1QktiJmqhJ9qIUDhqPUXmxO</span><br/><span class="rvts17">s9WL5cc5kuzBcXUNdXiKhSUnjn/PHdupmRpaTW4SojB4QHCUvW0kEeKqyynqvdc1</span><br/><span class="rvts17">EfQUt0nR/q+Hh+hu2P5LAmBC6ITNHt/eTQ/1XLawG3D+l6yTuCVhGrwwlSSCY1Xd</span><br/><span class="rvts17">rAW9vqv0y+dhFbkXhOpArqJVx3DuCzMVnH2G76IggP3TRewEEYhwY5PMRD7uUSzN</span><br/><span class="rvts17">t5iIUW38+umVt2GaRdbGkRTKDA4XBJ9V2jwNyDZWNEwIh9QMjTXUa4DX1R1G/0aP</span><br/><span class="rvts17">2XAcLP+0bNvR7WmuQNTlNSlq6tIKOLRYPpCIlF4TJV/5LllwNWN+B+gSSiAEBCOO</span><br/><span class="rvts17">fSbq4fzJPQ/GCucAEQEAAQAP/1n2SSxLLcgDPh9o/F0MFn/20mDkuXGQcYSnAN1k</span><br/><span class="rvts17">NGYYh7FdXxAdoJbBRvyLQHKiE+JjK6XcaVew+JAFWH4dlho1dsqU2snYoqe4y3v/</span><br/><span class="rvts17">N2Ppf8j532vHoawLtFeJFEzqGKB8an33re1fYMQl4pi7ZT0duJoreNtf62YIfIiB</span><br/><span class="rvts17">4YWJpiiUakNA0mtidbcxO7YqkHO13Bmmu+GyxnjieKDVPJOOMMJmpLJxAXx/smsj</span><br/><span class="rvts17">i/qkcZZUWvfdOYiNlB8mBxXmR1Bmub3I+iqqwqfmZnb0iY6BxscV6igARQb2BlPZ</span><br/><span class="rvts17">3c3c1/Fl9j4rVPWRNMxsZ1vYru8fo2KZ4y1dZBkE2ibCLwSkOp8r/oRRRIxzC43N</span><br/><span class="rvts17">k5F01YL+aETvEz2k6BfQuzDlJCuXqrmzdNlv5nlUhmiQCcwDnpGxQkVPbk3Vuadp</span><br/><span class="rvts17">aDvGHMSKWvxzJ5uu0cn258im0cpr9PNyal3AoW+aO89KW3/3wPY5Rf+Exo++gisT</span><br/><span class="rvts17">FbfrhtNrCAk1NspcpvNfFec2K9hL/hZ0MFrEPhLDNF47TPp47VkOMwU/Cb1rav8I</span><br/><span class="rvts17">Vic+fTeTTAjQlUI/wXw3UZYjLqFyGkMBMW8YTfKhv21SHT3fdxBQNdxmk1iVPX4X</span><br/><span class="rvts17">wpSeTxRK2I7BJlSl9neK+QZTkFGtmN0oFXs99z7k6nWlTTTSwTDuhvbj7LVRgp0o</span><br/><span class="rvts17">r6ORCADaA7pXmLR6GU4xT4uOSs/7pz9YgXLqFA/eTJqH9swJV2xTrtvmLjOlzuVK</span><br/><span class="rvts17">x+TScxXtTHFnVep2yJmQKnnQF11chXscEowCj1RF/cAwzrBljtbrykJmd13fYJXZ</span><br/><span class="rvts17">TxUSdCtH0C3X2b/5VIGWuPwF9dOFUYtICwzB0IvU+NNtGUEHUrKwazprJbigQVMt</span><br/><span class="rvts17">lY+jPU54hdG1gzNJftki0SA+wcqLv/IDHxnF2C1KvlSCYegv/bRFoq3Ji0F8+pBh</span><br/><span class="rvts17">f07fae6Tmg9JP0xc9JSlaXOCeTimjcQQP+FJVglX1+fA99wk5+oaS2szDicNHUtA</span><br/><span class="rvts17">RILFoGtWHew+9u+9Di3Q4HBAgi9lCADrFGWlAy+ag6rD5gXUSirVL42gZfMiTOmR</span><br/><span class="rvts17">NGBx1gJ9KBPjItzspY8W0T0Hx7H8/Hm22ZstTaahp08VBOLZWzlSNGnwew8PjblK</span><br/><span class="rvts17">OC37NhKEGLrEoI4HVLhBGQ3JBj0sVAdc58YIS/67JqpXQ58n4AcQTPbsOVDijfbJ</span><br/><span class="rvts17">Bt0kmnmSldF4E5Zr9CDbpwFP9jKJWSMHsSJfAMXVc8uGXW70ApLlJeJCyPd8TXvm</span><br/><span class="rvts17">n6w6qpEDNPtMezjNPiVYS6oK9PYXVQoem6z5oJ92+9xb+oUrPA06kTWF/7NOatGM</span><br/><span class="rvts17">vLDe7SSKaVnx6FpkHHYH0jhsMmMdB9F4x0WRG7QxT5fU2Ajh3EpbCACfertZBAxI</span><br/><span class="rvts17">sg9kCYJ9+wpvjqIPk+PBb3VDaJ4odMWPjc2v3MOmgK6cop1+xwQldoTZHic7Rtwd</span><br/><span class="rvts17">ULQf7JlA9VN/Aa/OVqw1ScyCaGvtLd3OxVNZX5K1hz9mDb5naOoBGc/3FPaWOZ1j</span><br/><span class="rvts17">8jhGbWOur7D6wH+tRkVkwjt/yyV0FuNGUIBxRPIcnQXNLl4TLY4VAmZKtM0Wdboc</span><br/><span class="rvts17">QFR4w/DBnwadokTs14WZyRSXIJNk9H5Q0HO4T1Zs25QXQwXvKef+oGPfCLp8b1Wh</span><br/><span class="rvts17">aTjhrDvtDcFaExF9fOpxh7Q2tAyVDsIOyA8l8KfA5syDm3l7Fz2/8pISXdb3825L</span><br/><span class="rvts17">I4O3wqeVTmKXeMCJAjYEGAEIACAWIQRSluuD4t51llTtqOWn9EJIw6A9eAUCWv7z</span><br/><span class="rvts17">NgIbDAAKCRCn9EJIw6A9eIJtD/4kMG1yUQxEv8fKIJrUOr4Mu+JLQsF9Me5QHzXQ</span><br/><span class="rvts17">DLwCSvOHkuehSf5Ix5y5r5PcvrR9QNhFVRpDralf+Larhxl40SY3RcDrCOuDb3Cb</span><br/><span class="rvts17">GzCD2Y2+y5CXcVMHqM02L166kyq/Eq9Co+BqOUyPHJQ6CS1zW8DPLFoTdX3GZFt6</span><br/><span class="rvts17">KT9HaVIpQ7wC8NnHNpjTBGzro8B9cZ4dI4AKCd8+YDEhYriG7WXFCFFONECIQstQ</span><br/><span class="rvts17">x52CqI/qu/XEYjsqbhj0zBe1ke4Faby2lEWqtM66l4+/RibjUVMwLQCqMBO0vgJl</span><br/><span class="rvts17">P7ou88cFpW5ycyvdfy3vibhMAssGcLL0gfKyb1tNBhktCVQtAcDr7DwK/+Zjas2r</span><br/><span class="rvts17">ofJRW4MAS4dj8/o5UD0YUzjWQAgx/OxjsUgbHTOu2eJ4Ai7KNE18iomZ1Xk7qbUb</span><br/><span class="rvts17">bl2O2noU2pMFn/LQSVtk8U6fljOzvTqhr9orqssjGW8VOLoLyMO0eJtl4Ii/jSwP</span><br/><span class="rvts17">snnHeL8yoABidl1zGjrNu8OEAiINFQo8tt1yhhHLNSrF1sd+i/Ny/9ZY1OzQawYq</span><br/><span class="rvts17">I4aJ3SlcimE2+CRlSNlWImbTiFoiMzy8IVAPw36DgKucUrWZ4vvYxT5fEIDNZjhA</span><br/><span class="rvts17">a0LjJcqFJ7IMa/PZ+Mfc0SxSHhcha8err5XkBAyFNtRBUpgZhQLaophqGBSagt12</span><br/><span class="rvts17">9bBWrw==</span><br/><span class="rvts17">=/Sm4</span><br/><span class="rvts17">-----END PGP PRIVATE KEY BLOCK-----</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Once your done copying your private key into your password manager it is a good idea to delete the output of the private key for security reasons.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# rm bbserver.asc</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts34">Don't forget</span><span class="rvts6"> to put the password you choose for the private key in your password manager as well.</span></p>
+<h3 class="rvps5"><a name="import_public_key"></a>
+<span class="rvts0"><span class="rvts14">Import Public Key</span></span></h3>
+<p class="rvps2"><span class="rvts6">On the machine or account that you want to encrypt with the public key you must import the key into that account.</span></p>
+<p class="rvps2"><span class="rvts6">Copy the public key </span><span class="rvts18">"bbserver-publickey.txt"</span><span class="rvts6"> into the home folder of the user you want to import the key into.</span></p>
+<p class="rvps2"><span class="rvts6">In this case the user is sammy. Login into the account. Now import the key.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">sammy@bbserver:~$ gpg --import bbserver-publickey.txt</span><br/><span class="rvts17">gpg: directory '/home/sammy/.gnupg' created</span><br/><span class="rvts17">gpg: keybox '/home/sammy/.gnupg/pubring.kbx' created</span><br/><span class="rvts17">gpg: /home/sammy/.gnupg/trustdb.gpg: trustdb created</span><br/><span class="rvts17">gpg: key A7F44248C3A03D78: public key "bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;" imported</span><br/><span class="rvts17">gpg: Total number processed: 1</span><br/><span class="rvts17">gpg: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; imported: 1</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">You can list the keys to see what keys are currently imported:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">sammy@bbserver:~$ gpg --list-keys</span><br/><span class="rvts17">/home/sammy/.gnupg/pubring.kbx</span><br/><span class="rvts17">------------------------------</span><br/><span class="rvts17">pub &nbsp; rsa4096 2018-05-18 [SC]</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span><br/><span class="rvts17">uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [ unknown] bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17">sub &nbsp; rsa4096 2018-05-18 [E]</span></p>
+<h2 class="rvps10"><a name="Encryption"></a>
+<span class="rvts0"><span class="rvts21">Encryption</span></span></h2>
+<h3 class="rvps5"><a name="encrypt_file_manually"></a>
+<span class="rvts0"><span class="rvts14">Encrypt A File Manually</span></span></h3>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">sammy@bbserver:~/backups/data$ gpg --encrypt --recipient 'bbserver' sammy_wordpress.sql.bz2</span><br/><span class="rvts17">gpg: 35C480BB71A4882A: There is no assurance this key belongs to the named user</span><br/><span class="rvts17">sub &nbsp;rsa4096/35C480BB71A4882A 2018-05-18 bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17">Primary key fingerprint: 5296 EB83 E2DE 7596 54ED &nbsp;A8E5 A7F4 4248 C3A0 3D78</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;Subkey fingerprint: 77BD AC0D 16C1 8887 6B63 &nbsp;0EE1 35C4 80BB 71A4 882A</span><br/><span class="rvts17"></span><br/><span class="rvts17">It is NOT certain that the key belongs to the person named</span><br/><span class="rvts17">in the user ID. &nbsp;If you *really* know what you are doing,</span><br/><span class="rvts17">you may answer the next question with yes.</span><br/><span class="rvts17"></span><br/><span class="rvts17">Use this key anyway? (y/N) y</span><br/><span class="rvts17">sammy@bbserver:~/backups/data$</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Using ls to list our files we can see that </span><span class="rvts18">"sammy_wordpress.sql.bz2.gpg"</span><span class="rvts6"> was created</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">sammy@bbserver:~/backups/data$ ls</span><br/><span class="rvts17">sammy_wordpress.sql.bz2 &nbsp;sammy_wordpress.sql.bz2.gpg</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="trust_key"></a>
+<span class="rvts0"><span class="rvts14">Trust the key</span></span></h3>
+<p class="rvps2"><span class="rvts6">Notice above you have to confirm that you want to use this key even though the user is not confirmed. This is fine until you want to use this key in any kind of automation such as a bash script and or cron job.</span></p>
+<p class="rvps2"><span class="rvts6">We can sign the key or trust the key to get around this issue.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">sammy@bbserver:~$ gpg --edit-key 'bbserver'</span><br/><span class="rvts17">gpg (GnuPG) 2.1.18; Copyright (C) 2017 Free Software Foundation, Inc.</span><br/><span class="rvts17">This is free software: you are free to change and redistribute it.</span><br/><span class="rvts17">There is NO WARRANTY, to the extent permitted by law.</span><br/><span class="rvts17"></span><br/><span class="rvts17">pub &nbsp;rsa4096/A7F44248C3A03D78</span><br/><span class="rvts17"> &nbsp; &nbsp; created: 2018-05-18 &nbsp;expires: never &nbsp; &nbsp; &nbsp; usage: SC</span><br/><span class="rvts17"> &nbsp; &nbsp; trust: unknown &nbsp; &nbsp; &nbsp; validity: unknown</span><br/><span class="rvts17">sub &nbsp;rsa4096/35C480BB71A4882A</span><br/><span class="rvts17"> &nbsp; &nbsp; created: 2018-05-18 &nbsp;expires: never &nbsp; &nbsp; &nbsp; usage: E</span><br/><span class="rvts17">[ unknown] (1). bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17"></span><br/><span class="rvts17">gpg&gt; trust</span><br/><span class="rvts17">pub &nbsp;rsa4096/A7F44248C3A03D78</span><br/><span class="rvts17"> &nbsp; &nbsp; created: 2018-05-18 &nbsp;expires: never &nbsp; &nbsp; &nbsp; usage: SC</span><br/><span class="rvts17"> &nbsp; &nbsp; trust: unknown &nbsp; &nbsp; &nbsp; validity: unknown</span><br/><span class="rvts17">sub &nbsp;rsa4096/35C480BB71A4882A</span><br/><span class="rvts17"> &nbsp; &nbsp; created: 2018-05-18 &nbsp;expires: never &nbsp; &nbsp; &nbsp; usage: E</span><br/><span class="rvts17">[ unknown] (1). bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17"></span><br/><span class="rvts17">Please decide how far you trust this user to correctly verify other users' keys</span><br/><span class="rvts17">(by looking at passports, checking fingerprints from different sources, etc.)</span><br/><span class="rvts17"></span><br/><span class="rvts17"> &nbsp;1 = I don't know or won't say</span><br/><span class="rvts17"> &nbsp;2 = I do NOT trust</span><br/><span class="rvts17"> &nbsp;3 = I trust marginally</span><br/><span class="rvts17"> &nbsp;4 = I trust fully</span><br/><span class="rvts17"> &nbsp;5 = I trust ultimately</span><br/><span class="rvts17"> &nbsp;m = back to the main menu</span></p>
+<p class="rvps7"><span class="rvts17"></span><br/><span class="rvts17">Your decision? 5</span><br/><span class="rvts17">Do you really want to set this key to ultimate trust? (y/N) y</span><br/><span class="rvts17"></span><br/><span class="rvts17">pub &nbsp;rsa4096/A7F44248C3A03D78</span><br/><span class="rvts17"> &nbsp; &nbsp; created: 2018-05-18 &nbsp;expires: never &nbsp; &nbsp; &nbsp; usage: SC</span><br/><span class="rvts17"> &nbsp; &nbsp; trust: ultimate &nbsp; &nbsp; &nbsp;validity: unknown</span><br/><span class="rvts17">sub &nbsp;rsa4096/35C480BB71A4882A</span><br/><span class="rvts17"> &nbsp; &nbsp; created: 2018-05-18 &nbsp;expires: never &nbsp; &nbsp; &nbsp; usage: E</span><br/><span class="rvts17">[ unknown] (1). bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17">Please note that the shown key validity is not necessarily correct</span><br/><span class="rvts17">unless you restart the program.</span><br/><span class="rvts17"></span><br/><span class="rvts17">gpg&gt; save</span><br/><span class="rvts17">Key not changed so no update needed.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">There is nothing more needed for this user ( sammy ) to trust the key.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Now that the key is trusted we can encrypt files without the prompt</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">sammy@bbserver:~/backups/data$ gpg --encrypt --recipient 'bbserver' sammy_wordpress.sql.bz2</span><br/><span class="rvts17">gpg: checking the trustdb</span><br/><span class="rvts17">gpg: marginals needed: 3 &nbsp;completes needed: 1 &nbsp;trust model: pgp</span><br/><span class="rvts17">gpg: depth: 0 &nbsp;valid: &nbsp; 1 &nbsp;signed: &nbsp; 0 &nbsp;trust: 0-, 0q, 0n, 0m, 0f, 1u</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps10"><a name="Decryption"></a>
+<span class="rvts0"><span class="rvts21">Decryption</span></span></h2>
+<p class="rvps2"><span class="rvts6">In this case we cannot decrypt the file that was encrypted with the public key as the "sammy" user. The user does not have the private key.</span></p>
+<p class="rvps2"><span class="rvts6">Here is the attempt to decrypt:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">sammy@bbserver:~/backups/data$ gpg --output sammy_wordpress.sql.bz2 sammy_wordpress.sql.bz2.gpg</span><br/><span class="rvts17">gpg: WARNING: no command supplied. &nbsp;Trying to guess what you mean ...</span><br/><span class="rvts17">gpg: encrypted with 4096-bit RSA key, ID 35C480BB71A4882A, created 2018-05-18</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;"bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;"</span><br/><span class="rvts17">gpg: decryption failed: No secret key</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">We created this key as root so we will have to decrypt the file as root.</span></p>
+<p class="rvps2"><span class="rvts6">You will be prompted for your password that was </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html#create_keypair">created with the key pair</a><span class="rvts6"> as shown above.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">root@bbserver:/home/sammy/backups/data# gpg --output sammy_wordpress.sql.bz2 sammy_wordpress.sql.bz2.gpg</span><br/><span class="rvts17">gpg: WARNING: no command supplied. &nbsp;Trying to guess what you mean ...</span><br/><span class="rvts17">gpg: encrypted with 4096-bit RSA key, ID 35C480BB71A4882A, created 2018-05-18</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;"bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;"</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps10"><a name="harden_security"></a>
+<span class="rvts0"><span class="rvts21">Harden Security</span></span></h2>
+<p class="rvps2"><span class="rvts6">You can harden security by removing the private key from the server making it impossible to decrypt a file that has been encrypted with the public key. If needed you can import the private key when needed</span></p>
+<h3 class="rvps5"><a name="remove_private_key"></a>
+<span class="rvts0"><span class="rvts14">Remove Private Key</span></span></h3>
+<p class="rvps2"><span class="rvts31">Warning!!!</span><span class="rvts6"> Make certain you have backed up your private key, password and fingerprint safely and securely before removing it from your server.</span></p>
+<h4 class="rvps13"><a name="delete_private_key"></a>
+<span class="rvts0"><span class="rvts32">Delete the private key</span></span></h4>
+<p class="rvps2"><span class="rvts6">You will be prompted several times and you need to choose yes to all of them.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">root@bbserver:~# gpg --delete-secret-key 'bbserver'</span><br/><span class="rvts17">gpg (GnuPG) 2.1.18; Copyright (C) 2017 Free Software Foundation, Inc.</span><br/><span class="rvts17">This is free software: you are free to change and redistribute it.</span><br/><span class="rvts17">There is NO WARRANTY, to the extent permitted by law.</span><br/><span class="rvts17"></span><br/><span class="rvts17"></span><br/><span class="rvts17">sec &nbsp;rsa4096/A7F44248C3A03D78 2018-05-18 bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17"></span><br/><span class="rvts17">Delete this key from the keyring? (y/N) y</span><br/><span class="rvts17">This is a secret key! - really delete? (y/N) y</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts33">Note:</span><span class="rvts6"> Deleting the private key does not delete the public key from the server.</span></p>
+<h4 class="rvps13"><a name="import_private_key"></a>
+<span class="rvts0"><span class="rvts32">Import the private key</span></span></h4>
+<p class="rvps2"><span class="rvts6">Copy your private key onto your server. In my case I am using ssh to connect to the server so I just use nano and then paste in the private key and save the file.</span></p>
+<p class="rvps2"><span class="rvts6">The contents of your private key should look similar to the </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html#output_private_key">private key output</a><span class="rvts6"> shown above.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# nano bbserver.asc</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">After the file is created / copied onto the server you need to import the file into gpg.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# gpg --import bbserver.asc</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Output:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">root@bbserver:~# gpg --import bbserver.asc</span><br/><span class="rvts17">gpg: key A7F44248C3A03D78: "bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;" not changed</span><br/><span class="rvts17">gpg: key A7F44248C3A03D78: secret key imported</span><br/><span class="rvts17">gpg: Total number processed: 1</span><br/><span class="rvts17">gpg: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;unchanged: 1</span><br/><span class="rvts17">gpg: &nbsp; &nbsp; &nbsp; secret keys read: 1</span><br/><span class="rvts17">gpg: &nbsp; secret keys imported: 1</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">To confirm you can list the private keys</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# gpg --list-secret-keys</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Output:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">root@bbserver:~# gpg --list-secret-keys</span><br/><span class="rvts17">/root/.gnupg/pubring.kbx</span><br/><span class="rvts17">------------------------</span><br/><span class="rvts17">sec &nbsp; rsa4096 2018-05-18 [SC]</span><br/><span class="rvts17"> &nbsp; &nbsp; &nbsp;5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span><br/><span class="rvts17">uid &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [ultimate] bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts17">ssb &nbsp; rsa4096 2018-05-18 [E]</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Remove your file containing the private key now that it is imported.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17">~# rm bbserver.asc</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps10"><a name="Advantages"></a>
+<span class="rvts0"><span class="rvts21">Advantages</span></span></h2>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">None of the encrypters needs to know sensitive information about the encryption - encryption is done with the public key. (You can create the key pair on your local workstation and only transfer the public key to your servers)</span></li>
+<li class="rvps2"><span class="rvts6">No passwords will appear in script files or jobs</span></li>
+<li class="rvps2"><span class="rvts6">You can have as much as encrypters on any system you want</span></li>
+<li class="rvps2"><span class="rvts6">If you keep your private key and the passphrase secret, everything is fine and very very hard to compromise</span></li>
+<li class="rvps2"><span class="rvts6">You can decrypt with the private key on Unix, Windows and Linux platforms using the specific PGP/GPG implementation</span></li>
+<li class="rvps2"><span class="rvts6">No need for special privileges on encrypting and decrypting systems, no mounting, no containers, no special file systems</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="Related"></a>
+<span class="rvts0"><span class="rvts14">Related</span></span></h3>
+<p class="rvps2"><a class="rvts13" href="SetupAdditionalEntropy.html">How to Setup Additional Entropy for Cloud Servers Using Haveged</a></p>
+<p class="rvps2"><a class="rvts11" href="https://easyengine.io/tutorials/linux/gpg-keys/" target="_blank">GPG Keys Cheatsheet</a></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2018  by Paul Moss. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+      // Custom JS
+      
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
+</html>
+

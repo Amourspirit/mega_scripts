@@ -28,6 +28,8 @@
 # Created: 2018-05-27
 # Version 1.2.2.0
 # File Name: mega_upload_file.sh
+# Github: https://github.com/Amourspirit/mega_scripts
+# Help: https://amourspirit.github.io/mega_scripts/mega_upload_fiilesh.html
 #
 # Required parameter 1: pass location to upload your file to Mega. This is the folder name on mega.nz where your upload will be sent.
 #     Exclude the "/Root" for your path. If your location is "/Root/myserver/backups" then pass "/myserver/backups" as the first parameter
@@ -39,13 +41,14 @@
 # If this script is called from another script then having an option for log and log date makes it so the all entries in the log filee may have the same log date.
 #
 # Exit Codes
-#     0 No know issues. script exited normally
-#     100 There is another mega upload process running
-#     103 megaput not found. Megtools requires installing
-#     104 no argument supplied for Mega Server Path
-#     110 no mega server path specified
-#     111 Argument for config was passed in but the config file can not be found or we do not have read permissions
-#     112 The file to upload does not exist or can not gain read access.
+# Code  Defination
+#   0   Normal Exit. No Errors Encountered.
+# 100   There is another mega process running. Can not continue.
+# 103   megaput not found. Megtools requires installing
+# 104   No argument supplied for Mega Server Path
+# 110   No mega server path specified
+# 111   Optional argument Param 3 was passed in but the config can not be found or we do not have read permissions
+# 112   The file to upload does not exist or can not gain read access.
 
 MEGA_DEFAULT_ROOT="/Root"
 DATELOG=`date +'%Y-%m-%d-%H-%M-%S'`

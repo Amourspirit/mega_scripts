@@ -28,21 +28,29 @@
 # Created: 2018-05-27
 # Version 1.2.2.0
 # File Name: mega_del_old.sh
+# Github: https://github.com/Amourspirit/mega_scripts
+# Help: https://amourspirit.github.io/mega_scripts/mega_del_oldsh.html
 #
-# Optional parameter 1: pass in the folder to delete older files from
-# Optional parameter 2: pass in the number of days as an integer from todays date to delete files older then
-# Optional parameter 3: pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
-# Optional parameter 4: pass in the log file to log output from this script in.
-# Optional parameter 5: pass in the log file date in the format of yyyy-mm-dd-H-M-S (2018-05-27-01-34-06)
+# param 1: Optional: The full path directory to delete older files from Mega.nz. Default is "/Root"
+# param 2: Optional: The number of days as a positive integer before todays date to delete files older then from Mega.nz. Default is 60 days.
+# param 3: Optional: The configuration file to use that contain the credientials for the Mega.nz account you want to access
+# param 4: Optional: The Log file to log to results of running mega_del_old.sh.
+#   Can be value of "none" in which case results are outputed to the terminal window
+#   Can be value of "silent" in which case no results are written to a log file or terminal window.
+#   Defaults to /var/log/mega_delete_old.log (requires script be run as root)
+# param 5: Optional: Date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file
+#   Example: 2018-06-21-14-31-22
+#   If Param 4 is set to "silent" this param 5 will be ignored.
 #
 # If this script is called from another script then having an option for log and log date makes it so the entries all have the same log date.
 #
 # Exit Codes
-#     0 Normal Exit
-#     100 There is another mega delete old process running
-#     101 megarm not found. Megtools requires installing
-#     102 megals not found. Megtools requires installing
-#     111 Optional argument two was passed in but the config can not be foud or we do not have read permissions
+# Code  Defination
+#   0   Normal Exit. No Errors Encountered.
+# 100   There is another mega process running. Can not continue.
+# 101   megarm not found. Megtools requires installing
+# 102   megals not found. Megtools requires installing
+# 111   Optional argument Param 3 was passed in but the config can not be found or we do not have read permissions
 
 #  read the folder into a var
 MEGA_DEFAULT_ROOT="/Root"

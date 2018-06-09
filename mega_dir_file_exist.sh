@@ -27,8 +27,9 @@
 # Created by Paul Moss
 # Created: 2018-06-02
 # Version 1.2.2.0
-#
 # File Name: mega_dir_file_exist.sh
+# Github: https://github.com/Amourspirit/mega_scripts
+# Help: https://amourspirit.github.io/mega_scripts/mega_dir_file_existsh.html
 # 
 # This script can be used to test if mega.nz can be connected to as well.
 #    Eg: ./mega_dir_file_exist.sh; echo $?
@@ -40,12 +41,13 @@
 # Optional parameter 2: pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
 #
 # Exit Codes
-#     0 Directory or File not found
-#     1 Directory found and is Root
-#     2 Directory found
-#     3 File found
-#     102 megals not found. Megtools requires installing
-#     111 Optional argument two was passed in but the config can not be foud or we do not have read permissions
+# Code  Defination
+#   0   Directory not found
+#   1   Directory is found and is Root
+#   2   Directory found
+#   3   File Found
+# 102   megals not found. Megtools requires installing
+# 111   Optional argument two was passed in but the config can not be foud or we do not have read permissions
 
 
 MEGA_DEFAULT_ROOT="/Root"

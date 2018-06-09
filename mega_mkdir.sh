@@ -27,8 +27,9 @@
 # Created by Paul Moss
 # Created: 2018-05-27
 # Version 1.2.2.0
-#
 # File Name: mega_mkdir.sh
+# Github: https://github.com/Amourspirit/mega_scripts
+# Help: https://amourspirit.github.io/mega_scripts/mega_mkdirsh.html
 # 
 # This script will make directories if they do not exist for a path.
 # This is the mega.nz equivalent of mkdir -p for UNIX
@@ -38,13 +39,14 @@
 # Optional parameter 2: pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
 #
 # Exit Codes
-#     0 If no errors were encountered
-#     40 If no argument is give for parameter one, the path to check.
-#     41 If megamkdir had error creating directory
-#     42 If a file was found with the same name as part of the path
-#     102 megals not found. Megtools requires installing
-#     111 Optional argument two was passed in but the config can not be foud or we do not have read permissions
-#     115 megamkdir not found. Megtools requires installing
+# Code  Defination
+#   0   Normal Exit. No Errors Encountered.
+#  40   If no argument is give for parameter one, the path to check.
+#  41   If megamkdir had error creating directory
+#  42   If a file was found with the same name as part of the path
+# 102   megals not found. Megtools requires installing
+# 111   Optional argument Param 2 was passed in but the config can not be found or we do not have read permissions
+# 115   megamkdir not found. Megtools requires installing
 
 if ! [ -x "$(command -v megamkdir)" ]; then
    exit 115

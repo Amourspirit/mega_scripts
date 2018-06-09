@@ -28,7 +28,8 @@
 # Created: 2018-05-27
 # Version 1.2.2.0
 # File Name: mega_db_save_upload.sh
-# See Pastebin: https://pastebin.com/wiEGvQMc
+# Github: https://github.com/Amourspirit/mega_scripts
+# Help: https://amourspirit.github.io/mega_scripts/mega_db_save_uploadsh.html
 #
 # Assumptions:
 #   Script assumes that you have enable .my.cnf and placed your MysqlDump username and password in the ~/.my.cnf file.

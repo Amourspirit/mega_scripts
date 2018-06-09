@@ -26,7 +26,7 @@
 # Delete files from a folder for a mega.nz account.
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.2.1.0
+# Version 1.2.2.0
 # File Name: mega_del_old.sh
 #
 # Optional parameter 1: pass in the folder to delete older files from
@@ -39,8 +39,6 @@
 #
 # Exit Codes
 #     0 Normal Exit
-#     20 No argument for user supplied for user
-#     21 No argument for user supplied for database
 #     100 There is another mega delete old process running
 #     101 megarm not found. Megtools requires installing
 #     102 megals not found. Megtools requires installing
@@ -153,24 +151,23 @@ echo "${DATELOG} ${LOG_ID}Processing Files older than '${FROM_DATESTAMP}' for fo
 echo "$MEGA_FILES" | while read line
 do
 
-    # using awk NF (number of fields) to count from right to left to get field data.
-    # using NF because not all lines suchs a root have the same number of columns before type
-    # however the data we need to access is always the same form right ot left
-    FILE_TYPE=$(echo "$line" | awk '{print $(NF-4)}')
-
+    FILE_TYPE=$(echo "$line" | awk '{print $3}')
+    if [[ $FILE_TYPE = "-" ]]; then
+        # this is root folder, continue
+        echo "root dir skipping"
+        continue
+    fi
     # when FILE_TYPE = 0 it is a file
     # when FILE_TYPE = 1 it is a folder
     # when FILE_TYPE = 2 it is root
     if [[ ${FILE_TYPE} -eq 0 ]]; then
-        # (( FILE_COUNT++ ))
-        #FILE_COUNT=$(($FILE_COUNT +1))
         FILE_COUNT=$(($(cat $TMP_FILE_COUNT) + 1))
         # clear the tmp file
         truncate -s 0 "${TMP_FILE_COUNT}"
         # Store the new value
         echo $FILE_COUNT >> ${TMP_FILE_COUNT}
         # The file modifed date is in column 5
-        FILE_STR_DATE=$(echo "$line" | awk '{print  $(NF-2)}')
+        FILE_STR_DATE=$(echo "$line" | awk '{print $5}')
 
         # Convert the file date into system date
         FILE_DATE=$(date -d ${FILE_STR_DATE} +%s)
@@ -178,8 +175,8 @@ do
         # compare the file system date to the Max age we want to keep
         if [ $MAX_AGE -ge $FILE_DATE ];
         then
-            # the full file name is in column 7
-            FILE_PATH=$(echo "$line" | awk '{print  $(NF)}')
+            # use grep to get the complete file path form megals output
+            FILE_PATH=$(echo "$line" | grep -o '/Root.*')
             
             if [[ -z "$CURRENT_CONFIG" ]]; then
                 # No argument is given for default configuration for that contains user account and password

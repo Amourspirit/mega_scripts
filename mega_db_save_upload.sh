@@ -26,7 +26,7 @@
 # Script to backup database and upload to a mega.nz account
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.2.1.0
+# Version 1.2.2.0
 # File Name: mega_db_save_upload.sh
 # See Pastebin: https://pastebin.com/wiEGvQMc
 #

@@ -26,7 +26,7 @@
 # Upload file to a folder for a mega.nz account.
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.2.1.0
+# Version 1.2.2.0
 # File Name: mega_upload_file.sh
 #
 # Required parameter 1: pass location to upload your file to Mega. This is the folder name on mega.nz where your upload will be sent.

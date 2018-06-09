@@ -162,7 +162,6 @@ do
     FILE_TYPE=$(echo "$line" | awk '{print $3}')
     if [[ $FILE_TYPE = "-" ]]; then
         # this is root folder, continue
-        echo "root dir skipping"
         continue
     fi
     # when FILE_TYPE = 0 it is a file

@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="HelpNDoc Professional Edition 5.7.1.578">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.ico"/>
+
+  <title>mega_del_old.sh</title>
+  <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
+  <meta name="keywords" content="">
+
+
+
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="mega_del_old.sh">
+  <meta name="twitter:description" content="A few scripts to use with megatools and mega.nz">
+
+  <!-- Open Graph data -->
+  <meta property="og:title" content="mega_del_old.sh" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="A few scripts to use with megatools and mega.nz" />
+  <meta property="og:site_name" content="Mega Scripts" /> 
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendors/bootstrap-3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="vendors/bootstrap-3.3.6/css/ie10-viewport-bug-workaround.css" rel="stylesheet"/>
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="vendors/html5shiv-3.7.2/html5shiv.min.js"></script>
+      <script src="vendors/respond-1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- JsTree styles -->
+  <link href="vendors/jstree-3.3.2/themes/default/style.min.css" rel="stylesheet"/>
+
+  <!-- Hnd styles -->
+  <link href="css/layout.min.css" rel="stylesheet" />
+  <link href="css/effects.min.css" rel="stylesheet" />
+  <link href="css/theme-light-green.min.css" rel="stylesheet" />
+  <link href="css/print.min.css" rel="stylesheet" media="print" />
+  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+
+  <!-- Content style -->
+  <link href="css/hnd.content.css" rel="stylesheet" />
+
+  
+
+
+
+</head>
+
+<body class="md-nav-expanded">
+
+
+
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible">Skip to main content</a>
+  </div>
+
+  <header class="headroom">
+    <button class="hnd-toggle btn btn-default">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>        
+    </button>
+    <h1>Mega Scripts</h1>
+    
+  </header>
+
+  <nav class="md-nav-expanded">
+    <!-- Nav tabs -->
+    <ul class="tab-tabs nav nav-tabs" role="tablist">
+      <li id="nav-close"> 
+        <button class="hnd-toggle btn btn-default">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </li>
+      
+      
+        <li role="presentation" class="tab active">
+            <a href="#contents" id="tab-contents" aria-controls="contents" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-list"></i>
+                Contents
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#index" id="tab-index" aria-controls="index" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-asterisk"></i>
+                Index
+            </a>
+        </li>
+      
+        <li role="presentation" class="tab">
+            <a href="#search" id="tab-search" aria-controls="search" role="tab" data-toggle="tab">
+                <i class="glyphicon glyphicon-search"></i>
+                Search
+            </a>
+        </li>
+      
+    </ul>  <!-- /Nav tabs -->
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      
+      <div role="tabpanel" class="tab-pane active" id="contents">
+        <div id="toc" class="tree-container unselectable"
+            data-url="_toc.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /contents-->
+      
+      <div role="tabpanel" class="tab-pane" id="index">
+        <div id="keywords" class="tree-container unselectable"
+            data-url="_keywords.json"
+            data-openlvl="1"
+        >
+            
+        </div>
+      </div>  <!-- /index-->
+      
+      <div role="tabpanel" class="tab-pane" id="search">
+        <div class="search-content">
+          <div class="search-input">
+            <form id="search-form">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="input-search" name="input-search" placeholder="Search..." />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>  <!-- /search-input -->
+          <div class="search-result">
+            <div id="search-info"></div>
+            <div class="tree-container unselectable" id="search-tree"></div>
+          </div>  <!-- /search-result -->
+        </div>  <!-- /search-content -->
+      </div>  <!-- /search-->
+      
+    </div>  <!-- /Tab panes -->
+
+  </nav>
+
+  <div id="main">
+
+    <article>
+        <div id="topic-content" class="container-fluid" 
+          data-hnd-id="mega_del_oldsh"
+          data-hnd-context="8"
+          data-hnd-title="mega_del_old.sh"
+        >
+            
+                <div class="navigation">
+                    <ol class="breadcrumb">
+                        <li>Linux</li>
+                    </ol>
+                    <div class="nav-arrows">
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="mega_upload_fiilesh.html" title="mega_upload_fiile.sh" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="mega_db_save_uploadsh.html" title="mega_db_save_upload.sh" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                    </div>
+                </div> 
+            
+
+            <a id="main-content"></a>
+            
+            <div class="main-content">
+                
+<p></p>
+<h1 class="rvps4"><a name="top"></a>
+<span class="rvts0"><span class="rvts12">Script Name: </span></span><span class="rvts0"><span class="rvts12">mega_del_old.sh</span></span></h1>
+<h2 class="rvps10"><span class="rvts0"><span class="rvts21">Description</span></span></h2>
+<p class="rvps2"><span class="rvts6">Delete files from a directory that are older then a given number of days for a </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> account.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="Parameters"></a>
+<span class="rvts0"><span class="rvts14">Parameters</span></span></h3>
+<p class="rvps8"><a name="Param1"></a>
+<span class="rvts19">Param 1</span></p>
+<p class="rvps9"><span class="rvts20">Optional: The full path directory to delete older files from </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts20">.</span><br/><span class="rvts20">Default is "/Root"</span></p>
+<p class="rvps8"><a name="Param2"></a>
+<span class="rvts19">Param 2</span></p>
+<p class="rvps9"><span class="rvts20">Optional: The number of days as a positive integer before todays date to delete files older then from </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts20">.</span><br/><span class="rvts20">Default is 60 days.</span></p>
+<p class="rvps8"><a name="Param3"></a>
+<span class="rvts19">Param 3</span></p>
+<p class="rvps9"><span class="rvts20">Optional: The configuration file to use that contain the credientials for the </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts20"> account you want to access</span></p>
+<p class="rvps8"><a name="Param4"></a>
+<span class="rvts19">Param 4</span></p>
+<p class="rvps9"><span class="rvts20">Optional: The Log file to log to results of running </span><span class="rvts20">mega_del_old.sh</span><span class="rvts20">.</span><br/><span class="rvts20">Can be value of "none" in which case results are outputed to the terminal window</span><br/><span class="rvts20">Can be value of "silent" in which case no results are written to a log file or terminal window.</span><br/><span class="rvts20">Defaults to </span><span class="rvts25">/var/log/mega_delete_old.log </span><span class="rvts26">(requires script be run as root)</span></p>
+<p class="rvps8"><a name="Param5"></a>
+<span class="rvts19">Param 5</span></p>
+<p class="rvps9"><span class="rvts20">Optional: Date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file</span><br/><span class="rvts20">Example: 2018-06-21-14-31-22</span><br/><span class="rvts20">If </span><a class="rvts27" href="mega_del_oldsh.html#Param4">Param 4</a><span class="rvts20"> is set to "</span><span class="rvts25">silent</span><span class="rvts20">" this param 5 will be ignored.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="ReturnCodes"></a>
+<span class="rvts0"><span class="rvts14">Possible Codes returned from Script</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts6">Code</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts6">Defination</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">0</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">Normal Exit. No Errors Encountered.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">100</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">There is another mega process running. Can not continue.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">101</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">megarm not found. Megtools requires installing</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">102</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">megals not found. Megtools requires installing</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">111</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">Optional argument </span><a class="rvts24" href="mega_del_oldsh.html#Param3">Param 3</a><span class="rvts6"> was passed in but the config can not be found or we do not have read permissions</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="Remarks"></a>
+<span class="rvts0"><span class="rvts14">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Never pass in the directory Root to </span><span class="rvts22">mega_del_old.sh</span><span class="rvts6"> as the frist part of the path.</span></p>
+<p class="rvps2"><span class="rvts6">For </span><a class="rvts24" href="mega_del_oldsh.html#Param1">Param 1</a><span class="rvts6"> </span><span class="rvts18">"/MyPath/myfile"</span><span class="rvts6"> is fine; however, </span><span class="rvts18">"/Root/MyPath/myfile"</span><span class="rvts6"> will fail.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts24" href="mega_del_oldsh.html#Param3">Param 3</a><span class="rvts6"> is omitted then you must have .megarc set in the current users home directory.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts24" href="mega_del_oldsh.html#Param4">Param 4</a><span class="rvts6"> is optional but useful when calling </span><span class="rvts22">mega_upload_file.sh</span><span class="rvts6"> from a master script such as </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6"> (</span><a class="rvts11" href="https://github.com/Amourspirit/mega_scripts/blob/master/mega_db_save_upload.sh" target="_blank">source</a><span class="rvts6">).</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><a class="rvts24" href="mega_del_oldsh.html#Param5">Param 5</a><span class="rvts6"> is optional but also useful when calling </span><span class="rvts22">mega_upload_file.sh</span><span class="rvts6"> from a master script such as </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6"> (</span><a class="rvts11" href="https://github.com/Amourspirit/mega_scripts/blob/master/mega_db_save_upload.sh" target="_blank">source</a><span class="rvts6">). By passing Log and Date to </span><span class="rvts22">mega_upload_file.sh</span><span class="rvts6"> then one log file will contain the same datestamp for all of the other called related scripts.</span></p>
+<h3 class="rvps5"><a name="Example"></a>
+<span class="rvts0"><span class="rvts14">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6">In this example we are deleting anything older then </span><span class="rvts18">60</span><span class="rvts6"> days in the </span><span class="rvts18">"/example/test"</span><span class="rvts6"> directory and sending the output to the terminal by setting </span><a class="rvts24" href="mega_del_oldsh.html#Param4">Param 4</a><span class="rvts6"> to </span><span class="rvts18">"none"</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_del_old.sh "/example/test" 60 "" "none"</span><br/><span class="rvts17">2018-06-08-19-22-35 MEGA DELETE OLD: Processing Files older than 'Mon Apr &nbsp;9 19:22:35 DST 2018' for folder '/Root/example/test'</span><br/><span class="rvts17">2018-06-08-19-22-35 MEGA DELETE OLD: Total Files: 2</span><br/><span class="rvts17">2018-06-08-19-22-35 MEGA DELETE OLD: Deleted Files: 0</span><br/><span class="rvts17">2018-06-08-19-22-35 MEGA DELETE OLD: Total: 50.0 GiB Used: &nbsp;132 bytes Free: &nbsp;50.0 GiB</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">In this example we are deleting anything older then </span><span class="rvts18">1</span><span class="rvts6"> days in the </span><span class="rvts18">"/example/test"</span><span class="rvts6"> directory and sending the output to the terminal by setting </span><a class="rvts24" href="mega_del_oldsh.html#Param4">Param 4</a><span class="rvts6"> to </span><span class="rvts18">"none"</span></p>
+<p class="rvps2"><span class="rvts6">You can see that there are two file deleted that are older then one day.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_del_old.sh "/example/test" 1 "" "none"</span><br/><span class="rvts17">2018-06-08-19-23-35 MEGA DELETE OLD: Processing Files older than 'Thu Jun &nbsp;7 19:23:35 DST 2018' for folder '/Root/example/test'</span><br/><span class="rvts17">2018-06-08-19-23-35 MEGA DELETE OLD: Deleted '/Root/example/test/hello world.txt' with modifed date of: 2018-06-07</span><br/><span class="rvts17">2018-06-08-19-23-35 MEGA DELETE OLD: Deleted '/Root/example/test/hello.txt' with modifed date of: 2018-06-06</span><br/><span class="rvts17">2018-06-08-19-23-35 MEGA DELETE OLD: Total Files: 2</span><br/><span class="rvts17">2018-06-08-19-23-35 MEGA DELETE OLD: Deleted Files: 2</span><br/><span class="rvts17">2018-06-08-19-23-35 MEGA DELETE OLD: Total: 50.0 GiB Used: &nbsp;108 bytes Free: &nbsp;50.0 GiB</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">If you want to delet all files in a directory you can set </span><a class="rvts24" href="mega_del_oldsh.html#Param2">Param 2</a><span class="rvts6"> to </span><span class="rvts18">0</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">In the following example we upload file ~/hello.txt and then delete it by setting </span><a class="rvts24" href="mega_del_oldsh.html#Param2">Param 2</a><span class="rvts6"> to </span><span class="rvts18">0</span><span class="rvts6"> and set </span><a class="rvts24" href="mega_del_oldsh.html#Param4">Param 4</a><span class="rvts6"> to </span><span class="rvts18">"none"</span><span class="rvts6"> to output the results to the terminal.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps7"><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_upload_file.sh "/example/test" ~/hello.txt; echo $?</span><br/><span class="rvts17">0</span><br/><span class="rvts17"></span><br/><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_del_old.sh "/example/test" 0 "" "none"</span><br/><span class="rvts17">2018-06-08-19-37-52 MEGA DELETE OLD: Processing Files older than 'Fri Jun &nbsp;8 19:37:52 DST 2018' for folder '/Root/example/test'</span><br/><span class="rvts17">2018-06-08-19-37-52 MEGA DELETE OLD: Deleted '/Root/example/test/hello.txt' with modifed date of: 2018-06-08</span><br/><span class="rvts17">2018-06-08-19-37-52 MEGA DELETE OLD: Total Files: 1</span><br/><span class="rvts17">2018-06-08-19-37-52 MEGA DELETE OLD: Deleted Files: 1</span><br/><span class="rvts17">2018-06-08-19-37-52 MEGA DELETE OLD: Total: 50.0 GiB Used: &nbsp;108 bytes Free: &nbsp;50.0 GiB</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+
+            </div>
+            
+            <div id="topic_footer"><div id="topic_footer_content">Copyright &copy; 2018  by Paul Moss. All Rights Reserved.</div></div>
+        </div>  <!-- /#topic-content -->
+    </article>
+
+    <footer></footer>
+
+  </div>  <!-- /#main -->
+
+  <div class="mask" data-toggle="sm-nav-expanded"></div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="hndModal" tabindex="-1" role="dialog" aria-labelledby="hndModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="hndModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary modal-btn-close" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="vendors/jquery-1.11.3/jquery.min.js"></script>
+  <script src="vendors/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+  <script src="vendors/fastclick-1.0.6/fastclick.min.js"></script>
+  <script src="vendors/markjs-8.8.3/jquery.mark.min.js"></script>
+  <script src="vendors/uri-1.18.9/uri.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="vendors/bootstrap-3.3.6/js/ie10-viewport-bug-workaround.js"></script>
+  
+  <!-- Headroom -->
+  <script src="vendors/headroom-0.9.3/headroom.min.js"></script>
+  <script src="vendors/headroom-0.9.3/jquery.headroom.min.js"></script>
+
+  <!-- JsTree -->
+  <script src="vendors/jstree-3.3.2/jstree.min.js"></script>
+
+  <!-- HelpNDoc scripts -->
+  <script src="_translations.js"></script>
+  <script src="js/hndsd.min.js"></script>
+  <script src="js/hndse.min.js"></script>
+  <script src="js/app.min.js"></script>
+
+  <!-- Scripts -->
+  <script>
+    $(function() {
+      // Instanciate FastClick
+      Origami.fastclick(document.body);
+      // Create the app
+      var app = new Hnd.App();
+      // Update translations
+      hnd_ut(app);
+      // Custom JS
+      
+      // Boot the app
+      app.Boot();
+    });
+  </script>
+
+
+
+</body>
+
+</html>
+

@@ -224,6 +224,14 @@ span.rvts37
 }
 a.rvts38, span.rvts38
 {
+ font-size: 13pt;
+ font-weight: bold;
+ color: #0000ff;
+ text-decoration: none;
+ border-bottom: double;
+}
+a.rvts39, span.rvts39
+{
  font-size: 16pt;
  font-weight: bold;
  color: #0000ff;

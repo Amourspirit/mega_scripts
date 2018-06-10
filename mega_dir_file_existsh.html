@@ -168,10 +168,10 @@
             
                 <div class="navigation">
                     <ol class="breadcrumb">
-                        <li>Linux</li>
+                        <li>Linux</li><li><a href="Scripts.html">Scripts</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="License.html" title="License" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="mega_mkdirsh.html" title="mega_mkdir.sh" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Scripts.html" title="Scripts" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="Scripts.html" title="Scripts" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="mega_mkdirsh.html" title="mega_mkdir.sh" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -183,61 +183,61 @@
 <p></p>
 <h1 class="rvps4"><a name="top"></a>
 <span class="rvts0"><span class="rvts12">Script Name: </span></span><span class="rvts0"><span class="rvts12">mega_dir_file_exist.sh</span></span></h1>
-<h2 class="rvps10"><a name="Description"></a>
-<span class="rvts0"><span class="rvts21">Description</span></span></h2>
+<h2 class="rvps7"><a name="Description"></a>
+<span class="rvts0"><span class="rvts17">Description</span></span></h2>
 <p class="rvps2"><span class="rvts6">Script check to see if a directory or file exist on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="Parameters"></a>
 <span class="rvts0"><span class="rvts14">Parameters</span></span></h3>
-<p class="rvps8"><a name="Param1"></a>
-<span class="rvts19">Param 1</span></p>
-<p class="rvps9"><span class="rvts20">Optional: The path to test if it exist</span><br/><span class="rvts20">Eg: "/MyPath/myfile"</span></p>
-<p class="rvps8"><a name="Param2"></a>
-<span class="rvts19">Param 2</span></p>
-<p class="rvps9"><span class="rvts20">Optional: The configuration file to use that contain the credientials for the </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts20"> account you want to access.</span></p>
+<p class="rvps9"><a name="Param1"></a>
+<span class="rvts20">Param 1</span></p>
+<p class="rvps10"><span class="rvts21">Optional: The path to test if it exist</span><br/><span class="rvts21">Eg: </span><span class="rvts26">"/MyPath/myfile"</span></p>
+<p class="rvps9"><a name="Param2"></a>
+<span class="rvts20">Param 2</span></p>
+<p class="rvps10"><span class="rvts21">Optional: The configuration file to use that contain the credentials for the </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts21"> account you want to access.</span><br/><span class="rvts21">See </span><a class="rvts25" href="Setupmegarc.html">Set up .megarc</a><span class="rvts21">.</span></p>
 <h3 class="rvps5"><a name="ReturnCodes"></a>
 <span class="rvts0"><span class="rvts14">Possible Codes returned from Script</span></span></h3>
-<div class="rvps2"><table width="100%" border="1" cellpadding="0" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-width: 0px; border-collapse: collapse;">
 <tr valign="top">
-<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts6">Code</span></p>
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts6">Code</span></p>
 </td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts6">Defination</span></p>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts6">Definition</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">0</span></p>
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">0</span></p>
 </td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">Directory not found</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">1</span></p>
-</td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">Directory is found and is Root</span></p>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Directory not found</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">2</span></p>
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">1</span></p>
 </td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">Directory found</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">3</span></p>
-</td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">File Found</span></p>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Directory is found and is Root</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">102</span></p>
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">2</span></p>
 </td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">megals not found. Megtools requires installing</span></p>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Directory found</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">111</span></p>
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">3</span></p>
 </td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 0px;"><p class="rvps2"><span class="rvts6">Optional argument two was passed in but the config can not be foud or we do not have read permissions</span></p>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">File Found</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">102</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">megals not found. </span><a class="rvts11" href="https://github.com/megous/megatools" target="_blank">Megtools</a><span class="rvts6"> requires installing</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">111</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Optional argument two was passed in but the config can not be found or we do not have read permissions</span></p>
 </td>
 </tr>
 </table>
@@ -246,7 +246,7 @@
 <h3 class="rvps5"><a name="Remarks"></a>
 <span class="rvts0"><span class="rvts14">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts6">Never pass in the directory Root to </span><span class="rvts22">mega_dir_file_exist.sh</span><span class="rvts6"> as the frist part of the path.</span></p>
-<p class="rvps2"><span class="rvts6">For </span><a class="rvts24" href="mega_dir_file_existsh.html#Param1">Param 1</a><span class="rvts6"> </span><span class="rvts18">"/MyPath/myfile"</span><span class="rvts6"> is fine; however, </span><span class="rvts18">"/Root/MyPath/myfile"</span><span class="rvts6"> will fail.</span></p>
+<p class="rvps2"><span class="rvts6">For </span><a class="rvts24" href="mega_dir_file_existsh.html#Param1">Param 1</a><span class="rvts6"> </span><span class="rvts19">"/MyPath/myfile"</span><span class="rvts6"> is fine; however, </span><span class="rvts19">"/Root/MyPath/myfile"</span><span class="rvts6"> will fail.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">If </span><a class="rvts24" href="mega_dir_file_existsh.html#Param2">Param 2</a><span class="rvts6"> is omitted then you must have </span><span class="rvts22">.megarc </span><span class="rvts6">set in the current users home directory.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -256,20 +256,20 @@
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">Script example to check and see if a file or folder exist on default </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> account on the command line.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps7"><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_dir_file_exist.sh</span><span class="rvts17"> '/MyPath/myfile'; echo $?</span></p>
+<p class="rvps8"><span class="rvts18"># </span><span class="rvts18">/bin/bash</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_dir_file_exist.sh</span><span class="rvts18"> '/MyPath/myfile'; echo $?</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">If the file exsit above then </span><span class="rvts18">3</span><span class="rvts6"> will echo to the command prompt if file does not exsit then </span><span class="rvts18">0</span><span class="rvts6"> will echo.</span></p>
+<p class="rvps2"><span class="rvts6">If the file exsit above then </span><span class="rvts19">3</span><span class="rvts6"> will echo to the command prompt if file does not exsit then </span><span class="rvts19">0</span><span class="rvts6"> will echo.</span></p>
 <h3 class="rvps5"><a name="Example2"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">Script example to check and see if we have access to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps7"><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_dir_file_exist.sh</span><span class="rvts17">; echo $?</span></p>
+<p class="rvps8"><span class="rvts18"># </span><span class="rvts18">/bin/bash</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_dir_file_exist.sh</span><span class="rvts18">; echo $?</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">or to check a non-default account</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps7"><span class="rvts17"># </span><span class="rvts17">/bin/bash</span><span class="rvts17"> </span><span class="rvts17">/usr/local/bin/</span><span class="rvts17">mega_dir_file_exist.sh</span><span class="rvts17"> "" ~/.megarc_other; echo $?</span></p>
+<p class="rvps8"><span class="rvts18"># </span><span class="rvts18">/bin/bash</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_dir_file_exist.sh</span><span class="rvts18"> "" ~/.megarc_other; echo $?</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">If the file exsit above then </span><span class="rvts18">1</span><span class="rvts6"> will echo to the command prompt if file does not exsit then </span><span class="rvts18">0</span><span class="rvts6"> will echo.</span></p>
+<p class="rvps2"><span class="rvts6">If the file exsit above then </span><span class="rvts19">1</span><span class="rvts6"> will echo to the command prompt if file does not exsit then </span><span class="rvts19">0</span><span class="rvts6"> will echo.</span></p>
 <h3 class="rvps5"><a name="Related"></a>
 <span class="rvts0"><span class="rvts14">Related</span></span></h3>
 <p class="rvps2"><a class="rvts13" href="Setupmegarc.html">Set up .megarc</a></p>

@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="favicon.ico"/>
 
-  <title>Set up .megarc</title>
+  <title>Set up Server for MySqlDump</title>
   <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
   <meta name="keywords" content="">
 
@@ -19,11 +19,11 @@
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Set up .megarc">
+  <meta name="twitter:title" content="Set up Server for MySqlDump">
   <meta name="twitter:description" content="A few scripts to use with megatools and mega.nz">
 
   <!-- Open Graph data -->
-  <meta property="og:title" content="Set up .megarc" />
+  <meta property="og:title" content="Set up Server for MySqlDump" />
   <meta property="og:type" content="article" />
   <meta property="og:description" content="A few scripts to use with megatools and mega.nz" />
   <meta property="og:site_name" content="Mega Scripts" /> 
@@ -161,9 +161,9 @@
 
     <article>
         <div id="topic-content" class="container-fluid" 
-          data-hnd-id="Setupmegarc"
-          data-hnd-context="4"
-          data-hnd-title="Set up .megarc"
+          data-hnd-id="SetupServerforMySqlDump"
+          data-hnd-context="11"
+          data-hnd-title="Set up Server for MySqlDump"
         >
             
                 <div class="navigation">
@@ -171,7 +171,7 @@
                         <li>Linux</li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="mega_db_save_uploadsh.html" title="mega_db_save_upload.sh" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="GnuPGEncryptandDecrypt.html" title="GnuPG Encrypt and Decrypt" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="SetupAdditionalEntropy.html" title="Setup Additional Entropy" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -181,24 +181,34 @@
             <div class="main-content">
                 
 <p></p>
-<h1 class="rvps4"><span class="rvts0"><span class="rvts12">Setting up .megarc</span></span></h1>
+<h1 class="rvps4"><a name="top"></a>
+<span class="rvts0"><span class="rvts12">Setting up to not need password for root and MySqlDump</span></span></h1>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">If you do not want to pass a credientials file then you can set up a file in your home directery named </span><span class="rvts33">.megarc</span></p>
-<p class="rvps2"><span class="rvts33"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># cd ~</span><br/><span class="rvts18"># nano .megarc</span></p>
+<p class="rvps2"><span class="rvts6">Setup mysqldump to not need password in the terminal or bash script</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Login as root if you are not already.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The contents of your .megarc file should look similar to the following.</span></p>
+<p class="rvps8"><span class="rvts18">$ su</span><br/><span class="rvts18">password: ******</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts31">[Login]</span><br/><span class="rvts31">Username = megauser@example.com</span><br/><span class="rvts31">Password = fisudiusfus7897f9s8fuf2joi2i23ijljasdfusd</span></p>
+<p class="rvps13"><span class="rvts6">or for some servers ( for instance default Debian 9 on </span><a class="rvts11" href="https://aws.amazon.com/" target="_blank">AWS</a><span class="rvts6">)</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">After your create and save your .megarc file you need to secure it by giving access to the owner only for read and write.</span></p>
+<p class="rvps8"><span class="rvts18">$ sudo -i</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># chmod 0600 .megarc</span></p>
+<p class="rvps2"><span class="rvts6">Create a </span><span class="rvts19">".my.cnf"</span><span class="rvts6"> file in the home directory.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h3 class="rvps5"><span class="rvts0"><span class="rvts14">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">Now that you created a </span><span class="rvts34">.megarc </span><span class="rvts6">file it is not necessary to pass in credentials to any of the </span><span class="rvts6">Mega Scripts</span><span class="rvts6">.</span></p>
-<p class="rvps2"><span class="rvts6">However if you want to use more then one </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> account for the same user then you can create file with a different name such as </span><span class="rvts34">.megarc_other </span><span class="rvts6">and pass the location of that script in as the credentials to be used. Secure any extra credential files as you did with the </span><span class="rvts34">.megarc </span><span class="rvts6">file.</span></p>
+<p class="rvps8"><span class="rvts18"># cd ~</span><br/><span class="rvts18"># nano .my.cnf</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Copy the content below and replace with your mysql username and password</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps11"><span class="rvts31">[mysqldump]</span><br/><span class="rvts31">user = root</span><br/><span class="rvts31">password = secret</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Save the file and exit nano.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Now change the file permission to 600 to prevent other users from reading it:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps8"><span class="rvts18"># chmod 0600 ~/.my.cnf</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Now when you execute mysqldump as root the system will not prompt you for password.</span></p>
 
             </div>
             

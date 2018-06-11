@@ -1,0 +1,25 @@
+[MEGA_DB_SAVE_UPLOAD]
+ENCRYPT_OUTPUT=true
+MEGA_ENABLED=true
+DELETE_BZ2_FILE=true
+MEGA_DELETE_OLD_BACKUPS=true
+DAYS_TO_KEEP_BACKUP=60
+DELETE_LOCAL_BACKUP=true
+SEND_EMAIL_ON_ERROR=false
+SEND_EMAIL_TO=
+SEND_EMAIL_FROM=noreply@myserver.com
+GPG_OWNER=bbserver
+SERVER_NAME=bbserver
+DB_USER=root
+LOG_NAME=mega_db.log
+LOG_ID=MEGA DATABASE:
+LOG_SEP= =========================================${DATELOG}=========================================
+MEGA_DEL_OLD_NAME=mega_del_old.sh
+MEGA_UPLOAD_FILE_NAME=mega_upload_file.sh
+MEGA_EXIST_FILE_NAME=mega_dir_file_exist.sh
+MEGA_MKDIR_FILE_NAME=mega_mkdir.sh
+SYS_LOG_DIR=/var/log
+MYSQL_DIR=/var/lib/mysql
+SYS_LOG_DIR=/var/log
+BAK_DIR=/home/${USER}/tmp
+MEGA_BACKUP_DIR=/$SERVER_NAME/backups/${USER}/database

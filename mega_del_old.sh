@@ -101,7 +101,7 @@ fi
 # Checking lock file
 test -r "${LOCK_FILE}"
 if [ $? -eq 0 ];then
-    echo -e "${DATELOG} ${LOG_ID}There is another mega delete old process running! Exit Code: 100" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID}There is another mega delete old process running! Exit Code: 100" >> ${LOG}
     exit 100
 fi
 

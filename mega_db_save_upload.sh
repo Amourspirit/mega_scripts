@@ -62,6 +62,9 @@
 #  52     The database passed in to the script does not exist
 #  53     The user passed in to the script does not exist
 #  60     bzip2 not found
+#  70     Configuration file for mega scripts does not exist
+#  71     No read permissions for configuration file
+#  72     It seems that no values have been set in the configuration file for section [MEGA_DB_SAVE_UPLOAD]
 # 100     There is another mega process running. Can not continue.
 # 101     megarm not found. Megtools requires installing
 # 102     megals not found. Megtools requires installing
@@ -72,30 +75,106 @@
 # 112     The file to upload does not exist or can not gain read access.
 # 115     megamkdir not found. Megtools requires installing
 
-ENCRYPT_OUTPUT=true # true or false
-MEGA_ENABLED=true # true or false
-DELETE_BZ2_FILE=true # true or false
-MEGA_DELETE_OLD_BACKUPS=true # true or false
-DAYS_TO_KEEP_BACKUP=60 # number of days to keep backups for the current user on mega.nz
-DELETE_LOCAL_BACKUP=true # true or false
+# trims white space from input
+function trim()
+{
+    local var=$1;
+    var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
+    var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
+    echo -n "$var";
+}
+CONFIG_FILE="$HOME/.mega_scriptsrc"
+test -e "${CONFIG_FILE}"
+if [ $? -ne 0 ];then
+    echo "Configuration '$HOME/.mega_scriptsrc' file has does not exist"
+    exit 70
+fi
+test -r "${CONFIG_FILE}"
+if [ $? -ne 0 ];then
+    echo "No read permissions for configuration '$HOME/.mega_scriptsrc'"
+    exit 71
+fi
+
+# make tmp file to hold section of config.ini style section in
+TMP_CONFIG_FILE=$(mktemp)
+# SECTION_NAME is a var to hold which section of config you want to read
+SECTION_NAME="MEGA_DB_SAVE_UPLOAD"
+# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
+
+# test tmp file to to see if it is greater then 0 in size
+test -s "${TMP_CONFIG_FILE}"
+if [ $? -ne 0 ];then
+    echo "It seems that no values have been set in the '$HOME/.mega_scriptsrc' for section [$SECTION_NAME]"
+    unlink $TMP_CONFIG_FILE
+    exit 72
+fi
+# create an array that contains configuration values
+# put values that need to be evaluated using eval in single quotes
+typeset -A SCRIPT_CONF # init array
+SCRIPT_CONF=( # set default values in config array
+    [ENCRYPT_OUTPUT]=true
+    [MEGA_ENABLED]=true
+    [DELETE_BZ2_FILE]=true
+    [MEGA_DELETE_OLD_BACKUPS]=true
+    [DAYS_TO_KEEP_BACKUP]=60
+    [DELETE_LOCAL_BACKUP]=true
+    [SEND_EMAIL_ON_ERROR]=false
+    [SEND_EMAIL_TO]=""
+    [SEND_EMAIL_FROM]=""
+    [GPG_OWNER]=""
+    [SERVER_NAME]=""
+    [DB_USER]="root"
+    [LOG]='/home/${USER}/logs/${LOG_NAME}'
+    [LOG_NAME]="mega_db.log"
+    [LOG_ID]="MEGA DATABASE:"
+    [LOG_SEP]='=========================================${DATELOG}========================================='
+    [MEGA_DEL_OLD_NAME]="mega_del_old.sh"
+    [MEGA_UPLOAD_FILE_NAME]="mega_upload_file.sh"
+    [MEGA_EXIST_FILE_NAME]="mega_dir_file_exist.sh"
+    [MEGA_MKDIR_FILE_NAME]="mega_mkdir.sh"
+    [SYS_LOG_DIR]="/var/log"
+    [MYSQL_DIR]="/var/lib/mysql"
+    [SYS_LOG_DIR]="/var/log"
+    [BAK_DIR]='/home/${USER}/tmp'
+    [MEGA_BACKUP_DIR]='/$SERVER_NAME/backups/${USER}/database'
+)
+
+# read the input of the tmp config file line by line
+while read line; do
+    if [[ "$line" =~ ^[^#]*= ]]; then
+        setting_name=$(trim "${line%%=*}");
+        setting_value=$(trim "${line#*=}");
+
+       SCRIPT_CONF[$setting_name]=$setting_value
+    fi
+done < "$TMP_CONFIG_FILE"
+# release the tmp file that is contains the current section values
+unlink $TMP_CONFIG_FILE
+DATELOG=`date +'%Y-%m-%d-%H-%M-%S'`
+SERVER_NAME=${SCRIPT_CONF[SERVER_NAME]}
+ENCRYPT_OUTPUT=${SCRIPT_CONF[ENCRYPT_OUTPUT]}
+MEGA_ENABLED=${SCRIPT_CONF[MEGA_ENABLED]}
+DELETE_BZ2_FILE=${SCRIPT_CONF[DELETE_BZ2_FILE]}
+MEGA_DELETE_OLD_BACKUPS=${SCRIPT_CONF[MEGA_DELETE_OLD_BACKUPS]}
+DAYS_TO_KEEP_BACKUP=${SCRIPT_CONF[DAYS_TO_KEEP_BACKUP]}
+DELETE_LOCAL_BACKUP=${SCRIPT_CONF[DELETE_LOCAL_BACKUP]}
 # set SEND_EMAIL_ON_ERROR="yes" to send email on error. Also must have valid SEND_EMAIL_TO email address and SEND_EMAIL_FROM address
-SEND_EMAIL_ON_ERROR=false # true or false
+SEND_EMAIL_ON_ERROR=${SCRIPT_CONF[SEND_EMAIL_ON_ERROR]}
 # 'SEND_EMAIL_TO' FOR MULTIPLE ADDRESS SEPERATE BY , SPACE
 # EXAMPLE: SEND_EMAIL_TO="myemail1@domain.com, myemail2@domain.com, myemail3@otherdomain.com"
-SEND_EMAIL_TO="" # must be a valid email address
-SEND_EMAIL_FROM="noreply@myserver.com"
-GPG_OWNER="bbserver"
-SERVER_NAME="bbserver"
-DB_USER="root"
-LOG_NAME="mega_db.log"
-LOG_ID="MEGA DATABASE: "
-LOG_SEP="=========================================${DATELOG}========================================="
-MEGA_DEL_OLD_NAME="mega_del_old.sh"
-MEGA_UPLOAD_FILE_NAME="mega_upload_file.sh"
-MEGA_EXIST_FILE_NAME="mega_dir_file_exist.sh"
-MEGA_MKDIR_FILE_NAME="mega_mkdir.sh"
-DATELOG=`date +'%Y-%m-%d-%H-%M-%S'`
-SYS_LOG_DIR="/var/log"
+SEND_EMAIL_TO=${SCRIPT_CONF[SEND_EMAIL_TO]}
+SEND_EMAIL_FROM=${SCRIPT_CONF[SEND_EMAIL_FROM]}
+GPG_OWNER=${SCRIPT_CONF[GPG_OWNER]}
+DB_USER=${SCRIPT_CONF[DB_USER]}
+LOG_NAME=${SCRIPT_CONF[LOG_NAME]}
+LOG_ID=${SCRIPT_CONF[LOG_ID]}
+LOG_SEP=$(eval echo ${SCRIPT_CONF[LOG_SEP]})
+MEGA_DEL_OLD_NAME=${SCRIPT_CONF[MEGA_DEL_OLD_NAME]}
+MEGA_UPLOAD_FILE_NAME=${SCRIPT_CONF[MEGA_UPLOAD_FILE_NAME]}
+MEGA_EXIST_FILE_NAME=${SCRIPT_CONF[MEGA_EXIST_FILE_NAME]}
+MEGA_MKDIR_FILE_NAME=${SCRIPT_CONF[MEGA_MKDIR_FILE_NAME]}
+SYS_LOG_DIR=${SCRIPT_CONF[SYS_LOG_DIR]}
 SEND_MAIL_CLIENT="$(command -v sendmail)"
 SYS_LOG="$SYS_LOG_DIR/$LOG_NAME"
 THIS_SCRIPT=`basename "$0"`
@@ -110,8 +189,8 @@ if [[ -z $SYS_LOG ]]; then
 fi
 
 if ! [ -x "$(command -v bzip2)" ]; then
-    echo "${DATELOG} ${LOG_ID}bzip2 not installed." >> ${LOG}
-    echo "${DATELOG} ${LOG_ID}You must install bzip2 to use '${THIS_SCRIPT}'. Exit Code: 60" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} bzip2 not installed." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You must install bzip2 to use '${THIS_SCRIPT}'. Exit Code: 60" >> ${LOG}
     echo "${LOG_SEP}" >> ${SYS_LOG}
     echo "" >> ${SYS_LOG}
     if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -124,7 +203,7 @@ fi
 if [ -z "$1" ]
   then
     echo "${LOG_SEP}" >> ${SYS_LOG}
-    echo "${DATELOG} ${LOG_ID}No argument for user supplied for user! Exiting! Exit Code 20" >> ${SYS_LOG}
+    echo "${DATELOG} ${LOG_ID} No argument for user supplied for user! Exiting! Exit Code 20" >> ${SYS_LOG}
     echo "${LOG_SEP}" >> ${SYS_LOG}
     echo "" >> ${SYS_LOG}
     if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -139,7 +218,7 @@ USER_ID=$(id -u "${USER}" &>/dev/null)
 # $? is 0 if found and 1 if not found for id -u user
 if [ $? -ne 0 ]; then
     echo "${LOG_SEP}" >> ${SYS_LOG}
-    echo "${DATELOG} ${LOG_ID}'${USER}' does Not Exit. Unable to continue: Exit Code: 53" >> ${SYS_LOG}
+    echo "${DATELOG} ${LOG_ID} '${USER}' does Not Exit. Unable to continue: Exit Code: 53" >> ${SYS_LOG}
     echo "${LOG_SEP}" >> ${SYS_LOG}
     echo "" >> ${SYS_LOG}
 
@@ -152,9 +231,9 @@ fi
 # done with USER_ID
 unset USER_ID
 
-LOG="/home/${USER}/logs/${LOG_NAME}"
-
+LOG=$(eval echo ${SCRIPT_CONF[LOG]})
 # if log is not supplied then redirect to stdout
+
 if [[ -z $LOG ]]; then
   LOG=/dev/stdout
 fi
@@ -165,7 +244,7 @@ if [ -z "$2" ]
   then
     echo "${LOG_SEP}" >> ${LOG}
     echo "No argument for user supplied for database! Exiting" >> ${LOG}
-    echo "${DATELOG} ${LOG_ID}No argument for user supplied for database! Exit Code: 21" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} No argument for user supplied for database! Exit Code: 21" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
     if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -175,14 +254,14 @@ if [ -z "$2" ]
     exit 21
 fi
 
-BAK_DIR="/home/${USER}/tmp"
+BAK_DIR=$(eval echo ${SCRIPT_CONF[BAK_DIR]})
 DB_NAME="$2"
 DB_NAME_NEW=$DATELOG"_$DB_NAME"
 DB_FILE_SQL=$BAK_DIR/$DB_NAME_NEW".sql"
 DB_FILE=$DB_FILE_SQL".bz2"
 LOCK_FILE="/tmp/mega_backup_db_lock"
 SCRIPT_DIR=$(dirname "$0")
-MEGA_BACKUP_DIR="/$SERVER_NAME/backups/${USER}/database"
+MEGA_BACKUP_DIR=$(eval echo ${SCRIPT_CONF[MEGA_BACKUP_DIR]})
 MEGA_DEL_OLD_SCRIPT=$SCRIPT_DIR"/"$MEGA_DEL_OLD_NAME
 MEGA_UPLOAD_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_UPLOAD_FILE_NAME
 MEGA_EXIST_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_EXIST_FILE_NAME
@@ -206,7 +285,7 @@ if [[ -n "$3" ]]; then
     test -r "${CURRENT_CONFIG}"
     if [ $? -ne 0 ]; then
         echo "${LOG_SEP}" >> ${LOG}
-        echo "${DATELOG} ${LOG_ID}Config file '${CURRENT_CONFIG}' does not exist or can not gain read access! Exit Code: 111" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} Config file '${CURRENT_CONFIG}' does not exist or can not gain read access! Exit Code: 111" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         echo "" >> ${LOG}
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -224,7 +303,7 @@ fi
 # https://stackoverflow.com/questions/7364709/bash-script-check-if-mysql-database-exists-perform-action-based-on-result#7364807
 test -d "$MYSQL_DIR/$DB_NAME"
 if [ $? -ne 0 ]; then
-    echo "${DATELOG} ${LOG_ID}'$DB_NAME' does Not Exit. Unable to continue: Exit Code: 52" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} '$DB_NAME' does Not Exit. Unable to continue: Exit Code: 52" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
     if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -236,7 +315,7 @@ fi
 
 test -r ~/.my.cnf
 if [ $? -ne 0 ]; then
-    echo "${DATELOG} ${LOG_ID}~/.my.cnf must be set up for MysqlDump to do its job. Unable to continue: Exit Code: 50" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} ~/.my.cnf must be set up for MysqlDump to do its job. Unable to continue: Exit Code: 50" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
     if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -250,7 +329,7 @@ if [[ "$MEGA_ENABLED" = true && $HAS_CONFIG -eq 0 ]]; then
     # no config has been passed into script. check and see if the default exist
     test -r ~/.megarc
     if [ $? -ne 0 ];then
-        echo "${DATELOG} ${LOG_ID}~/.megarc must be set up and readable by current to upload to mega when parameter 3 is omitted. Unable to continue: Exit Code: 51" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} ~/.megarc must be set up and readable by current to upload to mega when parameter 3 is omitted. Unable to continue: Exit Code: 51" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         echo "" >> ${LOG}
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -265,7 +344,7 @@ mkdir -p "$BAK_DIR"
 # Checking lock file
 test -r "${LOCK_FILE}"
 if [ $? -eq 0 ];then
-    echo "${DATELOG} ${LOG_ID}There is another mega backup database process running! Exit Code: 100" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} There is another mega backup database process running! Exit Code: 100" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
     if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -277,25 +356,25 @@ fi
 
 cd ${BAK_DIR}
 
-echo "${DATELOG} ${LOG_ID}Generating '${OUTPUT_FILE}' from database '${DB_NAME}'." >> ${LOG}
+echo "${DATELOG} ${LOG_ID} Generating '${OUTPUT_FILE}' from database '${DB_NAME}'." >> ${LOG}
 if [[ "$ENCRYPT_OUTPUT" = true ]]; then
     ${MSD} -u ${DB_USER} -h localhost -a ${DB_NAME} | bzip2  > ${DB_FILE} && gpg --encrypt --recipient "$GPG_OWNER" ${DB_FILE}
-    echo "${DATELOG} ${LOG_ID}'${DB_FILE}' has been encrypted using gpg as'${OUTPUT_FILE}'." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} '${DB_FILE}' has been encrypted using gpg as'${OUTPUT_FILE}'." >> ${LOG}
 else
     ${MSD} -u ${DB_USER} -h localhost -a ${DB_NAME} | bzip2  > ${DB_FILE}
-    echo "${DATELOG} ${LOG_ID}gpg encryption has been disabled in the script." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} gpg encryption has been disabled in the script." >> ${LOG}
 fi
-echo "${DATELOG} ${LOG_ID}Generated '${OUTPUT_FILE}' from database '${DB_NAME}'." >> ${LOG}
+echo "${DATELOG} ${LOG_ID} Generated '${OUTPUT_FILE}' from database '${DB_NAME}'." >> ${LOG}
 if [[ "$DELETE_BZ2_FILE" = true ]]; then
     rm -f ${DB_FILE}
-    echo "${DATELOG} ${LOG_ID}Delete bz2 file is enabled and '${DB_FILE}' has been deleted from '${BAK_DIR}'." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} Delete bz2 file is enabled and '${DB_FILE}' has been deleted from '${BAK_DIR}'." >> ${LOG}
 else
-    echo "${DATELOG} ${LOG_ID}Delete bz2 file is disabled and '${DB_FILE}' is still in '${BAK_DIR}'." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} Delete bz2 file is disabled and '${DB_FILE}' is still in '${BAK_DIR}'." >> ${LOG}
 fi
 
 # Create the path to upload to on mega if it does not exist
 if [[ "$MEGA_ENABLED" = true ]]; then
-    echo "${DATELOG} ${LOG_ID}Checking mega.nz path to see if it '$MEGA_BACKUP_DIR' directory exist. Will created if not." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} Checking mega.nz path to see if it '$MEGA_BACKUP_DIR' directory exist. Will created if not." >> ${LOG}
     if [[ $HAS_CONFIG -eq 0 ]]; then
         # No argument is given for default configuration for that contains user account and password
         ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" "$MEGA_BACKUP_DIR"
@@ -306,7 +385,7 @@ if [[ "$MEGA_ENABLED" = true ]]; then
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]; then
         # there was a problem running the script
-        echo "${DATELOG} ${LOG_ID}There was an issue running script '$MEGA_MKDIR_FILE_NAME'! Exit Code: $EXIT_CODE" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} There was an issue running script '$MEGA_MKDIR_FILE_NAME'! Exit Code: $EXIT_CODE" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         rm -f "${LOCK_FILE}"
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -327,7 +406,7 @@ if [[ "$MEGA_ENABLED" = true ]]; then
         EXIT_CODE=$?
         if [[ $EXIT_CODE -ne 0 ]]; then
             # there was a problem running the script
-            echo "${DATELOG} ${LOG_ID}There was an issue running script '$MEGA_DEL_OLD_NAME'! Exit Code: $EXIT_CODE" >> ${LOG}
+            echo "${DATELOG} ${LOG_ID} There was an issue running script '$MEGA_DEL_OLD_NAME'! Exit Code: $EXIT_CODE" >> ${LOG}
             echo "${LOG_SEP}" >> ${LOG}
             rm -f "${LOCK_FILE}"
             if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -348,7 +427,7 @@ if [[ "$MEGA_ENABLED" = true ]]; then
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]; then
         # there was a problem running the script
-        echo "${DATELOG} ${LOG_ID}There was an issue running script '$MEGA_UPLOAD_FILE_NAME': Exit Code: $EXIT_CODE" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} There was an issue running script '$MEGA_UPLOAD_FILE_NAME': Exit Code: $EXIT_CODE" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         rm -f "${LOCK_FILE}"
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -358,7 +437,7 @@ if [[ "$MEGA_ENABLED" = true ]]; then
         exit $EXIT_CODE
     fi
     #confirm new file is on mega.nz
-    echo "${DATELOG} ${LOG_ID}Checking mega.nz to see if backup has made it." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} Checking mega.nz to see if backup has made it." >> ${LOG}
     if [[ -z "$CURRENT_CONFIG" ]]; then
         # No argument is given for default configuration for that contains user account and password
         ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}"
@@ -370,7 +449,7 @@ if [[ "$MEGA_ENABLED" = true ]]; then
     if [[ $EXIT_CODE -ne 3 ]]; then
         # code 3 for this script means it found file.
         # there was a problem running the script
-        echo "${DATELOG} ${LOG_ID}There was an issue running script '$MEGA_EXIST_FILE_NAME'. Script exited with code '$EXIT_CODE'! Exit Code: 30" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} There was an issue running script '$MEGA_EXIST_FILE_NAME'. Script exited with code '$EXIT_CODE'! Exit Code: 30" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         rm -f "${LOCK_FILE}"
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -379,12 +458,12 @@ if [[ "$MEGA_ENABLED" = true ]]; then
         fi
         exit 30
     else
-        echo "${DATELOG} ${LOG_ID}File ${OUTPUT_FILE_NAME} has made it onto mega.nz" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} File ${OUTPUT_FILE_NAME} has made it onto mega.nz" >> ${LOG}
     fi
     if [[ "$DELETE_LOCAL_BACKUP" = true ]]; then
         #delete local file
         rm -f "${OUTPUT_FILE}"
-        echo "${DATELOG} ${LOG_ID}Local file ${OUTPUT_FILE_NAME} has been deleted." >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} Local file ${OUTPUT_FILE_NAME} has been deleted." >> ${LOG}
     fi
     # log the current space on mega.nz account
     if [[ $HAS_CONFIG -eq 0 ]]; then
@@ -395,13 +474,13 @@ if [[ "$MEGA_ENABLED" = true ]]; then
         # Argument is given for default configuration that contains user account and password
         CURRENT_SPACE=$(megadf --config "$CURRENT_CONFIG" --human | tr '\n' ' ')
     fi
-    echo "${DATELOG} ${LOG_ID}${CURRENT_SPACE}" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} ${CURRENT_SPACE}" >> ${LOG}
 else
-    echo "${DATELOG} ${LOG_ID}Mega is currently disabled in scritp" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} Mega is currently disabled in scritp" >> ${LOG}
 fi
 
 # Finish up
-echo "${DATELOG} ${LOG_ID}Normal Exit! Exit Code: 0" >> ${LOG}
+echo "${DATELOG} ${LOG_ID} Normal Exit! Exit Code: 0" >> ${LOG}
 echo "${LOG_SEP}" >> ${LOG}
 echo "" >> ${LOG}
 # Clean up and exit

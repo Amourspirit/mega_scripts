@@ -1,3 +1,14 @@
+# See https://amourspirit.github.io/mega_scripts/ConfigurationFile.html
+# It is most import to include GPG_OWNER, and SERVER_NAME in [MEGA_COMMON]
+# example ~/.mega_scripts
+[MEGA_COMMON]
+GPG_OWNER=bbserver
+SERVER_NAME=bbserver
+MEGA_DEL_OLD_NAME=mega_del_old.sh
+MEGA_UPLOAD_FILE_NAME=mega_upload_file.sh
+MEGA_EXIST_FILE_NAME=mega_dir_file_exist.sh
+MEGA_MKDIR_FILE_NAME=mega_mkdir.sh
+
 [MEGA_DB_SAVE_UPLOAD]
 ENCRYPT_OUTPUT=true
 MEGA_ENABLED=true
@@ -8,18 +19,21 @@ DELETE_LOCAL_BACKUP=true
 SEND_EMAIL_ON_ERROR=false
 SEND_EMAIL_TO=
 SEND_EMAIL_FROM=noreply@myserver.com
-GPG_OWNER=bbserver
-SERVER_NAME=bbserver
 DB_USER=root
 LOG_NAME=mega_db.log
 LOG_ID=MEGA DATABASE:
 LOG_SEP= =========================================${DATELOG}=========================================
-MEGA_DEL_OLD_NAME=mega_del_old.sh
-MEGA_UPLOAD_FILE_NAME=mega_upload_file.sh
-MEGA_EXIST_FILE_NAME=mega_dir_file_exist.sh
-MEGA_MKDIR_FILE_NAME=mega_mkdir.sh
 SYS_LOG_DIR=/var/log
 MYSQL_DIR=/var/lib/mysql
 SYS_LOG_DIR=/var/log
 BAK_DIR=/home/${USER}/tmp
 MEGA_BACKUP_DIR=/$SERVER_NAME/backups/${USER}/database
+
+[MEGA_DELETE_OLD]
+LOG_ID=MEGA DELETE OLD:
+MAX_DAYS_DEFAULT=60
+LOG=/var/log/mega_delete_old.log
+
+[MEGA_UPLOAD_FILE]
+LOG_ID=MEGA PUT:
+LOG=/var/log/mega_upload_file.log

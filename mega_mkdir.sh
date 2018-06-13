@@ -26,7 +26,7 @@
 # Script to check and see if a file or folder exist on a mega.nz account
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.2.2.0
+# Version 1.3.0.0
 # File Name: mega_mkdir.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_mkdirsh.html
@@ -48,14 +48,53 @@
 # 111   Optional argument Param 2 was passed in but the config can not be found or we do not have read permissions
 # 115   megamkdir not found. Megtools requires installing
 
+# trims white space from input
+function trim()
+{
+    local var=$1;
+    var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
+    var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
+    echo -n "$var";
+}
+
 if ! [ -x "$(command -v megamkdir)" ]; then
    exit 115
 fi
 
-BASH="/bin/bash"
+# create an array that contains configuration values
+# put values that need to be evaluated using eval in single quotes
+typeset -A SCRIPT_CONF # init array
+SCRIPT_CONF=( # set default values in config array
+    [MEGA_EXIST_FILE_NAME]="mega_dir_file_exist.sh"
+)
+
+# make tmp file to hold section of config.ini style section in
+TMP_CONFIG_COMMON_FILE=$(mktemp)
+# SECTION_NAME is a var to hold which section of config you want to read
+SECTION_NAME="MEGA_COMMON"
+# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
+
+# test tmp file to to see if it is greater then 0 in size
+test -s "${TMP_CONFIG_COMMON_FILE}"
+if [ $? -eq 0 ]; then
+   # read the input of the tmp config file line by line
+    while read line; do
+        if [[ "$line" =~ ^[^#]*= ]]; then
+            setting_name=$(trim "${line%%=*}");
+            setting_value=$(trim "${line#*=}");
+            SCRIPT_CONF[$setting_name]=$setting_value
+        fi
+    done < "$TMP_CONFIG_COMMON_FILE"
+fi
+
+# release the tmp file that is contains the current section values
+unlink $TMP_CONFIG_COMMON_FILE
+
+BASH="$(command -v bash)"
 SCRIPT_DIR=$(dirname "$0")
 MEGA_DEFAULT_ROOT="/Root"
-MEGA_EXIST_FILE_NAME="mega_dir_file_exist.sh"
+MEGA_EXIST_FILE_NAME=${SCRIPT_CONF[MEGA_EXIST_FILE_NAME]}
 MEGA_EXIST_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_EXIST_FILE_NAME
 CURRENT_CONFIG=""
 HAS_CONFIG=0

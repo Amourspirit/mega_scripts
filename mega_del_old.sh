@@ -26,7 +26,7 @@
 # Delete files from a folder for a mega.nz account.
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.2.2.0
+# Version 1.3.0.0
 # File Name: mega_del_old.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_del_oldsh.html
@@ -52,12 +52,53 @@
 # 102   megals not found. Megtools requires installing
 # 111   Optional argument Param 3 was passed in but the config can not be found or we do not have read permissions
 
+# trims white space from input
+function trim()
+{
+    local var=$1;
+    var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
+    var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
+    echo -n "$var";
+}
+
+# create an array that contains configuration values
+# put values that need to be evaluated using eval in single quotes
+typeset -A SCRIPT_CONF # init array
+SCRIPT_CONF=( # set default values in config array
+    [LOG_ID]='MEGA DELETE OLD:'
+    [MAX_DAYS_DEFAULT]=60
+    [LOG]='/var/log/mega_delete_old.log'
+)
+
+# make tmp file to hold section of config.ini style section in
+TMP_CONFIG_FILE=$(mktemp)
+# SECTION_NAME is a var to hold which section of config you want to read
+SECTION_NAME="MEGA_DELETE_OLD"
+# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
+
+# test tmp file to to see if it is greater then 0 in size
+test -s "${TMP_CONFIG_FILE}"
+if [ $? -eq 0 ]; then
+   # read the input of the tmp config file line by line
+    while read line; do
+        if [[ "$line" =~ ^[^#]*= ]]; then
+            setting_name=$(trim "${line%%=*}");
+            setting_value=$(trim "${line#*=}");
+            SCRIPT_CONF[$setting_name]=$setting_value
+        fi
+    done < "$TMP_CONFIG_FILE"
+fi
+
+# release the tmp file that is contains the current section values
+unlink $TMP_CONFIG_FILE
+
 #  read the folder into a var
 MEGA_DEFAULT_ROOT="/Root"
-MAX_DAYS_DEFAULT="60"
-DATELOG=`date +'%Y-%m-%d-%H-%M-%S'`
-LOG_ID="MEGA DELETE OLD: "
-LOG="/var/log/mega_delete_old.log"
+DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
+LOG_ID=${SCRIPT_CONF[LOG_ID]}
+MAX_DAYS_DEFAULT=${SCRIPT_CONF[MAX_DAYS_DEFAULT]}
+LOG=$(eval echo ${SCRIPT_CONF[LOG]})
 
 FILE_COUNT=0
 FILE_COUNT_DELETED=0
@@ -86,22 +127,22 @@ fi
 
 # https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
 if ! [ -x "$(command -v megarm)" ]; then
-    echo "${DATELOG} ${LOG_ID}You have not enabled MEGA remove." >> ${LOG}
-    echo "${DATELOG} ${LOG_ID}You need to install megatools from http://megatools.megous.com! Exit Code: 101" >> ${LOG}
-    echo "${DATELOG} ${LOG_ID}MEGA remove failed" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You have not enabled MEGA remove." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com! Exit Code: 101" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} MEGA remove failed" >> ${LOG}
     exit 101
 fi
 if ! [ -x "$(command -v megals)" ]; then
-    echo "${DATELOG} ${LOG_ID}You have not enabled MEGA list." >> ${LOG}
-    echo "${DATELOG} ${LOG_ID}You need to install megatools from http://megatools.megous.com! Exit Code: 102" >> ${LOG}
-    echo "${DATELOG} ${LOG_ID}MEGA list failed" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You have not enabled MEGA list." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com! Exit Code: 102" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} MEGA list failed" >> ${LOG}
     exit 102
 fi
 
 # Checking lock file
 test -r "${LOCK_FILE}"
 if [ $? -eq 0 ];then
-    echo "${DATELOG} ${LOG_ID}There is another mega delete old process running! Exit Code: 100" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} There is another mega delete old process running! Exit Code: 100" >> ${LOG}
     exit 100
 fi
 
@@ -135,7 +176,7 @@ if [[ -n "$3" ]]; then
     CURRENT_CONFIG="$3"
     test -r "${CURRENT_CONFIG}"
     if [ $? -ne 0 ]; then
-        echo "${DATELOG} ${LOG_ID}Config file '${CURRENT_CONFIG}' does not exist or can not gain read access! Exit Code: 111" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} Config file '${CURRENT_CONFIG}' does not exist or can not gain read access! Exit Code: 111" >> ${LOG}
         exit 111
     fi
 fi
@@ -154,7 +195,7 @@ else
 fi
 
 FROM_DATESTAMP=$(date -d "@$MAX_AGE")
-echo "${DATELOG} ${LOG_ID}Processing Files older than '${FROM_DATESTAMP}' for folder '${CURRENT_MEGA_FOLDER}' " >> ${LOG}
+echo "${DATELOG} ${LOG_ID} Processing Files older than '${FROM_DATESTAMP}' for folder '${CURRENT_MEGA_FOLDER}' " >> ${LOG}
 
 echo "$MEGA_FILES" | while read line
 do
@@ -192,7 +233,7 @@ do
                 # Argument is given for default configuration that contains user account and password
                 megarm --config "$CURRENT_CONFIG" "$FILE_PATH" >> ${LOG}
             fi
-            echo "${DATELOG} ${LOG_ID}Deleted '${FILE_PATH}' with modifed date of: ${FILE_STR_DATE}" >> ${LOG}
+            echo "${DATELOG} ${LOG_ID} Deleted '${FILE_PATH}' with modifed date of: ${FILE_STR_DATE}" >> ${LOG}
 
             # FILE_COUNT_DELETED=$(($FILE_COUNT_DELETED +1))
             FILE_COUNT_DELETED=$(($(cat $TMP_FILE_COUNT_DELETED) + 1))
@@ -207,8 +248,8 @@ FILE_COUNT=$(cat $TMP_FILE_COUNT)
 FILE_COUNT_DELETED=$(cat $TMP_FILE_COUNT_DELETED)
 unlink $TMP_FILE_COUNT
 unlink $TMP_FILE_COUNT_DELETED
-echo "${DATELOG} ${LOG_ID}Total Files: ${FILE_COUNT}" >> ${LOG}
-echo "${DATELOG} ${LOG_ID}Deleted Files: ${FILE_COUNT_DELETED}" >> ${LOG}
+echo "${DATELOG} ${LOG_ID} Total Files: ${FILE_COUNT}" >> ${LOG}
+echo "${DATELOG} ${LOG_ID} Deleted Files: ${FILE_COUNT_DELETED}" >> ${LOG}
 
 if [ -z "$CURRENT_CONFIG" ]; then
     # No argument is given for default configuration for that contains user account and password
@@ -218,6 +259,6 @@ else
     # Argument is given for default configuration that contains user account and password
     CURRENT_SPACE=$(megadf --config "$CURRENT_CONFIG" --human | tr '\n' ' ')
 fi
-echo "${DATELOG} ${LOG_ID}${CURRENT_SPACE}" >> ${LOG}
+echo "${DATELOG} ${LOG_ID} ${CURRENT_SPACE}" >> ${LOG}
 rm -f "${LOCK_FILE}"
 exit 0

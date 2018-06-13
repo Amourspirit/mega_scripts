@@ -26,7 +26,7 @@
 # Script to check and see if a file or folder exist on a mega.nz account
 # Created by Paul Moss
 # Created: 2018-06-02
-# Version 1.2.2.0
+# Version 1.3.0.0
 # File Name: mega_dir_file_exist.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_dir_file_existsh.html

@@ -26,7 +26,7 @@
 # Script to backup database and upload to a mega.nz account
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.2.2.0
+# Version 1.3.0.0
 # File Name: mega_db_save_upload.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_db_save_uploadsh.html
@@ -65,6 +65,7 @@
 #  70     Configuration file for mega scripts does not exist
 #  71     No read permissions for configuration file
 #  72     It seems that no values have been set in the configuration file for section [MEGA_DB_SAVE_UPLOAD]
+#  73     Invalid value in configuration
 # 100     There is another mega process running. Can not continue.
 # 101     megarm not found. Megtools requires installing
 # 102     megals not found. Megtools requires installing
@@ -95,20 +96,8 @@ if [ $? -ne 0 ];then
     exit 71
 fi
 
-# make tmp file to hold section of config.ini style section in
-TMP_CONFIG_FILE=$(mktemp)
-# SECTION_NAME is a var to hold which section of config you want to read
-SECTION_NAME="MEGA_DB_SAVE_UPLOAD"
-# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
-sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
+DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
 
-# test tmp file to to see if it is greater then 0 in size
-test -s "${TMP_CONFIG_FILE}"
-if [ $? -ne 0 ];then
-    echo "It seems that no values have been set in the '$HOME/.mega_scriptsrc' for section [$SECTION_NAME]"
-    unlink $TMP_CONFIG_FILE
-    exit 72
-fi
 # create an array that contains configuration values
 # put values that need to be evaluated using eval in single quotes
 typeset -A SCRIPT_CONF # init array
@@ -120,14 +109,14 @@ SCRIPT_CONF=( # set default values in config array
     [DAYS_TO_KEEP_BACKUP]=60
     [DELETE_LOCAL_BACKUP]=true
     [SEND_EMAIL_ON_ERROR]=false
-    [SEND_EMAIL_TO]=""
-    [SEND_EMAIL_FROM]=""
-    [GPG_OWNER]=""
-    [SERVER_NAME]=""
-    [DB_USER]="root"
+    [SEND_EMAIL_TO]=''
+    [SEND_EMAIL_FROM]=''
+    [GPG_OWNER]=''
+    [SERVER_NAME]=''
+    [DB_USER]='root'
     [LOG]='/home/${USER}/logs/${LOG_NAME}'
-    [LOG_NAME]="mega_db.log"
-    [LOG_ID]="MEGA DATABASE:"
+    [LOG_NAME]='mega_db.log'
+    [LOG_ID]='MEGA DATABASE:'
     [LOG_SEP]='=========================================${DATELOG}========================================='
     [MEGA_DEL_OLD_NAME]="mega_del_old.sh"
     [MEGA_UPLOAD_FILE_NAME]="mega_upload_file.sh"
@@ -140,18 +129,57 @@ SCRIPT_CONF=( # set default values in config array
     [MEGA_BACKUP_DIR]='/$SERVER_NAME/backups/${USER}/database'
 )
 
-# read the input of the tmp config file line by line
+# make tmp file to hold section of config.ini style section in
+TMP_CONFIG_COMMON_FILE=$(mktemp)
+# SECTION_NAME is a var to hold which section of config you want to read
+SECTION_NAME="MEGA_COMMON"
+# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
+
+# test tmp file to to see if it is greater then 0 in size
+# MEGA_COMMON IS REQUIRED 
+test -s "${TMP_CONFIG_COMMON_FILE}"
+if [ $? -ne 0 ];then
+    echo "It seems that no values have been set in the '$HOME/.mega_scriptsrc' for section [$SECTION_NAME]"
+    unlink $TMP_CONFIG_COMMON_FILE
+    exit 72
+fi
 while read line; do
     if [[ "$line" =~ ^[^#]*= ]]; then
         setting_name=$(trim "${line%%=*}");
         setting_value=$(trim "${line#*=}");
-
-       SCRIPT_CONF[$setting_name]=$setting_value
+        SCRIPT_CONF[$setting_name]=$setting_value
     fi
-done < "$TMP_CONFIG_FILE"
+done < "$TMP_CONFIG_COMMON_FILE"
+
+# release the tmp file that is contains the current section values
+unlink $TMP_CONFIG_COMMON_FILE
+
+# make tmp file to hold section of config.ini style section in
+TMP_CONFIG_FILE=$(mktemp)
+# SECTION_NAME is a var to hold which section of config you want to read
+SECTION_NAME="MEGA_DB_SAVE_UPLOAD"
+# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
+
+# read the input of the tmp config file line by line
+# test tmp file to to see if it is greater then 0 in size
+# MEGA_DB_SAVE_UPLOAD section is not required as the defaults are fine
+test -s "${TMP_CONFIG_FILE}"
+if [ $? -eq 0 ]; then
+   # read the input of the tmp config file line by line
+    while read line; do
+        if [[ "$line" =~ ^[^#]*= ]]; then
+            setting_name=$(trim "${line%%=*}");
+            setting_value=$(trim "${line#*=}");
+            SCRIPT_CONF[$setting_name]=$setting_value
+        fi
+    done < "$TMP_CONFIG_FILE"
+fi
 # release the tmp file that is contains the current section values
 unlink $TMP_CONFIG_FILE
-DATELOG=`date +'%Y-%m-%d-%H-%M-%S'`
+
+
 SERVER_NAME=${SCRIPT_CONF[SERVER_NAME]}
 ENCRYPT_OUTPUT=${SCRIPT_CONF[ENCRYPT_OUTPUT]}
 MEGA_ENABLED=${SCRIPT_CONF[MEGA_ENABLED]}
@@ -240,9 +268,7 @@ fi
 
 echo "${LOG_SEP}" >> ${LOG}
 
-if [ -z "$2" ]
-  then
-    echo "${LOG_SEP}" >> ${LOG}
+if [ -z "$2" ]; then
     echo "No argument for user supplied for database! Exiting" >> ${LOG}
     echo "${DATELOG} ${LOG_ID} No argument for user supplied for database! Exit Code: 21" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
@@ -273,6 +299,8 @@ CURRENT_CONFIG=""
 HAS_CONFIG=0
 OUTPUT_FILE=$DB_FILE
 
+RE_INTEGER='^[0-9]+$'
+
 if [[ "$ENCRYPT_OUTPUT" = true ]]; then
     OUTPUT_FILE=$OUTPUT_FILE".gpg"
 fi
@@ -297,6 +325,26 @@ if [[ -n "$3" ]]; then
 fi
 if [ ! -z "$CURRENT_CONFIG" ]; then
   HAS_CONFIG=1
+fi
+if [[ -z $SERVER_NAME ]] ; then
+    echo "${DATELOG} ${LOG_ID} SERVER_NAME is absent or empty from configuration! Exit Code: 73" >> ${LOG}
+    echo "${LOG_SEP}" >> ${LOG}
+    echo "" >> ${LOG}
+    if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: Bad Server Name ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
+        ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+    fi
+    exit 73
+fi
+if ! [[ $DAYS_TO_KEEP_BACKUP =~ $RE_INTEGER ]] ; then
+    echo "${DATELOG} ${LOG_ID} Invalid Integer for Config value DAYS_TO_KEEP_BACKUP. Must be a postitive integer! Exit Code: 73" >> ${LOG}
+    echo "${LOG_SEP}" >> ${LOG}
+    echo "" >> ${LOG}
+    if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
+        ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+    fi
+    exit 73
 fi
 
 # test to see if MySql database exist as a folder database if not assume database does not exit

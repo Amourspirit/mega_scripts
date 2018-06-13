@@ -65,10 +65,11 @@ a.rvts10, span.rvts10
 a.rvts11, span.rvts11
 {
  font-size: 12pt;
- color: #0000ff;
+ color: #003366;
  text-decoration: none;
- border-bottom: double;
+ border-bottom: dashed 1px;
 }
+a.rvts11:hover { color: #003366; border-bottom: dashed 1px #003366; }
 span.rvts12
 {
  font-size: 16pt;
@@ -136,10 +137,11 @@ span.rvts22
 a.rvts23, span.rvts23
 {
  font-size: 12pt;
- color: #0000ff;
+ color: #003366;
  text-decoration: none;
- border-bottom: double;
+ border-bottom: dashed 1px;
 }
+a.rvts23:hover { color: #003366; border-bottom: dashed 1px #003366; }
 a.rvts24, span.rvts24
 {
  font-size: 12pt;
@@ -181,34 +183,34 @@ a.rvts29, span.rvts29
 a.rvts29:hover { text-decoration: none; border-bottom: solid 1px #00ff00; }
 span.rvts30
 {
- font-size: 12pt;
- font-weight: bold;
+ font-family: 'Courier New', 'Courier', monospace;
 }
 span.rvts31
 {
- font-family: 'Courier New', 'Courier', monospace;
+ font-size: 12pt;
+ font-style: italic;
+ font-weight: bold;
 }
 span.rvts32
 {
  font-size: 12pt;
- font-style: italic;
  font-weight: bold;
 }
 span.rvts33
 {
  font-size: 12pt;
- font-weight: bold;
+ font-style: italic;
 }
 span.rvts34
 {
  font-size: 12pt;
- font-style: italic;
+ font-weight: bold;
+ color: #ff0000;
 }
 span.rvts35
 {
  font-size: 12pt;
  font-weight: bold;
- color: #ff0000;
 }
 span.rvts36
 {
@@ -226,18 +228,20 @@ a.rvts38, span.rvts38
 {
  font-size: 13pt;
  font-weight: bold;
- color: #0000ff;
+ color: #003366;
  text-decoration: none;
- border-bottom: double;
+ border-bottom: dashed 1px;
 }
+a.rvts38:hover { color: #003366; border-bottom: dashed 1px #003366; }
 a.rvts39, span.rvts39
 {
  font-size: 16pt;
  font-weight: bold;
- color: #0000ff;
+ color: #003366;
  text-decoration: none;
- border-bottom: double;
+ border-bottom: dashed 1px;
 }
+a.rvts39:hover { color: #003366; border-bottom: dashed 1px #003366; }
 /* ========== Para Styles ========== */
 p,ul,ol /* Paragraph Style */
 {
@@ -352,7 +356,8 @@ p,ul,ol /* Paragraph Style */
  margin: 16px 0px 4px 0px;
 }
 /* ========== Lists ========== */
-.list0 {text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;}
-.list1 {text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: circle;}
+.list0 {text-indent: 0px; padding: 0; margin: 0 0 0 40px; list-style-position: outside; list-style-type: disc;}
+.list1 {text-indent: 0px; padding: 0; margin: 0 0 0 32px; list-style-position: outside; list-style-type: circle;}
 .list2 {text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: square;}
 .list3 {text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: disc;}
+.list4 {text-indent: 0px; padding: 0; margin: 0 0 0 48px; list-style-position: outside; list-style-type: circle;}

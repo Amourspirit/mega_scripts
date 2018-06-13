@@ -13,7 +13,7 @@
 
   <title>GnuPG Encrypt and Decrypt</title>
   <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
-  <meta name="keywords" content="Remove Private Key,Import the private key">
+  <meta name="keywords" content=",Import the private key,Encrypt,Decrypt">
 
 
 
@@ -48,13 +48,12 @@
   <link href="css/effects.min.css" rel="stylesheet" />
   <link href="css/theme-light-green.min.css" rel="stylesheet" />
   <link href="css/print.min.css" rel="stylesheet" media="print" />
-  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+  <style type="text/css">nav { width: 300px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 300px} body.md-nav-expanded header { padding-left: 314px} }</style>
 
   <!-- Content style -->
   <link href="css/hnd.content.css" rel="stylesheet" />
-
+    <link href="css/totop.css" rel="stylesheet"/>
   
-
 
 
 </head>
@@ -115,7 +114,7 @@
       <div role="tabpanel" class="tab-pane active" id="contents">
         <div id="toc" class="tree-container unselectable"
             data-url="_toc.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -124,7 +123,7 @@
       <div role="tabpanel" class="tab-pane" id="index">
         <div id="keywords" class="tree-container unselectable"
             data-url="_keywords.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -156,7 +155,7 @@
     </div>  <!-- /Tab panes -->
 
   </nav>
-
+   <div id="toTop">Back to Top</div>
   <div id="main">
 
     <article>
@@ -240,10 +239,11 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">It is a good idea to copy the ID / Fingerprint into you password manager as well</span></p>
-<p class="rvps11"><span class="rvts31">5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span></p>
+<p class="rvps11"><span class="rvts30">5296EB83E2DE759654EDA8E5A7F44248C3A03D78</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="export_private_key"></a>
 <span class="rvts0"><span class="rvts14">Export your private key for backup</span></span></h3>
+<p class="rvps2"><span class="rvts34">Warning!!!</span><span class="rvts6"> If you are logged in to your terminal using a tools such as Putty then make certain you do not have logging turned on before displaying your private key in the ssh terminal window.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts18">~# gpg --export-secret-keys -a 5296EB83E2DE759654EDA8E5A7F44248C3A03D78 &gt; bbserver.asc</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -314,16 +314,16 @@
 <p class="rvps2"><span class="rvts6">You can harden security by removing the private key from the server making it impossible to decrypt a file that has been encrypted with the public key. If needed you can import the private key when needed</span></p>
 <h3 class="rvps5"><a name="remove_private_key"></a>
 <span class="rvts0"><span class="rvts14">Remove Private Key</span></span></h3>
-<p class="rvps2"><span class="rvts35">Warning!!!</span><span class="rvts6"> Make certain you have backed up your private key, password and fingerprint safely and securely before removing it from your server.</span></p>
+<p class="rvps2"><span class="rvts34">Warning!!!</span><span class="rvts6"> Make certain you have backed up your private key, password and fingerprint safely and securely before removing it from your server.</span></p>
 <h4 class="rvps12"><a name="delete_private_key"></a>
-<span class="rvts0"><span class="rvts32">Delete the private key</span></span></h4>
+<span class="rvts0"><span class="rvts31">Delete the private key</span></span></h4>
 <p class="rvps2"><span class="rvts6">You will be prompted several times and you need to choose yes to all of them.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts18">root@bbserver:~# gpg --delete-secret-key 'bbserver'</span><br/><span class="rvts18">gpg (GnuPG) 2.1.18; Copyright (C) 2017 Free Software Foundation, Inc.</span><br/><span class="rvts18">This is free software: you are free to change and redistribute it.</span><br/><span class="rvts18">There is NO WARRANTY, to the extent permitted by law.</span><br/><span class="rvts18"></span><br/><span class="rvts18"></span><br/><span class="rvts18">sec &nbsp;rsa4096/A7F44248C3A03D78 2018-05-18 bbserver (bbserver gpg key) &lt;bbserver@example.com&gt;</span><br/><span class="rvts18"></span><br/><span class="rvts18">Delete this key from the keyring? (y/N) y</span><br/><span class="rvts18">This is a secret key! - really delete? (y/N) y</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts30">Note:</span><span class="rvts6"> Deleting the private key does not delete the public key from the server.</span></p>
+<p class="rvps2"><span class="rvts35">Note:</span><span class="rvts6"> Deleting the private key does not delete the public key from the server.</span></p>
 <h4 class="rvps12"><a name="import_private_key"></a>
-<span class="rvts0"><span class="rvts32">Import the private key</span></span></h4>
+<span class="rvts0"><span class="rvts31">Import the private key</span></span></h4>
 <p class="rvps2"><span class="rvts6">Copy your private key onto your server. In my case I am using ssh to connect to the server so I just use nano and then paste in the private key and save the file.</span></p>
 <p class="rvps2"><span class="rvts6">The contents of your private key should look similar to the </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html#output_private_key">private key output</a><span class="rvts6"> shown above.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -352,8 +352,7 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h2 class="rvps7"><a name="Advantages"></a>
 <span class="rvts0"><span class="rvts17">Advantages</span></span></h2>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 40px; list-style-position: outside; list-style-type: disc;">
 <li class="rvps2"><span class="rvts6">None of the encrypters needs to know sensitive information about the encryption - encryption is done with the public key. (You can create the key pair on your local workstation and only transfer the public key to your servers)</span></li>
 <li class="rvps2"><span class="rvts6">No passwords will appear in script files or jobs</span></li>
 <li class="rvps2"><span class="rvts6">You can have as much as encrypters on any system you want</span></li>
@@ -418,7 +417,7 @@
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
-
+  <script src="js/totop.js"></script>
   <!-- Scripts -->
   <script>
     $(function() {

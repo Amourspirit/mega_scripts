@@ -48,13 +48,12 @@
   <link href="css/effects.min.css" rel="stylesheet" />
   <link href="css/theme-light-green.min.css" rel="stylesheet" />
   <link href="css/print.min.css" rel="stylesheet" media="print" />
-  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+  <style type="text/css">nav { width: 300px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 300px} body.md-nav-expanded header { padding-left: 314px} }</style>
 
   <!-- Content style -->
   <link href="css/hnd.content.css" rel="stylesheet" />
-
+    <link href="css/totop.css" rel="stylesheet"/>
   
-
 
 
 </head>
@@ -115,7 +114,7 @@
       <div role="tabpanel" class="tab-pane active" id="contents">
         <div id="toc" class="tree-container unselectable"
             data-url="_toc.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -124,7 +123,7 @@
       <div role="tabpanel" class="tab-pane" id="index">
         <div id="keywords" class="tree-container unselectable"
             data-url="_keywords.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -156,7 +155,7 @@
     </div>  <!-- /Tab panes -->
 
   </nav>
-
+   <div id="toTop">Back to Top</div>
   <div id="main">
 
     <article>
@@ -259,6 +258,8 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The </span><span class="rvts22">mega_dir_file_exist.sh</span><span class="rvts6"> does not have any logging or output to the terminal. Only the Exit code is set.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">If the name of this file "</span><span class="rvts6">mega_mkdir.sh</span><span class="rvts6">" is change for any reason then it needs to be reflected in the configuration file. See </span><a class="rvts13" href="ConfigurationFile.html">Configuration File</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="Example"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">Script example to create a folder if it does not exist exist on default </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> account on the command line.</span></p>
@@ -323,7 +324,7 @@
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
-
+  <script src="js/totop.js"></script>
   <!-- Scripts -->
   <script>
     $(function() {

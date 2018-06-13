@@ -48,13 +48,12 @@
   <link href="css/effects.min.css" rel="stylesheet" />
   <link href="css/theme-light-green.min.css" rel="stylesheet" />
   <link href="css/print.min.css" rel="stylesheet" media="print" />
-  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+  <style type="text/css">nav { width: 300px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 300px} body.md-nav-expanded header { padding-left: 314px} }</style>
 
   <!-- Content style -->
   <link href="css/hnd.content.css" rel="stylesheet" />
-
+    <link href="css/totop.css" rel="stylesheet"/>
   
-
 
 
 </head>
@@ -115,7 +114,7 @@
       <div role="tabpanel" class="tab-pane active" id="contents">
         <div id="toc" class="tree-container unselectable"
             data-url="_toc.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -124,7 +123,7 @@
       <div role="tabpanel" class="tab-pane" id="index">
         <div id="keywords" class="tree-container unselectable"
             data-url="_keywords.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -156,7 +155,7 @@
     </div>  <!-- /Tab panes -->
 
   </nav>
-
+   <div id="toTop">Back to Top</div>
   <div id="main">
 
     <article>
@@ -203,10 +202,12 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps8"><span class="rvts18">root@bbserver:~/scripts/mega_scripts-master# \cp -f *.sh /usr/local/bin/</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Edit </span><span class="rvts6">mega_db_save_upload.sh</span><span class="rvts6"> to reflect your email and server. See </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a></p>
+<p class="rvps2"><span class="rvts6">Edit / Create </span><a class="rvts13" href="ConfigurationFile.html">Configuration file</a><span class="rvts6"> for your current server</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># nano /usr/local/bin/mega_db_save_upload.sh</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="Related"></a>
+<span class="rvts0"><span class="rvts14">Related</span></span></h3>
+<p class="rvps2"><a class="rvts13" href="GettingStarted.html">Getting Started</a></p>
+<p class="rvps2"><span class="rvts6">Edit / Create </span><a class="rvts13" href="ConfigurationFile.html">Configuration file</a></p>
 
             </div>
             
@@ -258,7 +259,7 @@
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
-
+  <script src="js/totop.js"></script>
   <!-- Scripts -->
   <script>
     $(function() {

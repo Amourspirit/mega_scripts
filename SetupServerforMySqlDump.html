@@ -13,7 +13,7 @@
 
   <title>Set up Server for MySqlDump</title>
   <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
-  <meta name="keywords" content="">
+  <meta name="keywords" content=".my.cnf">
 
 
 
@@ -48,13 +48,12 @@
   <link href="css/effects.min.css" rel="stylesheet" />
   <link href="css/theme-light-green.min.css" rel="stylesheet" />
   <link href="css/print.min.css" rel="stylesheet" media="print" />
-  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+  <style type="text/css">nav { width: 300px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 300px} body.md-nav-expanded header { padding-left: 314px} }</style>
 
   <!-- Content style -->
   <link href="css/hnd.content.css" rel="stylesheet" />
-
+    <link href="css/totop.css" rel="stylesheet"/>
   
-
 
 
 </head>
@@ -115,7 +114,7 @@
       <div role="tabpanel" class="tab-pane active" id="contents">
         <div id="toc" class="tree-container unselectable"
             data-url="_toc.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -124,7 +123,7 @@
       <div role="tabpanel" class="tab-pane" id="index">
         <div id="keywords" class="tree-container unselectable"
             data-url="_keywords.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -156,7 +155,7 @@
     </div>  <!-- /Tab panes -->
 
   </nav>
-
+   <div id="toTop">Back to Top</div>
   <div id="main">
 
     <article>
@@ -171,7 +170,7 @@
                         <li>Linux</li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="SetupAdditionalEntropy.html" title="Setup Additional Entropy" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="SetupAdditionalEntropy.html" title="Setup Additional Entropy" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="ConfigurationFile.html" title="Configuration File" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -200,7 +199,7 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Copy the content below and replace with your mysql username and password</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts31">[mysqldump]</span><br/><span class="rvts31">user = root</span><br/><span class="rvts31">password = secret</span></p>
+<p class="rvps11"><span class="rvts30">[mysqldump]</span><br/><span class="rvts30">user = root</span><br/><span class="rvts30">password = secret</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Save the file and exit nano.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -209,6 +208,12 @@
 <p class="rvps8"><span class="rvts18"># chmod 0600 ~/.my.cnf</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Now when you execute mysqldump as root the system will not prompt you for password.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="Related"></a>
+<span class="rvts0"><span class="rvts14">Related</span></span></h3>
+<p class="rvps2"><a class="rvts13" href="GettingStarted.html">Getting Started</a></p>
+<p class="rvps2"><a class="rvts11" href="https://mariadb.com/kb/en/library/configuring-mariadb-with-mycnf/" target="_blank">Configuring MariaDB with my.cnf</a></p>
+<p class="rvps2"><a class="rvts11" href="https://dev.mysql.com/doc/refman/8.0/en/option-files.html" target="_blank">MySql Using Option Files</a></p>
 
             </div>
             
@@ -260,7 +265,7 @@
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
-
+  <script src="js/totop.js"></script>
   <!-- Scripts -->
   <script>
     $(function() {

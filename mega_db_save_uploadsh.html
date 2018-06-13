@@ -13,7 +13,7 @@
 
   <title>mega_db_save_upload.sh</title>
   <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
-  <meta name="keywords" content="">
+  <meta name="keywords" content="Encrypt">
 
 
 
@@ -48,13 +48,12 @@
   <link href="css/effects.min.css" rel="stylesheet" />
   <link href="css/theme-light-green.min.css" rel="stylesheet" />
   <link href="css/print.min.css" rel="stylesheet" media="print" />
-  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+  <style type="text/css">nav { width: 300px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 300px} body.md-nav-expanded header { padding-left: 314px} }</style>
 
   <!-- Content style -->
   <link href="css/hnd.content.css" rel="stylesheet" />
-
+    <link href="css/totop.css" rel="stylesheet"/>
   
-
 
 
 </head>
@@ -115,7 +114,7 @@
       <div role="tabpanel" class="tab-pane active" id="contents">
         <div id="toc" class="tree-container unselectable"
             data-url="_toc.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -124,7 +123,7 @@
       <div role="tabpanel" class="tab-pane" id="index">
         <div id="keywords" class="tree-container unselectable"
             data-url="_keywords.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -156,7 +155,7 @@
     </div>  <!-- /Tab panes -->
 
   </nav>
-
+   <div id="toTop">Back to Top</div>
   <div id="main">
 
     <article>
@@ -171,7 +170,7 @@
                         <li>Linux</li><li><a href="Scripts.html">Scripts</a></li>
                     </ol>
                     <div class="nav-arrows">
-                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Scripts.html" title="Scripts" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="mega_del_oldsh.html" title="mega_del_old.sh" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="Setupmegarc.html" title="Set up .megarc" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
+                        <div class="btn-group btn-group-xs" role="group"><a class="btn btn-default" href="Scripts.html" title="Scripts" role="button"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></a><a class="btn btn-default" href="mega_del_oldsh.html" title="mega_del_old.sh" role="button"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a><a class="btn btn-default" href="InstallMegatools.html" title="Install Megatools" role="button"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></div>
                     </div>
                 </div> 
             
@@ -185,9 +184,8 @@
 <span class="rvts0"><span class="rvts12">Script: </span></span><span class="rvts0"><span class="rvts12">mega_db_save_upload.sh</span></span></h1>
 <p class="rvps2"><span class="rvts6">In this document:</span></p>
 <p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#Description">Description</a></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#configue_mega_upload_file">Configuring mega_db_save_upload.sh</a></p>
+<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#configuration">Configuration</a></p>
 <p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#Parameters">Parameters</a></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#Fields">Fields</a></p>
 <p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#ReturnCodes">Possible codes returned by script</a></p>
 <p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#set_cron">Setting up Cron</a></p>
 <p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#Example">Example</a></p>
@@ -204,14 +202,11 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Script can easily be set to work as a cron job for automated backup.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<h2 class="rvps7"><a name="configue_mega_upload_file"></a>
-<span class="rvts0"><span class="rvts17">Configuring </span></span><span class="rvts0"><span class="rvts17">mega_db_save_upload.sh</span></span></h2>
-<p class="rvps2"><span class="rvts6">Once you have </span><a class="rvts13" href="Scripts.html">installed</a><span class="rvts6"> </span><span class="rvts6">Mega Scripts</span><span class="rvts6"> you will need to edit just a few </span><a class="rvts13" href="mega_db_save_uploadsh.html#Fields">Fields</a><span class="rvts6"> to get started.</span></p>
-<p class="rvps2"><span class="rvts6">You will need to set the </span><span class="rvts30">GPG_OWNER</span><span class="rvts6"> field to the </span><span class="rvts30">"Real Name"</span><span class="rvts6"> you set when you created your </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html#create_keypair">GPG Private/Public key-pair</a><span class="rvts6">.</span></p>
-<p class="rvps2"><span class="rvts6">Change </span><span class="rvts30">SERVER_NAME</span><span class="rvts6"> to the name of your server.</span></p>
-<p class="rvps2"><span class="rvts6">If you have </span><span class="rvts22">sendmail</span><span class="rvts6"> installed and configured and you want to send emails on error then set </span></p>
-<p class="rvps11"><span class="rvts31">SEND_EMAIL_ON_ERROR=true</span><br/><span class="rvts31">SEND_EMAIL_TO="myemail@example.com"</span><br/><span class="rvts31">SEND_EMAIL_FROM="myserver@example.com"</span></p>
-<p class="rvps2"><span class="rvts6">That is really all that you need to get started. Of course make sure you have </span><a class="rvts13" href="Setupmegarc.html">set up .megarc</a><span class="rvts6"> file of some sort.</span></p>
+<h3 class="rvps5"><a name="configuration"></a>
+<span class="rvts0"><span class="rvts14">Configuration</span></span></h3>
+<p class="rvps2"><span class="rvts6">There are configuration settings that can go into </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> for section </span><span class="rvts6">[MEGA_DB_SAVE_UPLOAD]</span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="ConfigurationFile.html">Configuration file</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="ConfigurationFile.html#Example4">Configuration file - Example</a><span class="rvts6"> for an example of setting up to send email.</span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h3 class="rvps5"><a name="Parameters"></a>
 <span class="rvts0"><span class="rvts14">Parameters</span></span></h3>
@@ -224,190 +219,6 @@
 <p class="rvps9"><a name="Param3"></a>
 <span class="rvts20">Param 3</span></p>
 <p class="rvps10"><span class="rvts21">Optional: The configuration file to use that contain the credentials for the </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts21"> account you want to access.</span><br/><span class="rvts21">See </span><a class="rvts25" href="Setupmegarc.html">Set up .megarc</a><span class="rvts21">.</span></p>
-<hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
-<h3 class="rvps5"><a name="Fields"></a>
-<span class="rvts0"><span class="rvts14">Fields</span></span></h3>
-<p class="rvps2"><span class="rvts6">If the field is not listed in the following table then the value should not be altered in the "</span><span class="rvts6">mega_db_save_upload.sh</span><span class="rvts6">" script.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<div class="rvps2"><table border="1" cellpadding="4" cellspacing="-1" style="border-width: 0px; background-color: #ffffff; border-collapse: collapse;">
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts30">Field</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts30">Type</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts30">Description</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">ENCRYPT_OUTPUT</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">true or false</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is true. If true database is encrypted before sending to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. See </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html">GnuPG Encrypt and Decrypt</a></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_ENABLED</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">true or false</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is true. If true database is sent to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">DELETE_BZ2_FILE</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">true or false</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is true. If true bz2 file of the database dump is deleted after encryption.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_DELETE_OLD_BACKUPS</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">true or false</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is true. If true older backups are deleted from </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. Date is determined by </span><span class="rvts30">DAYS_TO_KEEP_BACKUP</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">DAYS_TO_KEEP_BACKUP</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Positive integer</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is 60. If this value is set to 0 then all backups on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> will be deleted before the current backup is sent.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">DELETE_LOCAL_BACKUP</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">true or false</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is true. If true the local backup is deleted after the backup is confirmed to be on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SEND_EMAIL_ON_ERROR</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">true or false</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is false. If true </span><span class="rvts30">SEND_EMAIL_TO</span><span class="rvts6"> and </span><span class="rvts30">SEND_EMAIL_FROM</span><span class="rvts6"> must also be set. Sends an email specified by </span><span class="rvts30">SEND_EMAIL_TO</span><span class="rvts6"> value if there is an error during the execution of the script. Sendmail must be installed for email to be sent out by this script.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SEND_EMAIL_TO</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">A valid email address to send an email to upon an error. If specifying more then one email then separate each email by comma and space. Example: </span><span class="rvts30">SEND_EMAIL_TO</span><span class="rvts6">="myemail1@domain.com, myemail2@domain.com, myemail3@otherdomain.com"</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SEND_EMAIL_FROM</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">A valid email address that is used as the From when an email is sent.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" height="22" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">GPG_OWNER</span></p>
-</td>
-<td width="106" height="22" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" height="22" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">The GPG public key owner. See </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html">GnuPg Encrypt and Decrypt</a><span class="rvts6"> on how to set GPG public key.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SERVER_NAME</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">The name of the current server the script is running on. Used in logs and email.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">DB_USER</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "root". The MySql database user used to create database dumps with for backup.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG_NAME</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "mega_db.log". The name of the log file to output results.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG_ID</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "MEGA DATABASE: ". This is an Id to identify which script made the entry into the log file.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG_SEP</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">The text that is use to separate log entries from different times.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_DEL_OLD_NAME</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "</span><span class="rvts6">mega_del_old.sh</span><span class="rvts6">". The name of the script that is used to delete old files from </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. This value would only be changed if you renamed the "</span><span class="rvts6">mega_del_old.sh</span><span class="rvts6">" script. See </span><a class="rvts13" href="mega_del_oldsh.html">mega_del_old.sh</a></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_UPLOAD_FILE_NAME</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "</span><span class="rvts6">mega_upload_file.sh</span><span class="rvts6">". The name of the script that is used to upload backups to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. This value would only be change if you renamed the "</span><span class="rvts6">mega_upload_file.sh</span><span class="rvts6">" script. See </span><a class="rvts13" href="mega_upload_fiilesh.html">mega_upload_file.sh</a></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_EXIST_FILE_NAME</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "</span><span class="rvts6">mega_dir_file_exist.sh</span><span class="rvts6">". The name of the script that is used to check if a directory or file exist on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. This value would only change if you renamed the "</span><span class="rvts6">mega_dir_file_exist.sh</span><span class="rvts6">" script. See </span><a class="rvts13" href="mega_dir_file_existsh.html">mega_dir_file_exist.sh</a></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_MKDIR_FILE_NAME</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "</span><span class="rvts6">mega_mkdir.sh</span><span class="rvts6">". The name of the script that is used to make directories on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. This value would only change if you renamed the "</span><span class="rvts6">mega_mkdir.sh</span><span class="rvts6">" script. See </span><a class="rvts13" href="mega_mkdirsh.html">mega_mkdir.sh</a></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SYS_LOG_DIR</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "/var/log". This the path to where system errors are logged if they occur.</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="215" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">BAK_DIR</span></p>
-</td>
-<td width="106" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">string</span></p>
-</td>
-<td width="1068" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is "/home/${USER}/tmp". Which is the tmp directory of the user passed in via </span><a class="rvts24" href="mega_db_save_uploadsh.html#Param1">Param 1</a><span class="rvts6">. This is the directory that the backup of the database is created in.</span></p>
-</td>
-</tr>
-</table>
-</div>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h3 class="rvps5"><a name="ReturnCodes"></a>
 <span class="rvts0"><span class="rvts14">Possible codes returned by script</span></span></h3>
@@ -491,6 +302,30 @@
 </td>
 </tr>
 <tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">70</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Configuration file for mega scripts does not exist</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">71</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">No read permissions for configuration file</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">72</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">It seems that no values have been set in the configuration file for section [MEGA_DB_SAVE_UPLOAD]</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">73</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Invalid value in configuration</span></p>
+</td>
+</tr>
+<tr valign="top">
 <td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">100</span></p>
 </td>
 <td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">There is another mega process running. Can not continue.</span></p>
@@ -557,10 +392,10 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The first time you use cron you may have to choose an editor. I would recommend nano as it is the simplest.</span></p>
 <p class="rvps2"><span class="rvts6">Add your entry at the end of any current cron jobs that exist.</span></p>
-<h4 class="rvps12"><span class="rvts0"><span class="rvts32">Example Cron entry</span></span></h4>
+<h4 class="rvps12"><span class="rvts0"><span class="rvts31">Example Cron entry</span></span></h4>
 <p class="rvps2"><span class="rvts6">The following entry would run once a day at 9:40 PM and upload to the default account </span><a class="rvts13" href="Setupmegarc.html">set in .megarc</a><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6">This entry would backup database </span><span class="rvts19">"sammy_wordpress"</span><span class="rvts6"> for the user </span><span class="rvts19">"sammy"</span><span class="rvts6">.</span></p>
-<p class="rvps11"><span class="rvts31">40 21 * * * </span><span class="rvts31">/bin/bash</span><span class="rvts31"> </span><span class="rvts31">/usr/local/bin/</span><span class="rvts31">mega_db_save_upload.sh "sammy" "sammy_wordpress" &gt;/dev/null 2&gt;&amp;1</span></p>
+<p class="rvps11"><span class="rvts30">40 21 * * * </span><span class="rvts30">/bin/bash</span><span class="rvts30"> </span><span class="rvts30">/usr/local/bin/</span><span class="rvts30">mega_db_save_upload.sh "sammy" "sammy_wordpress" &gt;/dev/null 2&gt;&amp;1</span></p>
 <p class="rvps2"><span class="rvts6">By Default you would find the log entries in </span><span class="rvts19">/home/users/sammy/logs/mega_db.log</span></p>
 <p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts19">"/Root/myserver/backups/sammy/database/2018-06-07-21-40-01_sammy_wordpress.sql.bz2.gpg"</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -568,7 +403,7 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The following entry will run once a day at 1:00 AM and use a second mega account that the credentials stored in the </span><span class="rvts19">/.megarc_bob</span></p>
 <p class="rvps2"><span class="rvts6">This entry would backup database </span><span class="rvts19">"bugtracker_bob_db"</span><span class="rvts6"> for the user </span><span class="rvts19">"bob"</span><span class="rvts6">.</span></p>
-<p class="rvps11"><span class="rvts31">0 1 * * * </span><span class="rvts31">/bin/bash</span><span class="rvts31"> </span><span class="rvts31">/usr/local/bin/</span><span class="rvts31">mega_db_save_upload.sh "bob" "bugtracker_bob_db" ~/.megarc_bob &gt;/dev/null 2&gt;&amp;1</span></p>
+<p class="rvps11"><span class="rvts30">0 1 * * * </span><span class="rvts30">/bin/bash</span><span class="rvts30"> </span><span class="rvts30">/usr/local/bin/</span><span class="rvts30">mega_db_save_upload.sh "bob" "bugtracker_bob_db" ~/.megarc_bob &gt;/dev/null 2&gt;&amp;1</span></p>
 <p class="rvps2"><span class="rvts6">By Default you would find the log entries in </span><span class="rvts19">/home/users/bob/logs/mega_db.log</span></p>
 <p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts19">"/Root/myserver/backups/bob/database/2018-06-07-01-00-01_bugtracker_bob_db.sql.bz2.gpg"</span></p>
 <p class="rvps2"><span class="rvts19"><br/></span></p>
@@ -591,6 +426,11 @@
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h3 class="rvps5"><a name="Related"></a>
 <span class="rvts0"><span class="rvts14">Related</span></span></h3>
+<p class="rvps2"><a class="rvts13" href="GettingStarted.html">Getting Started</a></p>
+<p class="rvps2"><a class="rvts13" href="Setupmegarc.html">Setting up .megarc</a></p>
+<p class="rvps2"><a class="rvts13" href="ConfigurationFile.html">Configuration File</a></p>
+<p class="rvps2"><a class="rvts13" href="GnuPGEncryptandDecrypt.html">GnuPG Encrypt and Decrypt</a></p>
+<p class="rvps2"><a class="rvts13" href="SetupServerforMySqlDump.html">Set up Server for MySqlDump</a></p>
 <p class="rvps2"><a class="rvts11" href="https://crontab-generator.org/" target="_blank">Crontab Generator</a></p>
 <p class="rvps2"><span class="rvts6">mega_db_save_upload.sh</span><span class="rvts6"> </span><a class="rvts11" href="https://github.com/Amourspirit/mega_scripts/blob/master/mega_db_save_upload.sh" target="_blank">Latest Source</a></p>
 
@@ -644,7 +484,7 @@
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
-
+  <script src="js/totop.js"></script>
   <!-- Scripts -->
   <script>
     $(function() {

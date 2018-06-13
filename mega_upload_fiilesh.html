@@ -13,7 +13,7 @@
 
   <title>mega_upload_fiile.sh</title>
   <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
-  <meta name="keywords" content="mega_mkdir Name,Param 3,Source">
+  <meta name="keywords" content=",,">
 
 
 
@@ -48,13 +48,12 @@
   <link href="css/effects.min.css" rel="stylesheet" />
   <link href="css/theme-light-green.min.css" rel="stylesheet" />
   <link href="css/print.min.css" rel="stylesheet" media="print" />
-  <style type="text/css">nav { width: 350px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 350px} body.md-nav-expanded header { padding-left: 364px} }</style>
+  <style type="text/css">nav { width: 300px} @media screen and (min-width:769px) { body.md-nav-expanded div#main { margin-left: 300px} body.md-nav-expanded header { padding-left: 314px} }</style>
 
   <!-- Content style -->
   <link href="css/hnd.content.css" rel="stylesheet" />
-
+    <link href="css/totop.css" rel="stylesheet"/>
   
-
 
 
 </head>
@@ -115,7 +114,7 @@
       <div role="tabpanel" class="tab-pane active" id="contents">
         <div id="toc" class="tree-container unselectable"
             data-url="_toc.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -124,7 +123,7 @@
       <div role="tabpanel" class="tab-pane" id="index">
         <div id="keywords" class="tree-container unselectable"
             data-url="_keywords.json"
-            data-openlvl="1"
+            data-openlvl="0"
         >
             
         </div>
@@ -156,7 +155,7 @@
     </div>  <!-- /Tab panes -->
 
   </nav>
-
+   <div id="toTop">Back to Top</div>
   <div id="main">
 
     <article>
@@ -187,6 +186,10 @@
 <span class="rvts0"><span class="rvts17">Description</span></span></h2>
 <p class="rvps2"><span class="rvts6">This script will Upload file to a folder for a </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> account.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps5"><a name="configuration"></a>
+<span class="rvts0"><span class="rvts14">Configuration</span></span></h3>
+<p class="rvps2"><span class="rvts6">There are configuration settings that can go into </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> for section </span><span class="rvts6">[MEGA_UPLOAD_FILE]</span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="ConfigurationFile.html">Configuration file</a><span class="rvts6">.</span></p>
 <h3 class="rvps5"><a name="Parameters"></a>
 <span class="rvts0"><span class="rvts14">Parameters</span></span></h3>
 <p class="rvps9"><a name="Param1"></a>
@@ -272,6 +275,8 @@
 <p class="rvps2"><a class="rvts24" href="mega_upload_fiilesh.html#Param4">Param 4</a><span class="rvts6"> is optional but useful when calling </span><span class="rvts22">mega_upload_file.sh</span><span class="rvts6"> from a master script such as </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6"> (</span><a class="rvts11" href="https://github.com/Amourspirit/mega_scripts/blob/master/mega_db_save_upload.sh" target="_blank">source</a><span class="rvts6">).</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><a class="rvts24" href="mega_upload_fiilesh.html#Param5">Param 5</a><span class="rvts6"> is optional but also useful when calling </span><span class="rvts22">mega_upload_file.sh</span><span class="rvts6"> from a master script such as </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6"> (</span><a class="rvts11" href="https://github.com/Amourspirit/mega_scripts/blob/master/mega_db_save_upload.sh" target="_blank">source</a><span class="rvts6">). By passing Log and Date to </span><span class="rvts22">mega_upload_file.sh</span><span class="rvts6"> then one log file will contain the same datestamp for all of the other called related scripts.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">If the name of this file "</span><span class="rvts6">mega_upload_file.sh</span><span class="rvts6">" is change for any reason then it needs to be reflected in the configuration file. See </span><a class="rvts13" href="ConfigurationFile.html">Configuration File</a><span class="rvts6">.</span></p>
 <h3 class="rvps5"><a name="Example1"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">The following examples assume the path for upload already exit on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. Run </span><a class="rvts13" href="mega_mkdirsh.html">mega_mkdir.sh</a><span class="rvts6"> before running </span><span class="rvts22">mega_upload_file.sh</span><span class="rvts6">. If your not certain the path already exist on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
@@ -351,7 +356,7 @@
   <script src="js/hndsd.min.js"></script>
   <script src="js/hndse.min.js"></script>
   <script src="js/app.min.js"></script>
-
+  <script src="js/totop.js"></script>
   <!-- Scripts -->
   <script>
     $(function() {

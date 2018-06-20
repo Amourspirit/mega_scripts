@@ -26,7 +26,6 @@
 # Upload file to a folder for a mega.nz account.
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.3.0.0
 # File Name: mega_upload_file.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_upload_fiilesh.html
@@ -51,6 +50,7 @@
 # 112   The file to upload does not exist or can not gain read access.
 
 # trims white space from input
+MS_VERSION='1.3.1.0'
 function trim()
 {
     local var=$1;
@@ -66,55 +66,114 @@ SCRIPT_CONF=( # set default values in config array
     [LOG_ID]='MEGA PUT:'
     [LOG]='/var/log/mega_upload_file.log'
 )
+if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
+    # make tmp file to hold section of config.ini style section in
+    TMP_CONFIG_FILE=$(mktemp)
+    # SECTION_NAME is a var to hold which section of config you want to read
+    SECTION_NAME="MEGA_UPLOAD_FILE"
+    # sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
 
-# make tmp file to hold section of config.ini style section in
-TMP_CONFIG_FILE=$(mktemp)
-# SECTION_NAME is a var to hold which section of config you want to read
-SECTION_NAME="MEGA_UPLOAD_FILE"
-# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
-sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
+    # test tmp file to to see if it is greater then 0 in size
+    test -s "${TMP_CONFIG_FILE}"
+    if [ $? -eq 0 ]; then
+    # read the input of the tmp config file line by line
+        while read line; do
+            if [[ "$line" =~ ^[^#]*= ]]; then
+                setting_name=$(trim "${line%%=*}");
+                setting_value=$(trim "${line#*=}");
+                SCRIPT_CONF[$setting_name]=$setting_value
+            fi
+        done < "$TMP_CONFIG_FILE"
+    fi
 
-# test tmp file to to see if it is greater then 0 in size
-test -s "${TMP_CONFIG_FILE}"
-if [ $? -eq 0 ]; then
-   # read the input of the tmp config file line by line
-    while read line; do
-        if [[ "$line" =~ ^[^#]*= ]]; then
-            setting_name=$(trim "${line%%=*}");
-            setting_value=$(trim "${line#*=}");
-            SCRIPT_CONF[$setting_name]=$setting_value
-        fi
-    done < "$TMP_CONFIG_FILE"
+    # release the tmp file that is contains the current section values
+    unlink $TMP_CONFIG_FILE
 fi
 
-# release the tmp file that is contains the current section values
-unlink $TMP_CONFIG_FILE
 
-MEGA_DEFAULT_ROOT="/Root"
 DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
 LOG_ID=${SCRIPT_CONF[LOG_ID]}
 LOG=$(eval echo ${SCRIPT_CONF[LOG]})
-FILE_TO_UPLOAD=""
-LOCK_FILE="/tmp/mega_upload_file_lock"
-CURRENT_MEGA_FOLDER=""
-CURRENT_CONFIG=""
-CURRENT_SPACE=""
-MEGA_FULL_PATH=""
-HAS_CONFIG=0
 
-if [[ -n "$4" ]]; then
-    if [[ "$4" = "none" ]]; then
-        LOG=""
-    elif [[ "$4" = "silent" ]]; then
+usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
+[ $# -eq 0 ] && usage
+while getopts ":hvp:l:i:o:" arg; do
+  case $arg in
+    p) # Required: Specify -p The path to upload on Mega.nz.
+      MEGA_FULL_PATH="${OPTARG}"
+      ;;
+    l) # Required: Specify -l The path of the local file to upload onto Mega.nz.
+      FILE_TO_UPLOAD="${OPTARG}"
+      ;;
+    i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
+      CURRENT_CONFIG="${OPTARG}"
+      ;;
+    o) # Optional: Specify -o the output option Default log. Can be t for terminal. Can be s for silent
+      CURRENT_OUT="${OPTARG}"
+      ;;
+    d) # Optional: Specify -d Date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file. Example: 2018-06-21-14-31-22
+      DATELOG="${OPTARG}"
+      ;;
+    v) # -v Display version info
+      echo "mega_upload_file.sh version:${MS_VERSION}"
+      exit 0
+      ;;
+    h | *) # -h Display help.
+      usage
+      exit 0
+      ;;
+  esac
+done
+
+MEGA_DEFAULT_ROOT="/Root"
+FILE_TO_UPLOAD=''
+LOCK_FILE="/tmp/mega_upload_file_lock"
+CURRENT_MEGA_FOLDER=''
+CURRENT_CONFIG=''
+CURRENT_SPACE=''
+MEGA_FULL_PATH=''
+HAS_CONFIG=0
+if [[ -n "${CURRENT_OUT}" ]]; then
+    if [[ "${CURRENT_OUT}" = "t" ]]; then
+        LOG=/dev/stdout
+    elif [[ "${CURRENT_OUT}" = "s" ]]; then
         LOG=2>/dev/null
     else
-        LOG="$4"
+        LOG="${CURRENT_OUT}"
     fi
 fi
-
 # if log is not supplied then redirect to stdout
 if [[ -z $LOG ]]; then
   LOG=/dev/stdout
+fi
+if [ -z "${MEGA_FULL_PATH}" ]; then
+    # No argument for user supplied mega server path
+    echo "${DATELOG} ${LOG_ID} No argument supplied Mega server path." >> ${LOG}
+    exit 104
+else
+    MEGA_FULL_PATH="${MEGA_DEFAULT_ROOT}${MEGA_FULL_PATH}"
+fi
+if [ -z "${FILE_TO_UPLOAD}" ]; then
+    # No argument the file to upload to upload
+    echo "${DATELOG} ${LOG_ID} You are required pass in the file to upload to Mega." >> ${LOG}
+    exit 110
+fi
+# Checking that the actual file to upload exist and have read premissions
+test -r "${FILE_TO_UPLOAD}"
+if [ $? -ne 0 ]; then
+    echo "${DATELOG} ${LOG_ID} File to upload '${FILE_TO_UPLOAD}' does not exist or can not gain read access." >> ${LOG}
+    exit 112
+fi
+if [[ -n "${CURRENT_CONFIG}" ]]
+then
+    # Argument is given for default configuration for that contains user account and password
+    test -r "${CURRENT_CONFIG}"
+    if [ $? -ne 0 ]; then
+        echo "${DATELOG} ${LOG_ID} Config file '${CURRENT_CONFIG}' does not exist or can not gain read access." >> ${LOG}
+        exit 111
+    fi
+    HAS_CONFIG=1
 fi
 
 # https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
@@ -123,49 +182,6 @@ if ! [ -x "$(command -v megaput)" ]; then
     echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com" >> ${LOG}
     echo "${DATELOG} ${LOG_ID} MEGA put failed" >> ${LOG}
     exit 103
-fi
-if [ -z "$1" ]; then
-    # No argument for user supplied mega server path
-    echo "${DATELOG} ${LOG_ID} No argument supplied Mega server path." >> ${LOG}
-    exit 104
-else
-    MEGA_FULL_PATH="$MEGA_DEFAULT_ROOT$1"
-fi
-if [ -z "$2" ]; then
-    # No argument the file to upload to upload
-    echo "${DATELOG} ${LOG_ID} You are required pass in the file to upload to Mega." >> ${LOG}
-    exit 110
-else
-    FILE_TO_UPLOAD="$2"
-fi
-
-if [[ -n "$3" ]]
-then
-    # Argument is given for default configuration for that contains user account and password
-    CURRENT_CONFIG="$3"
-    test -r "${CURRENT_CONFIG}"
-    if [ $? -ne 0 ]; then
-        echo "${DATELOG} ${LOG_ID} Config file '${CURRENT_CONFIG}' does not exist or can not gain read access." >> ${LOG}
-        exit 111
-    fi
-fi
-
-if [ -n "$CURRENT_CONFIG" ]; then
-  HAS_CONFIG=1
-fi
-
-
-if [[ -n "$5" ]]
-then
-    # Argument is given for date log
-    DATELOG="$5"
-fi
-
-# Checking that the actual file to upload exist and have read premissions
-test -r "${FILE_TO_UPLOAD}"
-if [ $? -ne 0 ]; then
-    echo "${DATELOG} ${LOG_ID} File to upload '${FILE_TO_UPLOAD}' does not exist or can not gain read access." >> ${LOG}
-    exit 112
 fi
 
 # Checking lock file

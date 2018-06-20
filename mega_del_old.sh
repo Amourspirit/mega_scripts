@@ -26,7 +26,7 @@
 # Delete files from a folder for a mega.nz account.
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.3.0.0
+# Version 1.3.1.0
 # File Name: mega_del_old.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_del_oldsh.html

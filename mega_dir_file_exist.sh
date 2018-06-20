@@ -26,7 +26,6 @@
 # Script to check and see if a file or folder exist on a mega.nz account
 # Created by Paul Moss
 # Created: 2018-06-02
-# Version 1.3.0.0
 # File Name: mega_dir_file_exist.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_dir_file_existsh.html
@@ -37,8 +36,8 @@
 #    Eg: ./mega_dir_file_exist.sh "" ~/.megarc; echo $?
 #        this will output 1 if connection was successful and 0 otherwise while allowing to pass in a config file.
 #
-# Optional parameter 1: pass in the folder or file to see if exist
-# Optional parameter 2: pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
+# Optional -p pass in the folder or file to see if exist
+# Optional -i pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
 #
 # Exit Codes
 # Code  Defination
@@ -49,7 +48,7 @@
 # 102   megals not found. Megtools requires installing
 # 111   Optional argument two was passed in but the config can not be foud or we do not have read permissions
 
-
+MS_VERSION='1.3.1.0'
 MEGA_DEFAULT_ROOT="/Root"
 MEGA_SERVER_PATH=""
 CURRENT_CONFIG=""
@@ -59,31 +58,49 @@ FINAL_STATUS=0
 if ! [ -x "$(command -v megals)" ]; then
    exit 102
 fi
-if [[ -z "$1" ]]; then
+usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
+while getopts ":hvp:i:" arg; do
+  case $arg in
+    p) # Optional: Specify -p the path to test if it exist. Eg: /bin/bash /usr/local/bin/mega_dir_file_exist.sh -p '/MyPath/myfile'
+      MEGA_SERVER_PATH="${OPTARG}"
+      ;;
+    i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
+      CURRENT_CONFIG="${OPTARG}"
+      ;;
+    v) # -v Display version info
+      echo "mega_dir_file_exist.sh version:${MS_VERSION}"
+      exit 0
+      ;;
+    h) # -h Display help.
+      usage
+      exit 0
+      ;;
+  esac
+done
+if [[ -z "${MEGA_SERVER_PATH}" ]]; then
     # No argument for user supplied mega server path
-    MEGA_SERVER_PATH=$MEGA_DEFAULT_ROOT
+    MEGA_SERVER_PATH="${MEGA_DEFAULT_ROOT}"
     IN_ROOT=1
 else
-    MEGA_SERVER_PATH=$MEGA_DEFAULT_ROOT"$1"
+    MEGA_SERVER_PATH="${MEGA_DEFAULT_ROOT}${MEGA_SERVER_PATH}"
 fi
-if [[ -n "$2" ]]; then
+if [[ -n "${CURRENT_CONFIG}" ]]; then
     # Argument is given for default configuration for that contains user account and password
-    CURRENT_CONFIG="$2"
     test -r "${CURRENT_CONFIG}"
     if [ $? -ne 0 ]; then
         exit 111
     fi
 fi
 
-if [[ -z "$CURRENT_CONFIG" ]]; then
+if [[ -z "${CURRENT_CONFIG}" ]]; then
     # No argument is given for default configuration for that contains user account and password
-    MEGA_FILES=$(megals -l "$MEGA_SERVER_PATH")
+    MEGA_FILES=$(megals -l "${MEGA_SERVER_PATH}")
 else
     # Argument is given for default configuration that contains user account and password
-    MEGA_FILES=$(megals --config "$CURRENT_CONFIG" -l "$MEGA_SERVER_PATH")
+    MEGA_FILES=$(megals --config "${CURRENT_CONFIG}" -l "${MEGA_SERVER_PATH}")
 fi
 
-if [[ -z "$MEGA_FILES" ]]; then
+if [[ -z "${MEGA_FILES}" ]]; then
     #nothing returned from mggals this indicates that does not exist
     exit $FINAL_STATUS
 fi
@@ -102,12 +119,12 @@ else
     # write 0 to the file this way if loop finds nothing then default exit code will be 0
     echo 0 >> ${TMP_FILE_STATUS}
 
-    echo "$MEGA_FILES" | while read line
+    echo "${MEGA_FILES}" | while read line
     do
         # use grep to get the complete file path form megals output
         FILE_PATH=$(echo "$line" | grep -o '/Root.*')
 
-        if [[ $FILE_PATH != $MEGA_SERVER_PATH ]]; then
+        if [[ "${FILE_PATH}" != "${MEGA_SERVER_PATH}" ]]; then
             # not a match of the file / folder we are looking for
             continue
         fi

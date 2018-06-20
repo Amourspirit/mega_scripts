@@ -26,7 +26,6 @@
 # Script to check and see if a file or folder exist on a mega.nz account
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.3.0.0
 # File Name: mega_mkdir.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_mkdirsh.html
@@ -49,6 +48,7 @@
 # 115   megamkdir not found. Megtools requires installing
 
 # trims white space from input
+MS_VERSION='1.3.1.0'
 function trim()
 {
     local var=$1;
@@ -67,29 +67,30 @@ typeset -A SCRIPT_CONF # init array
 SCRIPT_CONF=( # set default values in config array
     [MEGA_EXIST_FILE_NAME]="mega_dir_file_exist.sh"
 )
+if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
+    # make tmp file to hold section of config.ini style section in
+    TMP_CONFIG_COMMON_FILE=$(mktemp)
+    # SECTION_NAME is a var to hold which section of config you want to read
+    SECTION_NAME="MEGA_COMMON"
+    # sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
 
-# make tmp file to hold section of config.ini style section in
-TMP_CONFIG_COMMON_FILE=$(mktemp)
-# SECTION_NAME is a var to hold which section of config you want to read
-SECTION_NAME="MEGA_COMMON"
-# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
-sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
+    # test tmp file to to see if it is greater then 0 in size
+    test -s "${TMP_CONFIG_COMMON_FILE}"
+    if [ $? -eq 0 ]; then
+    # read the input of the tmp config file line by line
+        while read line; do
+            if [[ "$line" =~ ^[^#]*= ]]; then
+                setting_name=$(trim "${line%%=*}");
+                setting_value=$(trim "${line#*=}");
+                SCRIPT_CONF[$setting_name]=$setting_value
+            fi
+        done < "$TMP_CONFIG_COMMON_FILE"
+    fi
 
-# test tmp file to to see if it is greater then 0 in size
-test -s "${TMP_CONFIG_COMMON_FILE}"
-if [ $? -eq 0 ]; then
-   # read the input of the tmp config file line by line
-    while read line; do
-        if [[ "$line" =~ ^[^#]*= ]]; then
-            setting_name=$(trim "${line%%=*}");
-            setting_value=$(trim "${line#*=}");
-            SCRIPT_CONF[$setting_name]=$setting_value
-        fi
-    done < "$TMP_CONFIG_COMMON_FILE"
+    # release the tmp file that is contains the current section values
+    unlink $TMP_CONFIG_COMMON_FILE
 fi
-
-# release the tmp file that is contains the current section values
-unlink $TMP_CONFIG_COMMON_FILE
 
 BASH="$(command -v bash)"
 SCRIPT_DIR=$(dirname "$0")
@@ -101,16 +102,34 @@ HAS_CONFIG=0
 DIR=""
 NEW_DIR=""
 EXIT_CODE=0
-if [ -z "$1" ]; then
+usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
+[ $# -eq 0 ] && usage
+while getopts ":hvp:i:" arg; do
+  case $arg in
+    p) # Required: Specify -p the Path to create if it does not exist on Mega.nz Example: /bin/bash /usr/local/bin/mega_mkdir.sh -p '/testdir/2018/bigtest/deep/deeper/bottom'; echo $?
+      DIR="${OPTARG}"
+      ;;
+    i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
+      CURRENT_CONFIG="${OPTARG}"
+      ;;
+     v) # -v Display version info
+      echo "mega_mkdir.sh version:${MS_VERSION}"
+      exit 0
+      ;;
+    h | *) # -h Display help.
+      usage
+      exit 0
+      ;;
+  esac
+done
+
+if [ -z "$DIR" ]; then
     # No argument supplied for path! Exiting
     exit 40
-else
-    DIR=$1
 fi
 
-if [[ -n "$2" ]]; then
+if [[ -n "$CURRENT_CONFIG" ]]; then
     # Argument is given for default configuration for that contains user account and password
-    CURRENT_CONFIG="$2"
     test -r "${CURRENT_CONFIG}"
     if [ $? -ne 0 ]; then
         #Config file does not exist or can not gain read access! Exit Code: 111
@@ -119,9 +138,9 @@ if [[ -n "$2" ]]; then
     HAS_CONFIG=1
 fi
 if [[ HAS_CONFIG -eq 1 ]]; then
-    ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "${DIR}" "${CURRENT_CONFIG}"
+    ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "-p '${DIR}''" "-i ${CURRENT_CONFIG}"
 else
-    ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "${DIR}"
+    ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "-p '${DIR}''"
 fi
 if [[ $? -eq 2 ]]; then
     # Directory already exist
@@ -153,9 +172,9 @@ for i in "${PARTS[@]}"; do
     if [[ -n $i ]]; then
         NEW_DIR="$NEW_DIR/$i"
         if [[ HAS_CONFIG -eq 1 ]]; then
-            ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "${NEW_DIR}" "${CURRENT_CONFIG}"
+            ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "-p '${NEW_DIR}''" "-i ${CURRENT_CONFIG}"
         else
-            ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "${NEW_DIR}"
+            ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "-p '${NEW_DIR}''"
         fi
         EXIST_RESULT=$?
         if [[ $EXIST_RESULT -eq 0 ]]; then

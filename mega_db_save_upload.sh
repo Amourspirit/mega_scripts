@@ -26,7 +26,7 @@
 # Script to backup database and upload to a mega.nz account
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.3.0.0
+# Version 1.3.1.0
 # File Name: mega_db_save_upload.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_db_save_uploadsh.html
@@ -422,18 +422,18 @@ fi
 
 # Create the path to upload to on mega if it does not exist
 if [[ "$MEGA_ENABLED" = true ]]; then
-    echo "${DATELOG} ${LOG_ID} Checking mega.nz path to see if it '$MEGA_BACKUP_DIR' directory exist. Will created if not." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} Checking mega.nz path to see if it '${MEGA_BACKUP_DIR}' directory exist. Will created if not." >> ${LOG}
     if [[ $HAS_CONFIG -eq 0 ]]; then
         # No argument is given for default configuration for that contains user account and password
-        ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" "$MEGA_BACKUP_DIR"
+        ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" "-p '${MEGA_BACKUP_DIR}''"
     else
         # Argument is given for default configuration that contains user account and password
-        ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" "$MEGA_BACKUP_DIR" "$CURRENT_CONFIG"
+        ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" "-p '${MEGA_BACKUP_DIR}' -i '${CURRENT_CONFIG}'"
     fi
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]; then
         # there was a problem running the script
-        echo "${DATELOG} ${LOG_ID} There was an issue running script '$MEGA_MKDIR_FILE_NAME'! Exit Code: $EXIT_CODE" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} There was an issue running script '${MEGA_MKDIR_FILE_NAME}'! Exit Code: ${EXIT_CODE}" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         rm -f "${LOCK_FILE}"
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then

@@ -30,18 +30,24 @@
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_upload_fiilesh.html
 #
-# Required parameter 1: pass location to upload your file to Mega. This is the folder name on mega.nz where your upload will be sent.
+# -p: Required: -p pass location to upload your file to Mega. This is the folder name on mega.nz where your upload will be sent.
 #     Exclude the "/Root" for your path. If your location is "/Root/myserver/backups" then pass "/myserver/backups" as the first parameter
-# Required parameter 2: pass in the file to upload to Mega. This must be the full path to the file that is to be uploaded to Mega.
-# Optional parameter 3: pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
-# Optional parameter 4: pass in the log file to log output from this script in.
-# Optional parameter 5: pass in the log file date in the format of yyyy-mm-dd-H-M-S (2018-05-27-01-34-06)
+# -l: Required: -l pass in the file to upload to Mega. This must be the full path to the file that is to be uploaded to Mega.
+# -i: Optional: -i pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
+# -o: Optional: -o pass in the log file to log output from this script in.
+# -d: Optional: -d pass in the date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file
+#     Example: 2018-06-21-14-31-22
+#     If -o is set to "s" this -d will be ignored.
+# -v: Display the current version of this script
+# -h: Display script help
 #
 # If this script is called from another script then having an option for log and log date makes it so the all entries in the log filee may have the same log date.
 #
 # Exit Codes
 # Code  Defination
 #   0   Normal Exit. No Errors Encountered.
+#   3   No write privileges to create log file
+#   4   Log file exist but no write privileges
 # 100   There is another mega process running. Can not continue.
 # 103   megaput not found. Megtools requires installing
 # 104   No argument supplied for Mega Server Path
@@ -57,13 +63,15 @@ function trim () {
     var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
     echo -n "$var";
 }
+LOG='/var/log/mega_upload_file.log'
+DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
 
 # create an array that contains configuration values
 # put values that need to be evaluated using eval in single quotes
 typeset -A SCRIPT_CONF # init array
 SCRIPT_CONF=( # set default values in config array
     [LOG_ID]='MEGA PUT:'
-    [LOG]='/var/log/mega_upload_file.log'
+    [LOG]="${LOG}"
 )
 # It is not necessary to have .mega_scriptsrc for thi script
 if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
@@ -92,10 +100,8 @@ if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
 fi
 
 
-DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
 LOG_ID=${SCRIPT_CONF[LOG_ID]}
 LOG=$(eval echo ${SCRIPT_CONF[LOG]})
-CURRENT_OUT=''
 
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 [ $# -eq 0 ] && usage
@@ -111,7 +117,7 @@ while getopts ":hvp:l:i:o:" arg; do
         CURRENT_CONFIG="${OPTARG}"
         ;;
     o) # Optional: Specify -o the output option Default log. Can be t for terminal. Can be s for silent
-        CURRENT_OUT="${OPTARG}"
+        LOG="${OPTARG}"
         ;;
     d) # Optional: Specify -d Date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file. Example: 2018-06-21-14-31-22
         DATELOG="${OPTARG}"
@@ -136,13 +142,42 @@ CURRENT_CONFIG=''
 CURRENT_SPACE=''
 MEGA_FULL_PATH=''
 HAS_CONFIG=0
-if [[ -n "${CURRENT_OUT}" ]]; then
-    if [[ "${CURRENT_OUT}" = "t" ]]; then
+
+if [[ -n "${LOG}" ]]; then
+    if [[ "${LOG}" = 't' ]]; then
+        # redirect to terminal output
         LOG=/dev/stdout
-    elif [[ "${CURRENT_OUT}" = "s" ]]; then
+    elif [[ "${LOG}" = 's' ]]; then
+        # redirect to null output
         LOG=2>/dev/null
     else
-        LOG="${CURRENT_OUT}"
+        # test to see if the log exits
+        if [[ -f "${LOG}" ]]; then
+            # log does exist
+            # see if we have write access to it
+            if ! [[ -w "${LOG}" ]]; then
+                # no write access to log file
+                # exit with error code 3
+                echo "No write access log file '${LOG}'. Ensure you have write privileges. Exit Code: 3"
+                exit 3
+            fi
+        else
+            # log does not exist see if we can create it
+            mkdir -p "$(dirname ${LOG})"
+            if [[ $? -ne 0 ]]; then
+                # unable to create log
+                # exit with error code 4
+                echo "Unable to create log file '${LOG}'. Ensure you have write privileges. Exit Code: 4"
+                exit 4
+            fi
+            touch "${LOG}"
+            if [[ $? -ne 0 ]]; then
+                # unable to create log
+                # exit with error code 4
+                echo "Unable to create log file '${LOG}'. Ensure you have write privileges. Exit Code: 4"
+                exit 4
+            fi
+        fi
     fi
 fi
 # if log is not supplied then redirect to stdout

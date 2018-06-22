@@ -30,16 +30,18 @@
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_del_oldsh.html
 #
-# param 1: Optional: The full path directory to delete older files from Mega.nz. Default is "/Root"
-# param 2: Optional: The number of days as a positive integer before todays date to delete files older then from Mega.nz. Default is 60 days.
-# param 3: Optional: The configuration file to use that contain the credientials for the Mega.nz account you want to access
-# param 4: Optional: The Log file to log to results of running mega_del_old.sh.
-#   Can be value of "none" in which case results are outputed to the terminal window
-#   Can be value of "silent" in which case no results are written to a log file or terminal window.
-#   Defaults to /var/log/mega_delete_old.log (requires script be run as root)
-# param 5: Optional: Date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file
-#   Example: 2018-06-21-14-31-22
-#   If Param 4 is set to "silent" this param 5 will be ignored.
+# -p: Optional: -p pass in the full path directory to delete older files from Mega.nz. Default is "/Root"
+# -a: Optional: -a pass in the number of days as a positive integer before todays date to delete files older then from Mega.nz. Default is 60 days.
+# -i: Optional: i- pass in the configuration file to use that contain the credientials for the Mega.nz account you want to access
+# -o: Optional: -o pass in the Log file to log to results of running mega_del_old.sh.
+#     Can be value of "n" in which case results are outputed to the terminal window
+#     Can be value of "s" in which case no results are written to a log file or terminal window.
+#     Defaults to /var/log/mega_delete_old.log (requires script be run as root)
+# -d: Optional: -d pass in the date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file
+#     Example: 2018-06-21-14-31-22
+#     If -o is set to "s" this -d will be ignored.
+# -v: Display the current version of this script
+# -h: Display script help
 #
 # If this script is called from another script then having an option for log and log date makes it so the entries all have the same log date.
 #

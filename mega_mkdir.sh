@@ -111,7 +111,7 @@ while getopts ":hvp:i:" arg; do
     i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
         CURRENT_CONFIG="${OPTARG}"
         ;;
-     v) # -v Display version info
+    v) # -v Display version info
         echo "$(basename $0) version:${MS_VERSION}"
         exit 0
         ;;

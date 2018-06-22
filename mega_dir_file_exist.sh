@@ -36,8 +36,10 @@
 #    Eg: ./mega_dir_file_exist.sh "" ~/.megarc; echo $?
 #        this will output 1 if connection was successful and 0 otherwise while allowing to pass in a config file.
 #
-# Optional -p pass in the folder or file to see if exist
-# Optional -i pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
+# -p: Optional: -p pass in the folder or file to see if exist
+# -i: Optional: -i pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
+# -v: Display the current version of this script
+# -h: Display script help
 #
 # Exit Codes
 # Code  Defination

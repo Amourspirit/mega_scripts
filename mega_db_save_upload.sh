@@ -77,13 +77,13 @@
 # 115     megamkdir not found. Megtools requires installing
 
 # trims white space from input
-function trim()
-{
+function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
     var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
     echo -n "$var";
 }
+
 CONFIG_FILE="$HOME/.mega_scriptsrc"
 test -e "${CONFIG_FILE}"
 if [ $? -ne 0 ];then

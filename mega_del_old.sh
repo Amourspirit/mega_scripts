@@ -26,7 +26,6 @@
 # Delete files from a folder for a mega.nz account.
 # Created by Paul Moss
 # Created: 2018-05-27
-# Version 1.3.1.0
 # File Name: mega_del_old.sh
 # Github: https://github.com/Amourspirit/mega_scripts
 # Help: https://amourspirit.github.io/mega_scripts/mega_del_oldsh.html
@@ -47,19 +46,24 @@
 # Exit Codes
 # Code  Defination
 #   0   Normal Exit. No Errors Encountered.
+#   3   No write privileges to create log file
+#   4   Log file exist but no write privileges
+#  10   Not a valid positve integer for -d option.
 # 100   There is another mega process running. Can not continue.
 # 101   megarm not found. Megtools requires installing
 # 102   megals not found. Megtools requires installing
 # 111   Optional argument Param 3 was passed in but the config can not be found or we do not have read permissions
 
+MS_VERSION='1.3.1.0'
 # trims white space from input
-function trim()
-{
+function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
     var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
     echo -n "$var";
 }
+LOG='/var/log/mega_del_old.log'
+DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
 
 # create an array that contains configuration values
 # put values that need to be evaluated using eval in single quotes
@@ -67,56 +71,116 @@ typeset -A SCRIPT_CONF # init array
 SCRIPT_CONF=( # set default values in config array
     [LOG_ID]='MEGA DELETE OLD:'
     [MAX_DAYS_DEFAULT]=60
-    [LOG]='/var/log/mega_delete_old.log'
+    [LOG]="${LOG}"
 )
 
-# make tmp file to hold section of config.ini style section in
-TMP_CONFIG_FILE=$(mktemp)
-# SECTION_NAME is a var to hold which section of config you want to read
-SECTION_NAME="MEGA_DELETE_OLD"
-# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
-sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
+# It is not necessary to have .mega_scriptsrc for thi script
+if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
+    # make tmp file to hold section of config.ini style section in
+    TMP_CONFIG_FILE=$(mktemp)
+    # SECTION_NAME is a var to hold which section of config you want to read
+    SECTION_NAME="MEGA_DELETE_OLD"
+    # sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
 
-# test tmp file to to see if it is greater then 0 in size
-test -s "${TMP_CONFIG_FILE}"
-if [ $? -eq 0 ]; then
-   # read the input of the tmp config file line by line
-    while read line; do
-        if [[ "$line" =~ ^[^#]*= ]]; then
-            setting_name=$(trim "${line%%=*}");
-            setting_value=$(trim "${line#*=}");
-            SCRIPT_CONF[$setting_name]=$setting_value
-        fi
-    done < "$TMP_CONFIG_FILE"
+    # test tmp file to to see if it is greater then 0 in size
+    test -s "${TMP_CONFIG_FILE}"
+    if [ $? -eq 0 ]; then
+    # read the input of the tmp config file line by line
+        while read line; do
+            if [[ "$line" =~ ^[^#]*= ]]; then
+                setting_name=$(trim "${line%%=*}");
+                setting_value=$(trim "${line#*=}");
+                SCRIPT_CONF[$setting_name]=$setting_value
+            fi
+        done < "$TMP_CONFIG_FILE"
+    fi
+    # release the tmp file that is contains the current section values
+    unlink $TMP_CONFIG_FILE
 fi
-
-# release the tmp file that is contains the current section values
-unlink $TMP_CONFIG_FILE
 
 #  read the folder into a var
 MEGA_DEFAULT_ROOT="/Root"
-DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
-LOG_ID=${SCRIPT_CONF[LOG_ID]}
 MAX_DAYS_DEFAULT=${SCRIPT_CONF[MAX_DAYS_DEFAULT]}
 LOG=$(eval echo ${SCRIPT_CONF[LOG]})
-
+LOG_ID=${SCRIPT_CONF[LOG_ID]}
 FILE_COUNT=0
 FILE_COUNT_DELETED=0
 LOCK_FILE="/tmp/mega_del_old_lock"
 CURRENT_MEGA_FOLDER=""
-CURRENT_CONFIG=""
-CURRENT_SPACE=""
-MAX_AGE=""
-MEGA_FILES=""
+CURRENT_CONFIG=''
+CURRENT_SPACE=''
+MAX_AGE=''
+MEGA_FILES=''
 IN_ROOT=0
+MEGA_SERVER_PATH=''
+HAS_CONFIG=0
 
-if [[ -n "$4" ]]; then
-    if [[ "$4" = "none" ]]; then
-        LOG=""
-    elif [ "$4" = "silent" ]; then
+usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
+while getopts ":hvp:a:o:d:i:" arg; do
+  case $arg in
+    p) # Optional: Specify -p the full path directory to delete older files from Mega.nz.
+        MEGA_SERVER_PATH="${OPTARG}"
+        ;;
+    a) # Optional: Specify -a for age that represents the number of days as a positive integer before todays date to delete files older then from Mega.nz.
+        MAX_DAYS_DEFAULT="${OPTARG}"
+        ;;
+    i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
+        CURRENT_CONFIG="${OPTARG}"
+        ;;
+    o) # Optional: Specify -o the output option Default log. Can be t for terminal. Can be s for silent
+        LOG="${OPTARG}"
+        ;;
+    d) # Optional: Specify -d Date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file. Example: 2018-06-21-14-31-22
+        DATELOG="${OPTARG}"
+        ;;
+    v) # -v Display version info
+        echo "$(basename $0) version:${MS_VERSION}"
+        exit 0
+        ;;
+    h) # -h Display help.
+        echo 'For online help visit: https://amourspirit.github.io/mega_scripts/mega_del_oldsh.html'
+        usage
+        exit 0
+        ;;
+  esac
+done
+
+if [[ -n "${LOG}" ]]; then
+    if [[ "${LOG}" = 't' ]]; then
+        # redirect to terminal output
+        LOG=/dev/stdout
+    elif [[ "${LOG}" = 's' ]]; then
+        # redirect to null output
         LOG=2>/dev/null
     else
-        LOG="$4"
+        # test to see if the log exits
+        if [[ -f "${LOG}" ]]; then
+            # log does exist
+            # see if we have write access to it
+            if ! [[ -w "${LOG}" ]]; then
+                # no write access to log file
+                # exit with error code 3
+                echo "No write access log file '${LOG}'. Ensure you have write privileges. Exit Code: 3"
+                exit 3
+            fi
+        else
+            # log does not exist see if we can create it
+            mkdir -p "$(dirname ${LOG})"
+            if [[ $? -ne 0 ]]; then
+                # unable to create log
+                # exit with error code 4
+                echo "Unable to create log file '${LOG}'. Ensure you have write privileges. Exit Code: 4"
+                exit 4
+            fi
+            touch "${LOG}"
+            if [[ $? -ne 0 ]]; then
+                # unable to create log
+                # exit with error code 4
+                echo "Unable to create log file '${LOG}'. Ensure you have write privileges. Exit Code: 4"
+                exit 4
+            fi
+        fi
     fi
 fi
 
@@ -139,6 +203,14 @@ if ! [ -x "$(command -v megals)" ]; then
     exit 102
 fi
 
+# test days input for valid number
+if ! [[ $MAX_DAYS_DEFAULT =~ ^[0-9]+$ ]]; then
+    # not a valid number or negative
+    echo "${DATELOG} ${LOG_ID} Not a valid positve integer for -d option." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} The -d option is incorrect. Exit code: 10" >> ${LOG}
+    exit 10
+fi
+
 # Checking lock file
 test -r "${LOCK_FILE}"
 if [ $? -eq 0 ];then
@@ -156,37 +228,27 @@ TMP_FILE_COUNT_DELETED=$(mktemp)
 echo 0 >> ${TMP_FILE_COUNT}
 echo 0 >> ${TMP_FILE_COUNT_DELETED}
 
-if [ -z "$1" ]; then
+if [ -z "${MEGA_SERVER_PATH}" ]; then
     # No argument for user supplied for folder
-    CURRENT_MEGA_FOLDER="$MEGA_DEFAULT_ROOT"
+    CURRENT_MEGA_FOLDER="${MEGA_DEFAULT_ROOT}"
     IN_ROOT=1
 else
-    CURRENT_MEGA_FOLDER="$MEGA_DEFAULT_ROOT$1"
+    CURRENT_MEGA_FOLDER="${MEGA_DEFAULT_ROOT}${MEGA_SERVER_PATH}"
 fi
+# calc how what date to use as the max age for expired files.
+MAX_AGE=$(date --date="-${MAX_DAYS_DEFAULT} day" +%s)
 
-if [ -z "$2" ]; then
-    # No argument for how old a file must be before it is deleted
-    MAX_AGE=$(date --date="-$MAX_DAYS_DEFAULT day" +%s)
-else
-    MAX_AGE=$(date --date="-$2 day" +%s)
-fi
-
-if [[ -n "$3" ]]; then
+if [[ -n "${CURRENT_CONFIG}" ]]; then
     # Argument is given for default configuration for that contains user account and password
-    CURRENT_CONFIG="$3"
     test -r "${CURRENT_CONFIG}"
-    if [ $? -ne 0 ]; then
-        echo "${DATELOG} ${LOG_ID} Config file '${CURRENT_CONFIG}' does not exist or can not gain read access! Exit Code: 111" >> ${LOG}
+    if [[ $? -ne 0 ]]; then
+        echo "${DATELOG} ${LOG_ID} Config file '${CURRENT_CONFIG}' does not exist or can not gain read access." >> ${LOG}
         exit 111
     fi
+    HAS_CONFIG=1
 fi
 
-if [[ -n "$5" ]]; then
-    # Argument is given for date log
-    DATELOG="$5"
-fi
-
-if [[ -z "$CURRENT_CONFIG" ]]; then
+if [[ $HAS_CONFIG -eq 0 ]]; then
     # No argument is given for default configuration for that contains user account and password
     MEGA_FILES=$(megals -l "$CURRENT_MEGA_FOLDER")
 else
@@ -197,7 +259,7 @@ fi
 FROM_DATESTAMP=$(date -d "@$MAX_AGE")
 echo "${DATELOG} ${LOG_ID} Processing Files older than '${FROM_DATESTAMP}' for folder '${CURRENT_MEGA_FOLDER}' " >> ${LOG}
 
-echo "$MEGA_FILES" | while read line
+echo "${MEGA_FILES}" | while read line
 do
 
     FILE_TYPE=$(echo "$line" | awk '{print $3}')
@@ -226,17 +288,17 @@ do
             # use grep to get the complete file path form megals output
             FILE_PATH=$(echo "$line" | grep -o '/Root.*')
             
-            if [[ -z "$CURRENT_CONFIG" ]]; then
+            if [[ $HAS_CONFIG -eq 0 ]]; then
                 # No argument is given for default configuration for that contains user account and password
-                megarm "$FILE_PATH" >> ${LOG}
+                megarm "${FILE_PATH}" >> ${LOG}
             else
                 # Argument is given for default configuration that contains user account and password
-                megarm --config "$CURRENT_CONFIG" "$FILE_PATH" >> ${LOG}
+                megarm --config "${CURRENT_CONFIG}" "${FILE_PATH}" >> ${LOG}
             fi
             echo "${DATELOG} ${LOG_ID} Deleted '${FILE_PATH}' with modifed date of: ${FILE_STR_DATE}" >> ${LOG}
 
             # FILE_COUNT_DELETED=$(($FILE_COUNT_DELETED +1))
-            FILE_COUNT_DELETED=$(($(cat $TMP_FILE_COUNT_DELETED) + 1))
+            FILE_COUNT_DELETED=$(($(cat ${TMP_FILE_COUNT_DELETED}) + 1))
             # clear the tmp file
             truncate -s 0 "${TMP_FILE_COUNT_DELETED}"
             # Store the new value
@@ -244,14 +306,15 @@ do
         fi  
     fi
 done
-FILE_COUNT=$(cat $TMP_FILE_COUNT)
-FILE_COUNT_DELETED=$(cat $TMP_FILE_COUNT_DELETED)
-unlink $TMP_FILE_COUNT
-unlink $TMP_FILE_COUNT_DELETED
+
+FILE_COUNT=$(cat ${TMP_FILE_COUNT})
+FILE_COUNT_DELETED=$(cat ${TMP_FILE_COUNT_DELETED})
+unlink ${TMP_FILE_COUNT}
+unlink ${TMP_FILE_COUNT_DELETED}
 echo "${DATELOG} ${LOG_ID} Total Files: ${FILE_COUNT}" >> ${LOG}
 echo "${DATELOG} ${LOG_ID} Deleted Files: ${FILE_COUNT_DELETED}" >> ${LOG}
 
-if [ -z "$CURRENT_CONFIG" ]; then
+if [ $HAS_CONFIG -eq 0 ]; then
     # No argument is given for default configuration for that contains user account and password
     # tr will remove the line breaks in this case and replace with a space to get the output on one line
     CURRENT_SPACE=$(megadf --human | tr '\n' ' ')

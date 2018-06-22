@@ -62,19 +62,20 @@ usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#/
 while getopts ":hvp:i:" arg; do
   case $arg in
     p) # Optional: Specify -p the path to test if it exist. Eg: /bin/bash /usr/local/bin/mega_dir_file_exist.sh -p '/MyPath/myfile'
-      MEGA_SERVER_PATH="${OPTARG}"
-      ;;
+        MEGA_SERVER_PATH="${OPTARG}"
+        ;;
     i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
-      CURRENT_CONFIG="${OPTARG}"
-      ;;
+        CURRENT_CONFIG="${OPTARG}"
+        ;;
     v) # -v Display version info
-      echo "mega_dir_file_exist.sh version:${MS_VERSION}"
-      exit 0
-      ;;
+        echo "$(basename $0) version:${MS_VERSION}"
+        exit 0
+        ;;
     h) # -h Display help.
-      usage
-      exit 0
-      ;;
+        echo 'For online help visit: https://amourspirit.github.io/mega_scripts/mega_dir_file_existsh.html'
+        usage
+        exit 0
+        ;;
   esac
 done
 if [[ -z "${MEGA_SERVER_PATH}" ]]; then

@@ -51,8 +51,7 @@
 
 # trims white space from input
 MS_VERSION='1.3.1.0'
-function trim()
-{
+function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
     var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
@@ -66,6 +65,7 @@ SCRIPT_CONF=( # set default values in config array
     [LOG_ID]='MEGA PUT:'
     [LOG]='/var/log/mega_upload_file.log'
 )
+# It is not necessary to have .mega_scriptsrc for thi script
 if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
     # make tmp file to hold section of config.ini style section in
     TMP_CONFIG_FILE=$(mktemp)
@@ -95,34 +95,36 @@ fi
 DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
 LOG_ID=${SCRIPT_CONF[LOG_ID]}
 LOG=$(eval echo ${SCRIPT_CONF[LOG]})
+CURRENT_OUT=''
 
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 [ $# -eq 0 ] && usage
 while getopts ":hvp:l:i:o:" arg; do
   case $arg in
     p) # Required: Specify -p The path to upload on Mega.nz.
-      MEGA_FULL_PATH="${OPTARG}"
-      ;;
+        MEGA_FULL_PATH="${OPTARG}"
+        ;;
     l) # Required: Specify -l The path of the local file to upload onto Mega.nz.
-      FILE_TO_UPLOAD="${OPTARG}"
-      ;;
+        FILE_TO_UPLOAD="${OPTARG}"
+        ;;
     i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
-      CURRENT_CONFIG="${OPTARG}"
-      ;;
+        CURRENT_CONFIG="${OPTARG}"
+        ;;
     o) # Optional: Specify -o the output option Default log. Can be t for terminal. Can be s for silent
-      CURRENT_OUT="${OPTARG}"
-      ;;
+        CURRENT_OUT="${OPTARG}"
+        ;;
     d) # Optional: Specify -d Date of Log in the format of yyyy-mm-dd-hh-mm-ss. This will be used as the date stamp in the log file. Example: 2018-06-21-14-31-22
-      DATELOG="${OPTARG}"
-      ;;
+        DATELOG="${OPTARG}"
+        ;;
     v) # -v Display version info
-      echo "mega_upload_file.sh version:${MS_VERSION}"
-      exit 0
-      ;;
+        echo "$(basename $0) version:${MS_VERSION}"
+        exit 0
+        ;;
     h | *) # -h Display help.
-      usage
-      exit 0
-      ;;
+        echo 'For online help visit: https://amourspirit.github.io/mega_scripts/mega_upload_fiilesh.html'
+        usage
+        exit 0
+        ;;
   esac
 done
 
@@ -165,11 +167,10 @@ if [ $? -ne 0 ]; then
     echo "${DATELOG} ${LOG_ID} File to upload '${FILE_TO_UPLOAD}' does not exist or can not gain read access." >> ${LOG}
     exit 112
 fi
-if [[ -n "${CURRENT_CONFIG}" ]]
-then
+if [[ -n "${CURRENT_CONFIG}" ]]; then
     # Argument is given for default configuration for that contains user account and password
     test -r "${CURRENT_CONFIG}"
-    if [ $? -ne 0 ]; then
+    if [[ $? -ne 0 ]]; then
         echo "${DATELOG} ${LOG_ID} Config file '${CURRENT_CONFIG}' does not exist or can not gain read access." >> ${LOG}
         exit 111
     fi

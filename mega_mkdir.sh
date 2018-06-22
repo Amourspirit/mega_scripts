@@ -49,8 +49,7 @@
 
 # trims white space from input
 MS_VERSION='1.3.1.0'
-function trim()
-{
+function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
     var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
@@ -107,19 +106,20 @@ usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#/
 while getopts ":hvp:i:" arg; do
   case $arg in
     p) # Required: Specify -p the Path to create if it does not exist on Mega.nz Example: /bin/bash /usr/local/bin/mega_mkdir.sh -p '/testdir/2018/bigtest/deep/deeper/bottom'; echo $?
-      DIR="${OPTARG}"
-      ;;
+        DIR="${OPTARG}"
+        ;;
     i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
-      CURRENT_CONFIG="${OPTARG}"
-      ;;
+        CURRENT_CONFIG="${OPTARG}"
+        ;;
      v) # -v Display version info
-      echo "mega_mkdir.sh version:${MS_VERSION}"
-      exit 0
-      ;;
+        echo "$(basename $0) version:${MS_VERSION}"
+        exit 0
+        ;;
     h | *) # -h Display help.
-      usage
-      exit 0
-      ;;
+        echo 'For online help visit: https://amourspirit.github.io/mega_scripts/mega_mkdirsh.html'
+        usage
+        exit 0
+        ;;
   esac
 done
 

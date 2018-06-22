@@ -32,10 +32,13 @@
 # 
 # This script will make directories if they do not exist for a path.
 # This is the mega.nz equivalent of mkdir -p for UNIX
-#    Eg: ./mega_mkdir.sh "/testdir/2018/bigtest/deep/deeper/bottom"
+#    Eg: ./mega_mkdir.sh -p "/testdir/2018/bigtest/deep/deeper/bottom"
 #
-# Optional parameter 1: pass in the folder or file to see if exist
-# Optional parameter 2: pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
+# -p: Optional: -p pass in the Path to create if it does not exist on Mega.nz
+#     Example: /bin/bash /usr/local/bin/mega_mkdir.sh -p '/testdir/2018/bigtest/deep/deeper/bottom'; echo $?
+# -i: Optional: -i pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
+# -v: Display the current version of this script
+# -h: Display script help
 #
 # Exit Codes
 # Code  Defination

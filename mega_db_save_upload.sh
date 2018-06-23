@@ -93,6 +93,7 @@
 # 111     Config can not be found or we do not have read permissions.
 # 112     The file to upload does not exist or can not gain read access.
 # 115     megamkdir not found. Megtools requires installing
+# 116     gpg
 
 MS_VERSION='1.3.1.0'
 # trims white space from input
@@ -159,12 +160,12 @@ if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
 
     # test tmp file to to see if it is greater then 0 in size
     # MEGA_COMMON IS REQUIRED 
-    test -s "${TMP_CONFIG_COMMON_FILE}"
-    if [ $? -ne 0 ];then
-        echo "It seems that no values have been set in the '$HOME/.mega_scriptsrc' for section [$SECTION_NAME]"
-        unlink $TMP_CONFIG_COMMON_FILE
-        exit 72
-    fi
+    # test -s "${TMP_CONFIG_COMMON_FILE}"
+    # if [ $? -ne 0 ];then
+    #     echo "It seems that no values have been set in the '$HOME/.mega_scriptsrc' for section [$SECTION_NAME]"
+    #     unlink $TMP_CONFIG_COMMON_FILE
+    #     exit 72
+    # fi
     while read line; do
         if [[ "$line" =~ ^[^#]*= ]]; then
             setting_name=$(trim "${line%%=*}");
@@ -240,20 +241,26 @@ while getopts ":hvu:d:i:o:s:f:m:" arg; do
     d) # Required: Specify -d the name of the database to be backed up to Mega.nz.
         DB_NAME="${OPTARG}"
         ;;
+    g) # Optional: Specify -g the gpg owner of the publick key to use for encryption. If encryption is turned on and -g option is not set then .mega_scriptsrc must have the value set for GPG_OWNER
+        GPG_OWNER="${OPTARG}"
+        ;;
     i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
         CURRENT_CONFIG="${OPTARG}"
         ;;
     o) # Optional: Specify -o the output option Default log. Can be t for terminal. Can be s for silent
         LOG="${OPTARG}"
         ;;
-    s) # Optional: Specify -o the output option System log. This is the log for high level errors. Can be t for terminal. Can be s for silent
+    s) # Optional: Specify -s the output option System log. This is the log for high level errors. Can be t for terminal. Can be s for silent
         SYS_LOG="${OPTARG}"
         ;;
-    f) # Optional: Specify -f the options that can to ignore and forget checking. Can be c for config and/or d for database. EG: -f 'cd' would ignore checking if mysql config and database exist.
+    f) # Optional: Specify -f the options that can to ignore and forget checking. Can be u for user, c for config and/or d for database. EG: -f 'cd' would ignore checking if mysql config and database exist.
         FORGET_OPT="${OPTARG}"
         ;;
     m) # Optional: Specify -m the option for email on error. y for send on error and n for no send email on error. .mega_scriptsrc must be configured for email to send.
         OPT_EMAIL="${OPTARG}"
+        ;;
+    n) # Optional: Specify -n the name of the server used in logs both locally and in path name on mega.nz. If this flag is not set then SERVER_NAME must be set in .mega_scriptsrc
+        SERVER_NAME="${OPTARG}"
         ;;
     v) # -v Display version info
         echo "$(basename $0) version:${MS_VERSION}"
@@ -464,6 +471,11 @@ OUTPUT_FILE=$DB_FILE
 RE_INTEGER='^[0-9]+$'
 
 if [[ "$ENCRYPT_OUTPUT" = true ]]; then
+    # test GPG_OWNER is set
+    if [[ -z $GPG_OWNER ]]; then
+        # fatal error GPG_OWNER must be set for enryption
+        
+    fi
     OUTPUT_FILE=$OUTPUT_FILE".gpg"
 fi
 

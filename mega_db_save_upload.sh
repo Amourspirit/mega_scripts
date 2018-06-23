@@ -37,20 +37,38 @@
 #       Other mega config files can be created and passed in as a parameter to this script
 #       config file such as ~/my.cnf and ~/.mgearc must be chmod 0700
 #
-# Required parameter 1: pass in the user for the current backup
-# Required parameter 2: pass in the name of the database to be backed up to mega.nz
-# Optional parameter 3: pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
+# -u: Required: -u pass in the user for the current backup
+# -d: Required: -d pass in the name of the database to be backed up to mega.nz
+# -i: Optional: -i pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
+# -o: Optional: -o pass in the Log file to log to results of running mega_del_old.sh.
+#     Can be value of "n" in which case results are outputed to the terminal window
+#     Can be value of "s" in which case no results are written to a log file or terminal window.
+#     Defaults to /home/${USER}/logs/mega_db.log
+# -s: Optional: -s pass in the Log file to log to results of running mega_del_old.sh.
+#     Can be value of "n" in which case results are outputed to the terminal window
+#     Can be value of "s" in which case no results are written to a log file or terminal window.
+#     Defaults to /var/log/mega_delete_old.log (requires script be run as root)
+# -f: Optional: -f to pass in options to forget or ignore checking for
+#     c skips testing for mysql configuration
+#     d skips testing for mysql database
+#     u skips testing for unix user. Must override LOG, BAK_DIR and MEGA_BACKUP_DIR in .mega_scriptsrc
+#     Example: -f 'dc' would skip checking of mysql configuration and database.
+# -m: Optionial: -m pass in the option for email on error. y for send on error and n for no send email on error. .mega_scriptsrc must be configured for email to send.
+# -v: Display the current version of this script
+# -h: Display script help
 #
 # General Notes:
-#     If user is not passed in or user does not exist then log will be written to /var/log/${LOG_NAM}
+#     If user is not passed in or user does not exist then log will be written to /var/log/mega_db.log my default. Can be overriden in .mega_scriptsrc
 #
 # Examples:
-#     /bin/bash /usr/local/bin/mega_db_save_upload.sh "user" "user_db"
-#     /bin/bash /usr/local/bin/mega_db_save_upload.sh "user_fan" "user_fan_db" ~/.megarc_user_fan
+#     /bin/bash /usr/local/bin/mega_db_save_upload.sh -u 'user' -d 'user_db'
+#     /bin/bash /usr/local/bin/mega_db_save_upload.sh -u 'user_fan' -d 'user_fan_db' -i "$HOME/.megarc_user_fan"
 #
 # Exit Codes
 # Code    Definition
 #   0     Normal Exit script found no issues
+#   3     No write privileges to create log file
+#   4     Log file exist but no write privileges
 #  20     No argument for user supplied for user
 #  21     No argument for user supplied for database
 #  30     File not found on mega.nz
@@ -76,6 +94,7 @@
 # 112     The file to upload does not exist or can not gain read access.
 # 115     megamkdir not found. Megtools requires installing
 
+MS_VERSION='1.3.1.0'
 # trims white space from input
 function trim () {
     local var=$1;
@@ -83,7 +102,7 @@ function trim () {
     var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
     echo -n "$var";
 }
-
+THIS_SCRIPT=`basename "$0"`
 CONFIG_FILE="$HOME/.mega_scriptsrc"
 test -e "${CONFIG_FILE}"
 if [ $? -ne 0 ];then
@@ -114,71 +133,74 @@ SCRIPT_CONF=( # set default values in config array
     [GPG_OWNER]=''
     [SERVER_NAME]=''
     [DB_USER]='root'
-    [LOG]='/home/${USER}/logs/${LOG_NAME}'
-    [LOG_NAME]='mega_db.log'
+    [LOG]='/home/${USER}/logs/mega_db.log'
     [LOG_ID]='MEGA DATABASE:'
     [LOG_SEP]='=========================================${DATELOG}========================================='
     [MEGA_DEL_OLD_NAME]="mega_del_old.sh"
     [MEGA_UPLOAD_FILE_NAME]="mega_upload_file.sh"
     [MEGA_EXIST_FILE_NAME]="mega_dir_file_exist.sh"
     [MEGA_MKDIR_FILE_NAME]="mega_mkdir.sh"
-    [SYS_LOG_DIR]="/var/log"
+    [SYS_LOG]="/var/log/mega_db.log"
     [MYSQL_DIR]="/var/lib/mysql"
-    [SYS_LOG_DIR]="/var/log"
     [BAK_DIR]='/home/${USER}/tmp'
     [MEGA_BACKUP_DIR]='/$SERVER_NAME/backups/${USER}/database'
+    [MYSQL_TEST_DB]=true
+    [MYSQL_TEST_CNF]=true
+    [TEST_USER]=true
 )
+# It is not necessary to have .mega_scriptsrc for thi script
+if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
+    # make tmp file to hold section of config.ini style section in
+    TMP_CONFIG_COMMON_FILE=$(mktemp)
+    # SECTION_NAME is a var to hold which section of config you want to read
+    SECTION_NAME="MEGA_COMMON"
+    # sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
 
-# make tmp file to hold section of config.ini style section in
-TMP_CONFIG_COMMON_FILE=$(mktemp)
-# SECTION_NAME is a var to hold which section of config you want to read
-SECTION_NAME="MEGA_COMMON"
-# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
-sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
-
-# test tmp file to to see if it is greater then 0 in size
-# MEGA_COMMON IS REQUIRED 
-test -s "${TMP_CONFIG_COMMON_FILE}"
-if [ $? -ne 0 ];then
-    echo "It seems that no values have been set in the '$HOME/.mega_scriptsrc' for section [$SECTION_NAME]"
-    unlink $TMP_CONFIG_COMMON_FILE
-    exit 72
-fi
-while read line; do
-    if [[ "$line" =~ ^[^#]*= ]]; then
-        setting_name=$(trim "${line%%=*}");
-        setting_value=$(trim "${line#*=}");
-        SCRIPT_CONF[$setting_name]=$setting_value
+    # test tmp file to to see if it is greater then 0 in size
+    # MEGA_COMMON IS REQUIRED 
+    test -s "${TMP_CONFIG_COMMON_FILE}"
+    if [ $? -ne 0 ];then
+        echo "It seems that no values have been set in the '$HOME/.mega_scriptsrc' for section [$SECTION_NAME]"
+        unlink $TMP_CONFIG_COMMON_FILE
+        exit 72
     fi
-done < "$TMP_CONFIG_COMMON_FILE"
-
-# release the tmp file that is contains the current section values
-unlink $TMP_CONFIG_COMMON_FILE
-
-# make tmp file to hold section of config.ini style section in
-TMP_CONFIG_FILE=$(mktemp)
-# SECTION_NAME is a var to hold which section of config you want to read
-SECTION_NAME="MEGA_DB_SAVE_UPLOAD"
-# sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
-sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
-
-# read the input of the tmp config file line by line
-# test tmp file to to see if it is greater then 0 in size
-# MEGA_DB_SAVE_UPLOAD section is not required as the defaults are fine
-test -s "${TMP_CONFIG_FILE}"
-if [ $? -eq 0 ]; then
-   # read the input of the tmp config file line by line
     while read line; do
         if [[ "$line" =~ ^[^#]*= ]]; then
             setting_name=$(trim "${line%%=*}");
             setting_value=$(trim "${line#*=}");
             SCRIPT_CONF[$setting_name]=$setting_value
         fi
-    done < "$TMP_CONFIG_FILE"
-fi
-# release the tmp file that is contains the current section values
-unlink $TMP_CONFIG_FILE
+    done < "$TMP_CONFIG_COMMON_FILE"
 
+    # release the tmp file that is contains the current section values
+    unlink $TMP_CONFIG_COMMON_FILE
+
+
+    # make tmp file to hold section of config.ini style section in
+    TMP_CONFIG_FILE=$(mktemp)
+    # SECTION_NAME is a var to hold which section of config you want to read
+    SECTION_NAME="MEGA_DB_SAVE_UPLOAD"
+    # sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_FILE
+
+    # read the input of the tmp config file line by line
+    # test tmp file to to see if it is greater then 0 in size
+    # MEGA_DB_SAVE_UPLOAD section is not required as the defaults are fine
+    test -s "${TMP_CONFIG_FILE}"
+    if [ $? -eq 0 ]; then
+    # read the input of the tmp config file line by line
+        while read line; do
+            if [[ "$line" =~ ^[^#]*= ]]; then
+                setting_name=$(trim "${line%%=*}");
+                setting_value=$(trim "${line#*=}");
+                SCRIPT_CONF[$setting_name]=$setting_value
+            fi
+        done < "$TMP_CONFIG_FILE"
+    fi
+    # release the tmp file that is contains the current section values
+    unlink $TMP_CONFIG_FILE
+fi
 
 SERVER_NAME=${SCRIPT_CONF[SERVER_NAME]}
 ENCRYPT_OUTPUT=${SCRIPT_CONF[ENCRYPT_OUTPUT]}
@@ -195,18 +217,163 @@ SEND_EMAIL_TO=${SCRIPT_CONF[SEND_EMAIL_TO]}
 SEND_EMAIL_FROM=${SCRIPT_CONF[SEND_EMAIL_FROM]}
 GPG_OWNER=${SCRIPT_CONF[GPG_OWNER]}
 DB_USER=${SCRIPT_CONF[DB_USER]}
-LOG_NAME=${SCRIPT_CONF[LOG_NAME]}
 LOG_ID=${SCRIPT_CONF[LOG_ID]}
 LOG_SEP=$(eval echo ${SCRIPT_CONF[LOG_SEP]})
 MEGA_DEL_OLD_NAME=${SCRIPT_CONF[MEGA_DEL_OLD_NAME]}
 MEGA_UPLOAD_FILE_NAME=${SCRIPT_CONF[MEGA_UPLOAD_FILE_NAME]}
 MEGA_EXIST_FILE_NAME=${SCRIPT_CONF[MEGA_EXIST_FILE_NAME]}
 MEGA_MKDIR_FILE_NAME=${SCRIPT_CONF[MEGA_MKDIR_FILE_NAME]}
-SYS_LOG_DIR=${SCRIPT_CONF[SYS_LOG_DIR]}
+SYS_LOG=${SCRIPT_CONF[SYS_LOG]}
+LOG=$(eval echo ${SCRIPT_CONF[LOG]})
+FORGET_OPT=''
+MYSQL_TEST_DB=${SCRIPT_CONF[MYSQL_TEST_DB]}
+MYSQL_TEST_CNF=${SCRIPT_CONF[MYSQL_TEST_CNF]}
+TEST_USER=${SCRIPT_CONF[TEST_USER]}
+OPT_EMAIL='y'
+usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
+[ $# -eq 0 ] && usage
+while getopts ":hvu:d:i:o:s:f:m:" arg; do
+  case $arg in
+    u) # Required: Specify -u the Unix user to do the database backup for.
+        USER="${OPTARG}"
+        ;;
+    d) # Required: Specify -d the name of the database to be backed up to Mega.nz.
+        DB_NAME="${OPTARG}"
+        ;;
+    i) # Optional: Specify -i the configuration file to use that contain the credentials for the Mega.nz account you want to access.
+        CURRENT_CONFIG="${OPTARG}"
+        ;;
+    o) # Optional: Specify -o the output option Default log. Can be t for terminal. Can be s for silent
+        LOG="${OPTARG}"
+        ;;
+    s) # Optional: Specify -o the output option System log. This is the log for high level errors. Can be t for terminal. Can be s for silent
+        SYS_LOG="${OPTARG}"
+        ;;
+    f) # Optional: Specify -f the options that can to ignore and forget checking. Can be c for config and/or d for database. EG: -f 'cd' would ignore checking if mysql config and database exist.
+        FORGET_OPT="${OPTARG}"
+        ;;
+    m) # Optional: Specify -m the option for email on error. y for send on error and n for no send email on error. .mega_scriptsrc must be configured for email to send.
+        OPT_EMAIL="${OPTARG}"
+        ;;
+    v) # -v Display version info
+        echo "$(basename $0) version:${MS_VERSION}"
+        exit 0
+        ;;
+    h | *) # -h Display help.
+        echo 'For online help visit: https://amourspirit.github.io/mega_scripts/mega_db_save_uploadsh.html'
+        usage
+        exit 0
+        ;;
+  esac
+done
+
+if [[ -n "${SYS_LOG}" ]]; then
+    if [[ "${SYS_LOG}" = 't' ]]; then
+        # redirect to terminal output
+        SYS_LOG=/dev/stdout
+    elif [[ "${SYS_LOG}" = 's' ]]; then
+        # redirect to null output
+        SYS_LOG=2>/dev/null
+    else
+        # test to see if the log exits
+        if [[ -f "${SYS_LOG}" ]]; then
+            # log does exist
+            # see if we have write access to it
+            if ! [[ -w "${SYS_LOG}" ]]; then
+                # no write access to log file
+                # exit with error code 3
+                echo "No write access log file '${SYS_LOG}'. Ensure you have write privileges. Exit Code: 3"
+                exit 3
+            fi
+        else
+            # log does not exist see if we can create it
+            mkdir -p "$(dirname ${SYS_LOG})"
+            if [[ $? -ne 0 ]]; then
+                # unable to create log
+                # exit with error code 4
+                echo "Unable to create log file '${SYS_LOG}'. Ensure you have write privileges. Exit Code: 4"
+                exit 4
+            fi
+            touch "${SYS_LOG}"
+            if [[ $? -ne 0 ]]; then
+                # unable to create log
+                # exit with error code 4
+                echo "Unable to create log file '${SYS_LOG}'. Ensure you have write privileges. Exit Code: 4"
+                exit 4
+            fi
+        fi
+    fi
+fi
+
+if [[ -n "${LOG}" ]]; then
+    if [[ "${LOG}" = 't' ]]; then
+        # redirect to terminal output
+        LOG=/dev/stdout
+    elif [[ "${LOG}" = 's' ]]; then
+        # redirect to null output
+        LOG=2>/dev/null
+    else
+        # test to see if the log exits
+        if [[ -f "${LOG}" ]]; then
+            # log does exist
+            # see if we have write access to it
+            if ! [[ -w "${LOG}" ]]; then
+                # no write access to log file
+                # exit with error code 3
+                echo "No write access log file '${LOG}'. Ensure you have write privileges. Exit Code: 3"
+                exit 3
+            fi
+        else
+            # log does not exist see if we can create it
+            mkdir -p "$(dirname ${LOG})"
+            if [[ $? -ne 0 ]]; then
+                # unable to create log
+                # exit with error code 4
+                echo "Unable to create log file '${LOG}'. Ensure you have write privileges. Exit Code: 4"
+                exit 4
+            fi
+            touch "${LOG}"
+            if [[ $? -ne 0 ]]; then
+                # unable to create log
+                # exit with error code 4
+                echo "Unable to create log file '${LOG}'. Ensure you have write privileges. Exit Code: 4"
+                exit 4
+            fi
+        fi
+    fi
+fi
+
+# if log is not supplied then redirect to stdout
+
+if [[ -z $LOG ]]; then
+  LOG=/dev/stdout
+fi
+
+if [[ -n $FORGET_OPT ]]; then
+    case "$FORGET_OPT" in 
+    c | C)
+        # do not check for mysql config file exist
+        MYSQL_TEST_CNF=false
+        ;;
+    d | D)
+        # do not check for mysql database exist
+        MYSQL_TEST_DB=false
+        ;;
+    u | U)
+        # do not check for mysql database exist
+        TEST_USER=false
+        ;;
+    esac
+fi
+
 SEND_MAIL_CLIENT="$(command -v sendmail)"
-SYS_LOG="$SYS_LOG_DIR/$LOG_NAME"
-THIS_SCRIPT=`basename "$0"`
+
 IS_SENDING_MAIL_ON_ERROR=false
+
+if [[ $OPT_EMAIL = 'y' ]]; then
+    # read from parameters and potentially override configuration
+    SEND_EMAIL_ON_ERROR=true
+fi
 
 if [[ "$SEND_EMAIL_ON_ERROR" = true && -x "$(command -v sendmail)"  && -n "$SEND_EMAIL_TO" && -n "$SEND_EMAIL_FROM" ]]; then
     IS_SENDING_MAIL_ON_ERROR=true
@@ -222,54 +389,50 @@ if ! [ -x "$(command -v bzip2)" ]; then
     echo "${LOG_SEP}" >> ${SYS_LOG}
     echo "" >> ${SYS_LOG}
     if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
-        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 5 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '${SYS_LOG}'")
+        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 5 ${SYS_LOG}) \n\n Log File: '${SYS_LOG}'")
         ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
     fi
     exit 60
 fi
 
-if [ -z "$1" ]
-  then
-    echo "${LOG_SEP}" >> ${SYS_LOG}
-    echo "${DATELOG} ${LOG_ID} No argument for user supplied for user! Exiting! Exit Code 20" >> ${SYS_LOG}
-    echo "${LOG_SEP}" >> ${SYS_LOG}
-    echo "" >> ${SYS_LOG}
-    if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
-        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '${SYS_LOG}'")
-        ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+
+
+if [[ "$TEST_USER" = true ]]; then
+    # USER is used for log file, backup dir and Mega backup dir.
+    # If the defaults are overriden in .mega_scriptsrc then it is not necessary to test for user.
+    if [ -z "$USER" ]; then
+        echo "${LOG_SEP}" >> ${SYS_LOG}
+        echo "${DATELOG} ${LOG_ID} No argument for user supplied for user! Exiting! Exit Code 20" >> ${SYS_LOG}
+        echo "${LOG_SEP}" >> ${SYS_LOG}
+        echo "" >> ${SYS_LOG}
+        if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+            EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${SYS_LOG}) \n\n Log File: '${SYS_LOG}'")
+            ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+        fi
+        exit 20
     fi
-    exit 20
-fi
-USER="$1"
+    USER_ID=$(id -u "${USER}" &>/dev/null)
+    # $? is 0 if found and 1 if not found for id -u user
+    if [[ $? -ne 0 ]]; then
+        echo "${LOG_SEP}" >> ${SYS_LOG}
+        echo "${DATELOG} ${LOG_ID} '${USER}' does Not Exit. Unable to continue: Exit Code: 53" >> ${SYS_LOG}
+        echo "${LOG_SEP}" >> ${SYS_LOG}
+        echo "" >> ${SYS_LOG}
 
-USER_ID=$(id -u "${USER}" &>/dev/null)
-# $? is 0 if found and 1 if not found for id -u user
-if [ $? -ne 0 ]; then
-    echo "${LOG_SEP}" >> ${SYS_LOG}
-    echo "${DATELOG} ${LOG_ID} '${USER}' does Not Exit. Unable to continue: Exit Code: 53" >> ${SYS_LOG}
-    echo "${LOG_SEP}" >> ${SYS_LOG}
-    echo "" >> ${SYS_LOG}
-
-    if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
-        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 $SYS_LOG_DIR/${LOG_NAME}) \n\n Log File: '${SYS_LOG}'")
-        ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+        if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+            EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${SYS_LOG}) \n\n Log File: '${SYS_LOG}'")
+            ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+        fi
+        exit 53
     fi
-    exit 53
-fi
-# done with USER_ID
-unset USER_ID
-
-LOG=$(eval echo ${SCRIPT_CONF[LOG]})
-# if log is not supplied then redirect to stdout
-
-if [[ -z $LOG ]]; then
-  LOG=/dev/stdout
+    # done with USER_ID
+    unset USER_ID
 fi
 
 echo "${LOG_SEP}" >> ${LOG}
 
-if [ -z "$2" ]; then
-    echo "No argument for user supplied for database! Exiting" >> ${LOG}
+if [ -z "$DB_NAME" ]; then
+    echo "${DATELOG} ${LOG_ID} No argument for -d for database! Exiting" >> ${LOG}
     echo "${DATELOG} ${LOG_ID} No argument for user supplied for database! Exit Code: 21" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
@@ -281,7 +444,6 @@ if [ -z "$2" ]; then
 fi
 
 BAK_DIR=$(eval echo ${SCRIPT_CONF[BAK_DIR]})
-DB_NAME="$2"
 DB_NAME_NEW=$DATELOG"_$DB_NAME"
 DB_FILE_SQL=$BAK_DIR/$DB_NAME_NEW".sql"
 DB_FILE=$DB_FILE_SQL".bz2"
@@ -346,32 +508,36 @@ if ! [[ $DAYS_TO_KEEP_BACKUP =~ $RE_INTEGER ]] ; then
     fi
     exit 73
 fi
-
-# test to see if MySql database exist as a folder database if not assume database does not exit
-# https://stackoverflow.com/questions/7364709/bash-script-check-if-mysql-database-exists-perform-action-based-on-result#7364807
-test -d "$MYSQL_DIR/$DB_NAME"
-if [ $? -ne 0 ]; then
-    echo "${DATELOG} ${LOG_ID} '$DB_NAME' does Not Exit. Unable to continue: Exit Code: 52" >> ${LOG}
-    echo "${LOG_SEP}" >> ${LOG}
-    echo "" >> ${LOG}
-    if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
-        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
-        ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+if [[ "$MYSQL_TEST_DB" = true ]]; then
+    # test to see if MySql database exist as a folder database if not assume database does not exit
+    # https://stackoverflow.com/questions/7364709/bash-script-check-if-mysql-database-exists-perform-action-based-on-result#7364807
+    test -d "$MYSQL_DIR/$DB_NAME"
+    if [ $? -ne 0 ]; then
+        echo "${DATELOG} ${LOG_ID} '$DB_NAME' does Not Exit. Unable to continue: Exit Code: 52" >> ${LOG}
+        echo "${LOG_SEP}" >> ${LOG}
+        echo "" >> ${LOG}
+        if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+            EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
+            ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+        fi
+        exit 52
     fi
-    exit 52
 fi
 
-test -r ~/.my.cnf
-if [ $? -ne 0 ]; then
-    echo "${DATELOG} ${LOG_ID} ~/.my.cnf must be set up for MysqlDump to do its job. Unable to continue: Exit Code: 50" >> ${LOG}
-    echo "${LOG_SEP}" >> ${LOG}
-    echo "" >> ${LOG}
-    if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
-        EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
-        ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+if [[ "$MYSQL_TEST_CNF" = true ]]; then
+    test -r ~/.my.cnf
+    if [ $? -ne 0 ]; then
+        echo "${DATELOG} ${LOG_ID} ~/.my.cnf must be set up for MysqlDump to do its job. Unable to continue: Exit Code: 50" >> ${LOG}
+        echo "${LOG_SEP}" >> ${LOG}
+        echo "" >> ${LOG}
+        if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+            EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
+            ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+        fi
+        exit 50
     fi
-    exit 50
 fi
+
 
 if [[ "$MEGA_ENABLED" = true && $HAS_CONFIG -eq 0 ]]; then
     # no config has been passed into script. check and see if the default exist
@@ -446,15 +612,15 @@ if [[ "$MEGA_ENABLED" = true ]]; then
          # Remove any expired database backup files
         if [[ $HAS_CONFIG -eq 0 ]]; then
             # No argument is given for default configuration for that contains user account and password
-            ${BASH} "${MEGA_DEL_OLD_SCRIPT}" "$MEGA_BACKUP_DIR" "$DAYS_TO_KEEP_BACKUP" "" "$LOG" "$DATELOG"
+            ${BASH} "${MEGA_DEL_OLD_SCRIPT}" "-p '${MEGA_BACKUP_DIR}' -a ${DAYS_TO_KEEP_BACKUP} -o '${LOG}' -d '${DATELOG}'"
         else
             # Argument is given for default configuration that contains user account and password
-            ${BASH} "${MEGA_DEL_OLD_SCRIPT}" "$MEGA_BACKUP_DIR" "$DAYS_TO_KEEP_BACKUP" "$CURRENT_CONFIG" "$LOG" "$DATELOG"
+            ${BASH} "${MEGA_DEL_OLD_SCRIPT}" "-p '${MEGA_BACKUP_DIR}' -a ${DAYS_TO_KEEP_BACKUP} -o '${LOG}' -d '${DATELOG}' -i '${CURRENT_CONFIG}'"
         fi
         EXIT_CODE=$?
         if [[ $EXIT_CODE -ne 0 ]]; then
             # there was a problem running the script
-            echo "${DATELOG} ${LOG_ID} There was an issue running script '$MEGA_DEL_OLD_NAME'! Exit Code: $EXIT_CODE" >> ${LOG}
+            echo "${DATELOG} ${LOG_ID} There was an issue running script '${MEGA_DEL_OLD_NAME}'! Exit Code: ${EXIT_CODE}" >> ${LOG}
             echo "${LOG_SEP}" >> ${LOG}
             rm -f "${LOCK_FILE}"
             if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -467,15 +633,15 @@ if [[ "$MEGA_ENABLED" = true ]]; then
     # Send new backup to mega.nz
     if [[ $HAS_CONFIG -eq 0 ]]; then
         # No argument is given for default configuration for that contains user account and password
-        ${BASH} "${MEGA_UPLOAD_FILE_SCRIPT}" "${MEGA_BACKUP_DIR}" "${OUTPUT_FILE}" "" "$LOG" "$DATELOG"
+        ${BASH} "${MEGA_UPLOAD_FILE_SCRIPT}" "-p '${MEGA_BACKUP_DIR}' -l '${OUTPUT_FILE}' -o '${LOG}' -d '${DATELOG}'"
     else
         # Argument is given for default configuration that contains user account and password
-        ${BASH} "${MEGA_UPLOAD_FILE_SCRIPT}" "${MEGA_BACKUP_DIR}" "${OUTPUT_FILE}" "$CURRENT_CONFIG" "$LOG" "$DATELOG"
+        ${BASH} "${MEGA_UPLOAD_FILE_SCRIPT}" "-p '${MEGA_BACKUP_DIR}' -l '${OUTPUT_FILE}' -o '${LOG}' -d '$DATELOG' -i '${CURRENT_CONFIG}'"
     fi
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]; then
         # there was a problem running the script
-        echo "${DATELOG} ${LOG_ID} There was an issue running script '$MEGA_UPLOAD_FILE_NAME': Exit Code: $EXIT_CODE" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} There was an issue running script '${MEGA_UPLOAD_FILE_NAME}': Exit Code: ${EXIT_CODE}" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         rm -f "${LOCK_FILE}"
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -488,16 +654,16 @@ if [[ "$MEGA_ENABLED" = true ]]; then
     echo "${DATELOG} ${LOG_ID} Checking mega.nz to see if backup has made it." >> ${LOG}
     if [[ -z "$CURRENT_CONFIG" ]]; then
         # No argument is given for default configuration for that contains user account and password
-        ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}"
+        ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "-p '${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}'"
     else
         # Argument is given for default configuration that contains user account and password
-        ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}" "$CURRENT_CONFIG"
+        ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" "-p '${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}' -i '${CURRENT_CONFIG}'"
     fi
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 3 ]]; then
         # code 3 for this script means it found file.
         # there was a problem running the script
-        echo "${DATELOG} ${LOG_ID} There was an issue running script '$MEGA_EXIST_FILE_NAME'. Script exited with code '$EXIT_CODE'! Exit Code: 30" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} There was an issue running script '${MEGA_EXIST_FILE_NAME}'. Script exited with code '${EXIT_CODE}'! Exit Code: 30" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         rm -f "${LOCK_FILE}"
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then

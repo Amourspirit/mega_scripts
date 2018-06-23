@@ -93,15 +93,42 @@
 # 111     Config can not be found or we do not have read permissions.
 # 112     The file to upload does not exist or can not gain read access.
 # 115     megamkdir not found. Megtools requires installing
-# 116     gpg
+# 116     Null value. Config file 'GPG_OWNER' of .mega_scriptrc or -g option must be set.
+# 117     Config file 'GPG_OWNER' of .mega_scriptrc or -g option must be set and must be a valid GPG Public Key.
 
 MS_VERSION='1.3.1.0'
-# trims white space from input
+# function: trim
+# Param 1: the variable to trim whitespace from
+# Usage:
+#   while read line; do
+#       if [[ "$line" =~ ^[^#]*= ]]; then
+#           setting_name=$(trim "${line%%=*}");
+#           setting_value=$(trim "${line#*=}");
+#           SCRIPT_CONF[$setting_name]=$setting_value
+#       fi
+#   done < "$TMP_CONFIG_COMMON_FILE"
 function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
     var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
     echo -n "$var";
+}
+# function: GpgPubKeyExist
+# Param 1: name of public gpg key to search
+# Usage:
+#   GPG_OWNER='dlserver'
+#   if GpgPubKeyExist "$GPG_OWNER"; then
+#     echo "${GPG_OWNER} key exist"
+#   else
+#    echo "${GPG_OWNER} key not found"
+#  fi
+function GpgPubKeyExist () {
+    local result='';
+    result=$(gpg --list-public-keys | grep "^uid.*\s$1\s");
+    if [[ -z $result ]]; then
+        return 1
+    fi
+    return 0
 }
 THIS_SCRIPT=`basename "$0"`
 CONFIG_FILE="$HOME/.mega_scriptsrc"
@@ -148,6 +175,7 @@ SCRIPT_CONF=( # set default values in config array
     [MYSQL_TEST_DB]=true
     [MYSQL_TEST_CNF]=true
     [TEST_USER]=true
+    [TEST_GPG]=true
 )
 # It is not necessary to have .mega_scriptsrc for thi script
 if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
@@ -230,6 +258,7 @@ FORGET_OPT=''
 MYSQL_TEST_DB=${SCRIPT_CONF[MYSQL_TEST_DB]}
 MYSQL_TEST_CNF=${SCRIPT_CONF[MYSQL_TEST_CNF]}
 TEST_USER=${SCRIPT_CONF[TEST_USER]}
+TEST_GPG=${SCRIPT_CONF[TEST_USER]}
 OPT_EMAIL='y'
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 [ $# -eq 0 ] && usage
@@ -370,6 +399,9 @@ if [[ -n $FORGET_OPT ]]; then
         # do not check for mysql database exist
         TEST_USER=false
         ;;
+    g | G)
+        # do not check for gpg
+        TEST_GPG=false
     esac
 fi
 
@@ -471,19 +503,43 @@ OUTPUT_FILE=$DB_FILE
 RE_INTEGER='^[0-9]+$'
 
 if [[ "$ENCRYPT_OUTPUT" = true ]]; then
-    # test GPG_OWNER is set
+    # test for null even if TEST_GPG is false
     if [[ -z $GPG_OWNER ]]; then
         # fatal error GPG_OWNER must be set for enryption
-        
+        echo "${LOG_SEP}" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} null value, config file 'GPG_OWNER' of .mega_scriptrc or -g option must be set! Exit Code: 116" >> ${LOG}
+        echo "${LOG_SEP}" >> ${LOG}
+        echo "" >> ${LOG}
+        if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+            EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
+            ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+        fi
+        exit 116
     fi
+    # test GPG_OWNER is set
+    if [[ "$TEST_GPG" = true ]]; then
+        
+        if ! GpgPubKeyExist "$GPG_OWNER"; then
+            # fatal error GPG_OWNER must be set for enryption
+            echo "${LOG_SEP}" >> ${LOG}
+            echo "${DATELOG} ${LOG_ID} Public Key for '${GPG_OWNER}' not found. Config file 'GPG_OWNER' of .mega_scriptrc or -g option must be set and must be a valid GPG Public Key! Exit Code: 117" >> ${LOG}
+            echo "${LOG_SEP}" >> ${LOG}
+            echo "" >> ${LOG}
+            if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+                EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
+                ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+            fi
+            exit 117
+        fi
+    fi
+    
     OUTPUT_FILE=$OUTPUT_FILE".gpg"
 fi
 
 OUTPUT_FILE_NAME=$(basename ${OUTPUT_FILE})
 
-if [[ -n "$3" ]]; then
+if [[ -n "$CURRENT_CONFIG" ]]; then
     # Argument is given for default configuration for that contains user account and password
-    CURRENT_CONFIG="$3"
     test -r "${CURRENT_CONFIG}"
     if [ $? -ne 0 ]; then
         echo "${LOG_SEP}" >> ${LOG}

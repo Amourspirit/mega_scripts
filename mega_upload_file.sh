@@ -105,7 +105,7 @@ LOG=$(eval echo ${SCRIPT_CONF[LOG]})
 
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 [ $# -eq 0 ] && usage
-while getopts ":hvp:l:i:o:" arg; do
+while getopts ":hvp:l:i:o:d:" arg; do
   case $arg in
     p) # Required: Specify -p The path to upload on Mega.nz.
         MEGA_FULL_PATH="${OPTARG}"

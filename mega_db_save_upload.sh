@@ -38,21 +38,25 @@
 #
 # -u: Required: -u pass in the user for the current backup
 # -d: Required: -d pass in the name of the database to be backed up to mega.nz
+# -a: Optional: -a pass in the number of days as a positive integer before todays date to delete files older then from Mega.nz. Default is 60 days.
 # -i: Optional: -i pass in the configuration file that contains the account information for mega.nz. Defaults to ~/.megarc
-# -o: Optional: -o pass in the Log file to log to results of running mega_del_old.sh.
+# -g: Optional: -g the gpg owner of the public key to use for encryption. If encryption is set to true and -g option is not set then .mega_scriptsrc must have the value set for GPG_OWNER
+# -o: Optional: -o pass in the Log file to log to results
 #     Can be value of "n" in which case results are outputed to the terminal window
 #     Can be value of "s" in which case no results are written to a log file or terminal window.
 #     Defaults to /home/${USER}/logs/mega_db.log
-# -s: Optional: -s pass in the Log file to log to results of running mega_del_old.sh.
+# -s: Optional: -s pass in the Log file to log User related errors
 #     Can be value of "n" in which case results are outputed to the terminal window
 #     Can be value of "s" in which case no results are written to a log file or terminal window.
-#     Defaults to /var/log/mega_delete_old.log (requires script be run as root)
+#     Defaults to /var/log/mega_db.log (requires script be run as root)
 # -f: Optional: -f to pass in options to forget or ignore checking for
 #     c skips testing for mysql configuration
 #     d skips testing for mysql database
 #     u skips testing for unix user. Must override LOG, BAK_DIR and MEGA_BACKUP_DIR in .mega_scriptsrc
+#     g skips testing if gpg public key exist
 #     Example: -f 'dc' would skip checking of mysql configuration and database.
-# -m: Optionial: -m pass in the option for email on error. y for send on error and n for no send email on error. .mega_scriptsrc must be configured for email to send.
+# -m: Optional: -m pass in the option for email on error. y for send on error and n for no send email on error. .mega_scriptsrc must be configured for email to send.
+# -n: Optional: -n the name of the server used in logs both locally and in path name on mega.nz. If this flag is not set then SERVER_NAME must be set in .mega_scriptsrc
 # -v: Display the current version of this script
 # -h: Display script help
 #
@@ -94,6 +98,8 @@
 # 115     megamkdir not found. Megtools requires installing
 # 116     Null value. Config file 'GPG_OWNER' of .mega_scriptrc or -g option must be set.
 # 117     Config file 'GPG_OWNER' of .mega_scriptrc or -g option must be set and must be a valid GPG Public Key.
+# 118     Unable to create directory to place backup file in.
+# 119     Unable to write in directory for backup file.
 
 MS_VERSION='1.3.1.0'
 # function: trim
@@ -163,14 +169,14 @@ SCRIPT_CONF=( # set default values in config array
     [LOG]='/home/${USER}/logs/mega_db.log'
     [LOG_ID]='MEGA DATABASE:'
     [LOG_SEP]='=========================================${DATELOG}========================================='
-    [MEGA_DEL_OLD_NAME]="mega_del_old.sh"
-    [MEGA_UPLOAD_FILE_NAME]="mega_upload_file.sh"
-    [MEGA_EXIST_FILE_NAME]="mega_dir_file_exist.sh"
-    [MEGA_MKDIR_FILE_NAME]="mega_mkdir.sh"
-    [SYS_LOG]="/var/log/mega_db.log"
-    [MYSQL_DIR]="/var/lib/mysql"
+    [MEGA_DEL_OLD_NAME]='mega_del_old.sh'
+    [MEGA_UPLOAD_FILE_NAME]='mega_upload_file.sh'
+    [MEGA_EXIST_FILE_NAME]='mega_dir_file_exist.sh'
+    [MEGA_MKDIR_FILE_NAME]='mega_mkdir.sh'
+    [SYS_LOG]='/var/log/mega_db.log'
+    [MYSQL_DIR]='/var/lib/mysql'
     [BAK_DIR]='/home/${USER}/tmp'
-    [MEGA_BACKUP_DIR]='/$SERVER_NAME/backups/${USER}/database'
+    [MEGA_BACKUP_DIR]='/${SERVER_NAME}/backups/${USER}/database'
     [MYSQL_TEST_DB]=true
     [MYSQL_TEST_CNF]=true
     [TEST_USER]=true
@@ -246,28 +252,40 @@ SEND_EMAIL_FROM=${SCRIPT_CONF[SEND_EMAIL_FROM]}
 GPG_OWNER=${SCRIPT_CONF[GPG_OWNER]}
 DB_USER=${SCRIPT_CONF[DB_USER]}
 LOG_ID=${SCRIPT_CONF[LOG_ID]}
-LOG_SEP=$(eval echo ${SCRIPT_CONF[LOG_SEP]})
+LOG_SEP=${SCRIPT_CONF[LOG_SEP]}
 MEGA_DEL_OLD_NAME=${SCRIPT_CONF[MEGA_DEL_OLD_NAME]}
 MEGA_UPLOAD_FILE_NAME=${SCRIPT_CONF[MEGA_UPLOAD_FILE_NAME]}
 MEGA_EXIST_FILE_NAME=${SCRIPT_CONF[MEGA_EXIST_FILE_NAME]}
 MEGA_MKDIR_FILE_NAME=${SCRIPT_CONF[MEGA_MKDIR_FILE_NAME]}
 SYS_LOG=${SCRIPT_CONF[SYS_LOG]}
-LOG=$(eval echo ${SCRIPT_CONF[LOG]})
+LOG=${SCRIPT_CONF[LOG]}
+BAK_DIR=${SCRIPT_CONF[BAK_DIR]}
+MEGA_BACKUP_DIR=${SCRIPT_CONF[MEGA_BACKUP_DIR]}
 FORGET_OPT=''
 MYSQL_TEST_DB=${SCRIPT_CONF[MYSQL_TEST_DB]}
 MYSQL_TEST_CNF=${SCRIPT_CONF[MYSQL_TEST_CNF]}
 TEST_USER=${SCRIPT_CONF[TEST_USER]}
 TEST_GPG=${SCRIPT_CONF[TEST_USER]}
 OPT_EMAIL='y'
+
+# done with config array so lets free up the memory
+unset SCRIPT_CONF
+
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 [ $# -eq 0 ] && usage
-while getopts ":hvu:d:i:o:s:f:m:" arg; do
+while getopts ":hvu:d:a:b:g:i:o:s:f:m:n:r:" arg; do
   case $arg in
     u) # Required: Specify -u the Unix user to do the database backup for.
         USER="${OPTARG}"
         ;;
     d) # Required: Specify -d the name of the database to be backed up to Mega.nz.
         DB_NAME="${OPTARG}"
+        ;;
+    a) # Optional: Specify -a for age that represents the number of days as a positive integer before todays date to delete files older then from Mega.nz.
+        DAYS_TO_KEEP_BACKUP="${OPTARG}"
+        ;;
+    b) # optional: Spedify -b for location of backup directory on the local server
+        BAK_DIR="${OPTARG}"
         ;;
     g) # Optional: Specify -g the gpg owner of the publick key to use for encryption. If encryption is turned on and -g option is not set then .mega_scriptsrc must have the value set for GPG_OWNER
         GPG_OWNER="${OPTARG}"
@@ -290,6 +308,9 @@ while getopts ":hvu:d:i:o:s:f:m:" arg; do
     n) # Optional: Specify -n the name of the server used in logs both locally and in path name on mega.nz. If this flag is not set then SERVER_NAME must be set in .mega_scriptsrc
         SERVER_NAME="${OPTARG}"
         ;;
+    r) # Optional: Specify -r the directory on the mega.nz server to save the backup in.
+        MEGA_BACKUP_DIR="${OPTARG}"
+        ;;
     v) # -v Display version info
         echo "$(basename $0) version:${MS_VERSION}"
         exit 0
@@ -301,6 +322,16 @@ while getopts ":hvu:d:i:o:s:f:m:" arg; do
         ;;
   esac
 done
+
+# the follow vars are eval in case they contain other expandable vars such as $HOME or ${USER}
+SERVER_NAME=$(eval echo ${SERVER_NAME})
+BAK_DIR=$(eval echo ${BAK_DIR})
+LOG=$(eval echo ${LOG})
+SYS_LOG=$(eval echo ${SYS_LOG})
+OPT_EMAIL=$(eval echo ${OPT_EMAIL})
+MEGA_BACKUP_DIR=$(eval echo ${MEGA_BACKUP_DIR})
+CURRENT_CONFIG=$(eval echo ${CURRENT_CONFIG})
+LOG_SEP=$(eval echo ${LOG_SEP})
 
 if [[ -n "${SYS_LOG}" ]]; then
     if [[ "${SYS_LOG}" = 't' ]]; then
@@ -481,13 +512,12 @@ if [ -z "$DB_NAME" ]; then
     exit 21
 fi
 
-BAK_DIR=$(eval echo ${SCRIPT_CONF[BAK_DIR]})
+
 DB_NAME_NEW=$DATELOG"_$DB_NAME"
 DB_FILE_SQL=$BAK_DIR/$DB_NAME_NEW".sql"
 DB_FILE=$DB_FILE_SQL".bz2"
 LOCK_FILE="/tmp/mega_backup_db_lock"
 SCRIPT_DIR=$(dirname "$0")
-MEGA_BACKUP_DIR=$(eval echo ${SCRIPT_CONF[MEGA_BACKUP_DIR]})
 MEGA_DEL_OLD_SCRIPT=$SCRIPT_DIR"/"$MEGA_DEL_OLD_NAME
 MEGA_UPLOAD_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_UPLOAD_FILE_NAME
 MEGA_EXIST_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_EXIST_FILE_NAME
@@ -610,7 +640,7 @@ if [[ "$MEGA_ENABLED" = true && $HAS_CONFIG -eq 0 ]]; then
     # no config has been passed into script. check and see if the default exist
     test -r ~/.megarc
     if [ $? -ne 0 ];then
-        echo "${DATELOG} ${LOG_ID} ~/.megarc must be set up and readable by current to upload to mega when parameter 3 is omitted. Unable to continue: Exit Code: 51" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} ~/.megarc must be set up and readable by current to upload to mega when -i is omitted. Unable to continue: Exit Code: 51" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         echo "" >> ${LOG}
         if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
@@ -620,8 +650,37 @@ if [[ "$MEGA_ENABLED" = true && $HAS_CONFIG -eq 0 ]]; then
         exit 51
     fi
 fi
-# make the backup directory if it does not exist
-mkdir -p "$BAK_DIR"
+if [[ -d "$BAK_DIR" ]]; then
+    # directory already exist. now check for write premissions
+    if ! [[ -w "$BAK_DIR" ]]; then
+        echo "${DATELOG} ${LOG_ID} Criticial error, unable to write to ${BAK_DIR}. Lacking write premissions. Unable to continue: Exit Code: 119" >> ${LOG}
+        echo "${LOG_SEP}" >> ${LOG}
+        echo "" >> ${LOG}
+        if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+            EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
+            ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+        fi
+        exit 119
+
+    fi
+else
+    # make the backup directory if it does not exist
+    mkdir -p "$BAK_DIR" 2>/dev/null
+    if [[ $? -ne 0 ]]; then
+        # there was a problem creating backup directory. Critical error
+        if [ $? -ne 0 ];then
+            echo "${DATELOG} ${LOG_ID} Criticial error, unable to create or access directory to place backup in. Unable to continue: Exit Code: 118" >> ${LOG}
+            echo "${LOG_SEP}" >> ${LOG}
+            echo "" >> ${LOG}
+            if [[ "$IS_SENDING_MAIL_ON_ERROR" = true ]]; then
+                EMAIL_MSG=$(echo -e "To: ${SEND_EMAIL_TO}\nFrom: ${SEND_EMAIL_FROM}\nSubject: ${SERVER_NAME} ${DATELOG} - ERROR RUNNING SCRIPT '${THIS_SCRIPT}' \n\n Log Tail:\n $(tail -n 4 ${LOG}) \n\n Log File: '${LOG}'")
+                ${SEND_MAIL_CLIENT} -t <<< "$EMAIL_MSG"
+            fi
+            exit 118
+        fi
+    fi
+fi
+
 # Checking lock file
 test -r "${LOCK_FILE}"
 if [ $? -eq 0 ];then

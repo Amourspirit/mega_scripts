@@ -187,25 +187,25 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Login as root if you are not already.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18">$ su</span><br/><span class="rvts18">password: ******</span></p>
+<p class="rvps9"><span class="rvts19">$ su</span><br/><span class="rvts19">password: ******</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps13"><span class="rvts6">or for some servers ( for instance default Debian 9 on </span><a class="rvts11" href="https://aws.amazon.com/" target="_blank">AWS</a><span class="rvts6">)</span></p>
+<p class="rvps14"><span class="rvts6">or for some servers ( for instance default Debian 9 on </span><a class="rvts11" href="https://aws.amazon.com/" target="_blank">AWS</a><span class="rvts6">)</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18">$ sudo -i</span></p>
+<p class="rvps9"><span class="rvts19">$ sudo -i</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Create a </span><span class="rvts19">".my.cnf"</span><span class="rvts6"> file in the home directory.</span></p>
+<p class="rvps2"><span class="rvts6">Create a </span><span class="rvts20">".my.cnf"</span><span class="rvts6"> file in the home directory.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># cd ~</span><br/><span class="rvts18"># nano .my.cnf</span></p>
+<p class="rvps9"><span class="rvts19"># cd ~</span><br/><span class="rvts19"># nano .my.cnf</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Copy the content below and replace with your mysql username and password</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts30">[mysqldump]</span><br/><span class="rvts30">user = root</span><br/><span class="rvts30">password = secret</span></p>
+<p class="rvps12"><span class="rvts32">[mysqldump]</span><br/><span class="rvts32">user = root</span><br/><span class="rvts32">password = secret</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Save the file and exit nano.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Now change the file permission to 600 to prevent other users from reading it:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># chmod 0600 ~/.my.cnf</span></p>
+<p class="rvps9"><span class="rvts19"># chmod 0600 ~/.my.cnf</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Now when you execute mysqldump as root the system will not prompt you for password.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>

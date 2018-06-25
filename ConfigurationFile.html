@@ -13,7 +13,7 @@
 
   <title>Configuration File</title>
   <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
-  <meta name="keywords" content=",,.mega_scriptsrc">
+  <meta name="keywords" content=",,.mega_scriptsrc,-u">
 
 
 
@@ -183,22 +183,22 @@
 <h1 class="rvps4"><a name="top"></a>
 <span class="rvts0"><span class="rvts12">Configuration File: </span></span><span class="rvts0"><span class="rvts12">.mega_scriptsrc</span></span></h1>
 <p class="rvps2"><span class="rvts6">In this Document</span></p>
-<p class="rvps13"><a class="rvts13" href="ConfigurationFile.html#Description">Description</a></p>
-<p class="rvps13"><a class="rvts13" href="ConfigurationFile.html#general_config">General Configuration [MEGA_COMMON]</a></p>
-<p class="rvps13"><a class="rvts13" href="ConfigurationFile.html#config_mega_db_save_upload">Configuration for [MEGA_DB_SAVE_UPLOAD]</a></p>
-<p class="rvps13"><a class="rvts13" href="ConfigurationFile.html#config_mega_del_old">Configuration for [MEGA_DELETE_OLD]</a></p>
-<p class="rvps13"><a class="rvts13" href="ConfigurationFile.html#config_mega_del_old">Configuration for [MEGA_UPLOAD_FILE]</a></p>
-<p class="rvps13"><a class="rvts13" href="ConfigurationFile.html#Related">Related</a></p>
+<p class="rvps14"><a class="rvts13" href="ConfigurationFile.html#Description">Description</a></p>
+<p class="rvps14"><a class="rvts13" href="ConfigurationFile.html#general_config">General Configuration [MEGA_COMMON]</a></p>
+<p class="rvps14"><a class="rvts13" href="ConfigurationFile.html#config_mega_db_save_upload">Configuration for [MEGA_DB_SAVE_UPLOAD]</a></p>
+<p class="rvps14"><a class="rvts13" href="ConfigurationFile.html#config_mega_del_old">Configuration for [MEGA_DELETE_OLD]</a></p>
+<p class="rvps14"><a class="rvts13" href="ConfigurationFile.html#config_mega_del_old">Configuration for [MEGA_UPLOAD_FILE]</a></p>
+<p class="rvps14"><a class="rvts13" href="ConfigurationFile.html#Related">Related</a></p>
 <h2 class="rvps7"><a name="Description"></a>
 <span class="rvts0"><span class="rvts17">Description</span></span></h2>
 <p class="rvps2"><span class="rvts6">A configuration file is used to manage setting for the </span><span class="rvts6">Mega Scripts</span><span class="rvts6"> files.</span></p>
 <p class="rvps2"><span class="rvts6">The name of this configuration file is "</span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6">".</span></p>
-<p class="rvps2"><span class="rvts6">A new configuration file must be created for each user account that is going to use </span><span class="rvts6">Mega Scripts</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">A new configuration file may be created for each user account that is going to use </span><span class="rvts6">Mega Scripts</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Once you have </span><a class="rvts13" href="Scripts.html">installed</a><span class="rvts6"> </span><span class="rvts6">Mega Scripts</span><span class="rvts6"> you will need to edit just a few configuration settings to get started in the </span><a class="rvts13" href="ConfigurationFile.html#general_config">General Configuration</a><span class="rvts6">.</span></p>
-<p class="rvps2"><span class="rvts6">You will need to set the </span><span class="rvts35">GPG_OWNER</span><span class="rvts6"> field to the </span><span class="rvts35">"Real Name"</span><span class="rvts6"> you set when you created your </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html#create_keypair">GPG Private/Public key-pair</a><span class="rvts6">.</span></p>
-<p class="rvps2"><span class="rvts6">You will need to set up your .my.cnf file for </span><a class="rvts13" href="SetupServerforMySqlDump.html">MySqldump.</a></p>
-<p class="rvps2"><span class="rvts6">Change </span><span class="rvts35">SERVER_NAME</span><span class="rvts6"> to the name of your server in the configure section. See </span><a class="rvts13" href="ConfigurationFile.html">Configuration File</a><span class="rvts6"> for instruction on how to set up </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> configuration file.</span></p>
+<p class="rvps2"><span class="rvts6">You may want to set the </span><a class="rvts13" href="ConfigurationFile.html#GC_GPG_OWNER">GPG_OWNER</a><span class="rvts6"> field to the </span><span class="rvts18">"Real Name"</span><span class="rvts6"> you set when you created your </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html#create_keypair">GPG Private/Public key-pair</a><span class="rvts6">. </span></p>
+<p class="rvps2"><span class="rvts6">You may want to set up your .my.cnf file for </span><a class="rvts13" href="SetupServerforMySqlDump.html">MySqldump.</a></p>
+<p class="rvps2"><span class="rvts6">You may want to change </span><a class="rvts13" href="ConfigurationFile.html#GC_SERVER_NAME">SERVER_NAME</a><span class="rvts6"> to the name of your server in the configure section. See </span><a class="rvts13" href="ConfigurationFile.html">Configuration File</a><span class="rvts6"> for instruction on how to set up </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> configuration file.</span></p>
 <p class="rvps2"><span class="rvts6">That is really all that you need to get started. Of course make sure you have </span><a class="rvts13" href="Setupmegarc.html">set up .megarc</a><span class="rvts6"> file of some sort.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="general_config"></a>
@@ -206,59 +206,65 @@
 <p class="rvps2"><span class="rvts6">This table is the possible configuration settings that can go into </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> for section </span><span class="rvts6">[MEGA_COMMON]</span><span class="rvts6">.</span></p>
 <div class="rvps2"><table border="1" cellpadding="4" cellspacing="-1" style="border-width: 0px; background-color: #ffffff; border-collapse: collapse;">
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Key</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Key</span></p>
 </td>
-<td width="88" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Required</span></p>
+<td width="88" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Required</span></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Description</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Description</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">GPG_OWNER</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="GC_GPG_OWNER"></a>
+<span class="rvts6">GPG_OWNER</span></p>
 </td>
-<td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_true32.png"></p>
+<td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
 <td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. The GPG public key owner. See </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html">GnuPg Encrypt and Decrypt</a><span class="rvts6"> on how to set GPG public key.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SERVER_NAME</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="GC_SERVER_NAME"></a>
+<span class="rvts6">SERVER_NAME</span></p>
 </td>
-<td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_true32.png"></p>
+<td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
 <td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. The name of the current server the script is running on. Used in logs and email.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_DEL_OLD_NAME</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="GC_MEGA_DEL_OLD_NAME"></a>
+<span class="rvts6">MEGA_DEL_OLD_NAME</span></p>
 </td>
 <td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">mega_del_old.sh</span><span class="rvts6">. This is the default name of </span><a class="rvts13" href="mega_del_oldsh.html">mega_del_old.sh</a><span class="rvts6"> and is include for the rare instance that the script would need to be used as a different name.</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">mega_del_old.sh</span><span class="rvts6">. This is the default name of </span><a class="rvts13" href="mega_del_oldsh.html">mega_del_old.sh</a><span class="rvts6"> and is include for the rare instance that the script would need to be used as a different name.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_EXIST_FILE_NAME</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="GC_MEGA_EXIST_FILE_NAME"></a>
+<span class="rvts6">MEGA_EXIST_FILE_NAME</span></p>
 </td>
 <td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">mega_dir_file_exist.sh</span><span class="rvts6">. This is the default name of </span><a class="rvts13" href="mega_dir_file_existsh.html">mega_dir_file_exist</a><span class="rvts6">.sh and is include for the rare instance that the script would need to be used as a different name.</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">mega_dir_file_exist.sh</span><span class="rvts6">. This is the default name of </span><a class="rvts13" href="mega_dir_file_existsh.html">mega_dir_file_exist</a><span class="rvts6">.sh and is include for the rare instance that the script would need to be used as a different name.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_MKDIR_FILE_NAME</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="GC_MEGA_MKDIR_FILE_NAME"></a>
+<span class="rvts6">MEGA_MKDIR_FILE_NAME</span></p>
 </td>
 <td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">mega_mkdir.sh</span><span class="rvts6">. This is the default name of </span><a class="rvts13" href="mega_mkdirsh.html">mega_mkdir.sh</a><span class="rvts6"> and is include for the rare instance that the script would need to be used as a different name.</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">mega_mkdir.sh</span><span class="rvts6">. This is the default name of </span><a class="rvts13" href="mega_mkdirsh.html">mega_mkdir.sh</a><span class="rvts6"> and is include for the rare instance that the script would need to be used as a different name.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_UPLOAD_FILE_NAME</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="GC_MEGA_UPLOAD_FILE_NAME"></a>
+<span class="rvts6">MEGA_UPLOAD_FILE_NAME</span></p>
 </td>
 <td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">mega_upload_file.sh</span><span class="rvts6">. This is the default name of </span><a class="rvts13" href="mega_upload_fiilesh.html">mega_upload_file.sh</a><span class="rvts6"> and is include for the rare instance that the script would need to be used as a different name.</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">mega_upload_file.sh</span><span class="rvts6">. This is the default name of </span><a class="rvts13" href="mega_upload_fiilesh.html">mega_upload_file.sh</a><span class="rvts6"> and is include for the rare instance that the script would need to be used as a different name.</span></p>
 </td>
 </tr>
 </table>
@@ -270,79 +276,90 @@
 <p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a></p>
 <div class="rvps2"><table border="1" cellpadding="4" cellspacing="-1" style="border-width: 0px; background-color: #ffffff; border-collapse: collapse;">
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Key</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Key</span></p>
 </td>
-<td width="87" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Required</span></p>
+<td width="87" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Required</span></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Description</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Description</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">BAK_DIR</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_BAK_DIR"></a>
+<span class="rvts6">BAK_DIR</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">/home/${USER}/tmp</span><span class="rvts6">. Which is the tmp directory of the user passed in via </span><a class="rvts24" href="mega_db_save_uploadsh.html#Param1">Param 1</a><span class="rvts6">. This is the directory that the backup of the database is created in.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">/home/${USER}/tmp</span><span class="rvts6">. Which is the tmp directory of the user passed in via </span><a class="rvts25" href="mega_db_save_uploadsh.html#_u">-u</a><span class="rvts6">. This is the directory that the backup of the database is created in.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">DAYS_TO_KEEP_BACKUP</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_DAYS_TO_KEEP_BACKUP"></a>
+<span class="rvts6">DAYS_TO_KEEP_BACKUP</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Integer Value. Default is </span><span class="rvts19">60</span><span class="rvts6">. If this value is set to 0 then all backups for the current database on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> will be deleted before the current backup is sent.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Integer Value. Default is </span><span class="rvts20">60</span><span class="rvts6">. If this value is set to 0 then all backups for the current database on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> will be deleted before the current backup is sent.</span></p>
+<p class="rvps2"><span class="rvts6">Can be overridden by </span><a class="rvts25" href="mega_db_save_uploadsh.html#_a">-a</a><span class="rvts6"> option of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">DB_USER</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_DB_USER"></a>
+<span class="rvts6">DB_USER</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">root</span><span class="rvts6">. The MySql database user used to create database dumps with for backup.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">root</span><span class="rvts6">. The MySql database user used to create database dumps with for backup.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">DELETE_BZ2_FILE</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_DELETE_BZ2_FILE"></a>
+<span class="rvts6">DELETE_BZ2_FILE</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts19">true</span><span class="rvts6">. If true bz2 file of the database dump is deleted after encryption.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">true</span><span class="rvts6">. If true bz2 file of the database dump is deleted after encryption.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">DELETE_LOCAL_BACKUP</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_DELETE_LOCAL_BACKUP"></a>
+<span class="rvts6">DELETE_LOCAL_BACKUP</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts19">true</span><span class="rvts6">. If true the local backup is deleted after the backup is confirmed to be on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">true</span><span class="rvts6">. If true the local backup is deleted after the backup is confirmed to be on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">ENCRYPT_OUTPUT</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_ENCRYPT_OUTPUT"></a>
+<span class="rvts6">ENCRYPT_OUTPUT</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts19">true</span><span class="rvts6">. If true database is encrypted before sending to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. See </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html">GnuPG Encrypt and Decrypt</a></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">true</span><span class="rvts6">. If true database is encrypted before sending to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">. See </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html">GnuPG Encrypt and Decrypt</a></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG_ID</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_LOG"></a>
+<span class="rvts6">LOG</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">MEGA DATABASE:</span><span class="rvts6">. This is an Id to identify which script made the entry into the log file.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">/home/${USER}/logs/mega_db.log</span><span class="rvts6">. The path of the log file to output results.</span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts25" href="mega_db_save_uploadsh.html#_u">-u</a><span class="rvts6"> for USER &nbsp;of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG_NAME</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_LOG_ID"></a>
+<span class="rvts6">LOG_ID</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">mega_db.log</span><span class="rvts6">. The name of the log file to output results.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">MEGA DATABASE:</span><span class="rvts6">. This is an Id to identify which script made the entry into the log file.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG_SEP</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_LOG_SEP"></a>
+<span class="rvts6">LOG_SEP</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
@@ -350,15 +367,28 @@
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MEGA_ENABLED</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_MEGA_BACKUP_DIR"></a>
+<span class="rvts6">MEGA_BACKUP_DIR</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts19">true</span><span class="rvts6">. If true database is sent to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">/${SERVER_NAME}/backups/${USER}/database</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">This is the location that the database backup will be saved on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">See: </span><a class="rvts13" href="ConfigurationFile.html#GC_SERVER_NAME">SERVER_NAME</a><span class="rvts6"> and </span><a class="rvts25" href="mega_db_save_uploadsh.html#_n">-n</a><span class="rvts6"> of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SEND_EMAIL_FROM</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_MEGA_ENABLED"></a>
+<span class="rvts6">MEGA_ENABLED</span></p>
+</td>
+<td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
+</td>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">true</span><span class="rvts6">. If true database is sent to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_SEND_EMAIL_FROM"></a>
+<span class="rvts6">SEND_EMAIL_FROM</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
@@ -366,27 +396,67 @@
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SEND_EMAIL_ON_ERROR</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_SEND_EMAIL_ON_ERROR"></a>
+<span class="rvts6">SEND_EMAIL_ON_ERROR</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts19">false</span><span class="rvts6">. If </span><span class="rvts19">true</span><span class="rvts6"> </span><span class="rvts35">SEND_EMAIL_TO</span><span class="rvts6"> and </span><span class="rvts35">SEND_EMAIL_FROM</span><span class="rvts6"> must also be set. Sends an email specified by </span><span class="rvts35">SEND_EMAIL_TO</span><span class="rvts6"> value if there is an error during the execution of the script. Sendmail must be installed for email to be sent out by this script.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">false</span><span class="rvts6">. If </span><span class="rvts20">true</span><span class="rvts6"> </span><a class="rvts13" href="ConfigurationFile.html#MDSU_SEND_EMAIL_TO">SEND_EMAIL_TO</a><span class="rvts6"> and </span><a class="rvts13" href="ConfigurationFile.html#MDSU_SEND_EMAIL_FROM">SEND_EMAIL_FROM</a><span class="rvts6"> must also be set. Sends an email specified by </span><a class="rvts13" href="ConfigurationFile.html#MDSU_SEND_EMAIL_TO">SEND_EMAIL_TO</a><span class="rvts6"> value if there is an error during the execution of the script. Sendmail must be installed for email to be sent out by this script.</span><br/><span class="rvts6">Can be overridden by </span><a class="rvts25" href="mega_db_save_uploadsh.html#_m">-m</a><span class="rvts6"> option of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SEND_EMAIL_TO</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_SEND_EMAIL_TO"></a>
+<span class="rvts6">SEND_EMAIL_TO</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. A valid email address to send an email to upon an error. If specifying more then one email then separate each email by comma and space. Example: </span><span class="rvts35">SEND_EMAIL_TO</span><span class="rvts6">=myemail1@domain.com, myemail2@domain.com, myemail3@otherdomain.com</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. A valid email address to send an email to upon an error. If specifying more then one email then separate each email by comma and space. Example: </span><span class="rvts18">SEND_EMAIL_TO</span><span class="rvts6">=myemail1@domain.com, myemail2@domain.com, myemail3@otherdomain.com</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">SYS_LOG_DIR</span></p>
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_SYS_LOG"></a>
+<span class="rvts6">SYS_LOG</span></p>
 </td>
 <td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is </span><span class="rvts19">/var/log</span><span class="rvts6">. This the path to where system errors are logged if they occur. If your executing this script as a non-root user then this value would need to be set to a directory that the non-root user has write access to.</span></p>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Default is </span><span class="rvts20">/var/log/mega_db.log</span><span class="rvts6">. This the path to where system errors are logged if they occur. If your executing this script as a non-root user then this value would need to be set to a directory that the non-root user has write access to.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_MYSQL_TEST_DB"></a>
+<span class="rvts6">MYSQL_TEST_DB</span></p>
+</td>
+<td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
+</td>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">true</span><span class="rvts6">. If set to false then skips testing for mysql database. If for any reason you know that your database exist and you are getting an error 52 then you can set thei option to </span><span class="rvts20">false</span><span class="rvts6">. The option </span><a class="rvts25" href="mega_db_save_uploadsh.html#_f">-f</a><span class="rvts6"> of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6"> will override this setting.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_MYSQL_TEST_CNF"></a>
+<span class="rvts6">MYSQL_TEST_CNF</span></p>
+</td>
+<td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
+</td>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">true</span><span class="rvts6">. If set to </span><span class="rvts20">false</span><span class="rvts6"> then skips testing for mysql configuration. If you know that your mysql configuration file is set up properly for mysqldump and your are getting an error 50 then you can set this option to </span><span class="rvts20">false</span><span class="rvts6">. The option </span><a class="rvts25" href="mega_db_save_uploadsh.html#_f">-f</a><span class="rvts6"> of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6"> will override this setting.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_TEST_GPG"></a>
+<span class="rvts6">TEST_GPG</span></p>
+</td>
+<td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
+</td>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">true</span><span class="rvts6">. If set to </span><span class="rvts20">false</span><span class="rvts6"> then skips testing if gpg public key exist. If for any reason your are getting an error of 117 and you know your public key is imported then you can set this option to </span><span class="rvts20">false</span><span class="rvts6">. The option </span><a class="rvts25" href="mega_db_save_uploadsh.html#_f">-f</a><span class="rvts6"> of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6"> will override this setting.</span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html">GnuPG Encrypt and Decrypt</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="235" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDSU_TEST_USER"></a>
+<span class="rvts6">TEST_USER</span></p>
+</td>
+<td width="87" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
+</td>
+<td width="822" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Boolean Value. Default is </span><span class="rvts20">true</span><span class="rvts6">. If set to </span><span class="rvts20">false</span><span class="rvts6"> then skips testing for unix user. Must override ( </span><a class="rvts13" href="ConfigurationFile.html#MDSU_LOG">LOG</a><span class="rvts6"> or use </span><a class="rvts25" href="mega_db_save_uploadsh.html#_o">-o</a><span class="rvts6"> option of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6">), </span><a class="rvts13" href="ConfigurationFile.html#MDSU_BAK_DIR">BAK_DIR</a><span class="rvts6"> and </span><a class="rvts13" href="ConfigurationFile.html#MDSU_MEGA_BACKUP_DIR">MEGA_BACKUP_DIR</a><span class="rvts6">. The option </span><a class="rvts25" href="mega_db_save_uploadsh.html#_f">-f</a><span class="rvts6"> of </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a><span class="rvts6"> will override this setting.</span></p>
 </td>
 </tr>
 </table>
@@ -397,35 +467,38 @@
 <p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="mega_del_oldsh.html">Mega_del_old.sh</a></p>
 <div class="rvps2"><table border="1" cellpadding="4" cellspacing="-1" style="border-width: 0px; background-color: #ffffff; border-collapse: collapse;">
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Key</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Key</span></p>
 </td>
-<td width="88" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Required</span></p>
+<td width="88" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Required</span></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Description</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG_ID</span></p>
-</td>
-<td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
-</td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">MEGA DELETE OLD:</span><span class="rvts6">. This is an Id to identify which script made the entry into the log file.</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Description</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">MAX_DAYS_DEFAULT</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDO_LOG_ID"></a>
+<span class="rvts6">LOG_ID</span></p>
 </td>
 <td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Integer Value. Default is </span><span class="rvts19">60</span><span class="rvts6">. If this value is set to 0 then all files for the current folder on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> will be deleted</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">MEGA DELETE OLD:</span><span class="rvts6">. This is an Id to identify which script made the entry into the log file.</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDO_MAX_DAYS_DEFAULT"></a>
+<span class="rvts6">MAX_DAYS_DEFAULT</span></p>
 </td>
 <td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is&nbsp;</span><span class="rvts19"> /var/log/mega_delete_old.log</span><span class="rvts6">. The name of the log file to output results. If your executing this script as a non-root user then this value would need to be set to a directory that the non-root user has write access to.</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Integer Value. Default is </span><span class="rvts20">60</span><span class="rvts6">. If this value is set to 0 then all files for the current folder on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> will be deleted</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MDO_LOG"></a>
+<span class="rvts6">LOG</span></p>
+</td>
+<td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
+</td>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is&nbsp;</span><span class="rvts20"> /var/log/mega_delete_old.log</span><span class="rvts6">. The name of the log file to output results. If your executing this script as a non-root user then this value would need to be set to a directory that the non-root user has write access to.</span></p>
 </td>
 </tr>
 </table>
@@ -436,27 +509,29 @@
 <p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="mega_del_oldsh.html">mega_upload_file.sh</a></p>
 <div class="rvps2"><table border="1" cellpadding="4" cellspacing="-1" style="border-width: 0px; background-color: #ffffff; border-collapse: collapse;">
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Key</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Key</span></p>
 </td>
-<td width="88" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Required</span></p>
+<td width="88" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Required</span></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts35">Description</span></p>
-</td>
-</tr>
-<tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG_ID</span></p>
-</td>
-<td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
-</td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">MEGA PUT:</span><span class="rvts6">. This is an Id to identify which script made the entry into the log file.</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px; background-color: #c0c0c0;"><p class="rvps2"><span class="rvts18">Description</span></p>
 </td>
 </tr>
 <tr valign="top">
-<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">LOG</span></p>
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MUF_LOG_ID"></a>
+<span class="rvts6">LOG_ID</span></p>
 </td>
 <td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
 </td>
-<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts19">/var/log/mega_upload_file.log</span><span class="rvts6">. The name of the log file to output results. If your executing this script as a non-root user then this value would need to be set to a directory that the non-root user has write access to.</span></p>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">MEGA PUT:</span><span class="rvts6">. This is an Id to identify which script made the entry into the log file.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="236" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><a name="MUF_LOG"></a>
+<span class="rvts6">LOG</span></p>
+</td>
+<td width="88" valign="top" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps3"><img alt="" style="padding : 1px;" src="lib/img_false32.png"></p>
+</td>
+<td width="813" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">String Value. Default is </span><span class="rvts20">/var/log/mega_upload_file.log</span><span class="rvts6">. The name of the log file to output results. If your executing this script as a non-root user then this value would need to be set to a directory that the non-root user has write access to.</span></p>
 </td>
 </tr>
 </table>
@@ -468,35 +543,35 @@
 <h3 class="rvps5"><a name="Example1"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">Example of most basic configuration for </span><span class="rvts6">.mega_scriptsrc</span></p>
-<p class="rvps11"><span class="rvts30">[MEGA_COMMON]</span><br/><span class="rvts30">GPG_OWNER=bbserver</span><br/><span class="rvts30">SERVER_NAME=bbserver</span></p>
+<p class="rvps12"><span class="rvts32">[MEGA_COMMON]</span><br/><span class="rvts32">GPG_OWNER=bbserver</span><br/><span class="rvts32">SERVER_NAME=bbserver</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="Example2"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
-<p class="rvps2"><span class="rvts6">Example of configuration file </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> for non root user </span><span class="rvts22">bigbyte</span></p>
+<p class="rvps2"><span class="rvts6">Example of configuration file </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> for non root user </span><span class="rvts23">bigbyte</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts30">[MEGA_COMMON]</span><br/><span class="rvts30">GPG_OWNER=bbserver</span><br/><span class="rvts30">SERVER_NAME=bbserver</span><br/><span class="rvts30"></span><br/><span class="rvts30">[MEGA_DB_SAVE_UPLOAD]</span><br/><span class="rvts30">DB_USER=bigbyte</span><br/><span class="rvts30">LOG_NAME=mega_db_bigbyte.log</span><br/><span class="rvts30">SYS_LOG_DIR=/home/bigbyte/logs</span></p>
+<p class="rvps12"><span class="rvts32">[MEGA_COMMON]</span><br/><span class="rvts32">GPG_OWNER=bbserver</span><br/><span class="rvts32">SERVER_NAME=bbserver</span><br/><span class="rvts32"></span><br/><span class="rvts32">[MEGA_DB_SAVE_UPLOAD]</span><br/><span class="rvts32">DB_USER=bigbyte</span><br/><span class="rvts32">LOG=/home/bigbyte/logs/mega_db_save_up.log</span><br/><span class="rvts32">SYS_LOG=/home/bigbyte/logs/mega_db_save_up_sys.log</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="Example3"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
-<p class="rvps2"><span class="rvts6">Example of configuration file </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> that has </span><span class="rvts22">mega_del_old.sh</span><span class="rvts6">, </span><span class="rvts22">mega_dir_file_exist.sh</span><span class="rvts6">, </span><span class="rvts22">mega_mkdir.sh</span><span class="rvts6"> and </span><span class="rvts22">mega_upload_file.sh</span><span class="rvts6"> renamed to . (dot) hidden files. This is for configuration is also for a non root user </span><span class="rvts22">bigbyte;</span><span class="rvts6"> however, the same configuration change would have to be made for all user that share access to the same scripts.</span></p>
+<p class="rvps2"><span class="rvts6">Example of configuration file </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> that has </span><span class="rvts23">mega_del_old.sh</span><span class="rvts6">, </span><span class="rvts23">mega_dir_file_exist.sh</span><span class="rvts6">, </span><span class="rvts23">mega_mkdir.sh</span><span class="rvts6"> and </span><span class="rvts23">mega_upload_file.sh</span><span class="rvts6"> renamed to . (dot) hidden files. This is for configuration is also for a non root user </span><span class="rvts23">bigbyte;</span><span class="rvts6"> however, the same configuration change would have to be made for all user that share access to the same scripts.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Rename </span><span class="rvts22">mega_del_old.sh</span><span class="rvts6">, </span><span class="rvts22">mega_dir_file_exist.sh</span><span class="rvts6">, </span><span class="rvts22">mega_mkdir.sh</span><span class="rvts6"> and </span><span class="rvts22">mega_upload_file.sh</span></p>
+<p class="rvps2"><span class="rvts6">Rename </span><span class="rvts23">mega_del_old.sh</span><span class="rvts6">, </span><span class="rvts23">mega_dir_file_exist.sh</span><span class="rvts6">, </span><span class="rvts23">mega_mkdir.sh</span><span class="rvts6"> and </span><span class="rvts23">mega_upload_file.sh</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># mv </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_del_old.sh</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">.</span><span class="rvts18">mega_del_old.sh</span><br/><span class="rvts18"># mv </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_dir_file_exist.sh</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">.</span><span class="rvts18">mega_dir_file_exist.sh</span><br/><span class="rvts18"># mv </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_mkdir.sh</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">.</span><span class="rvts18">mega_mkdir.sh</span><br/><span class="rvts18"># mv </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_upload_file.sh</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">.</span><span class="rvts18">mega_upload_file.sh</span></p>
+<p class="rvps9"><span class="rvts19"># mv </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_del_old.sh</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">.</span><span class="rvts19">mega_del_old.sh</span><br/><span class="rvts19"># mv </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_dir_file_exist.sh</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">.</span><span class="rvts19">mega_dir_file_exist.sh</span><br/><span class="rvts19"># mv </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_mkdir.sh</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">.</span><span class="rvts19">mega_mkdir.sh</span><br/><span class="rvts19"># mv </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_upload_file.sh</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">.</span><span class="rvts19">mega_upload_file.sh</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Change the configuration file to represent the new names.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18">bigbyte@bbserver:~$ nano </span><span class="rvts18">.mega_scriptsrc</span></p>
+<p class="rvps9"><span class="rvts19">bigbyte@bbserver:~$ nano </span><span class="rvts19">.mega_scriptsrc</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts30">[MEGA_COMMON]</span><br/><span class="rvts30">GPG_OWNER=bbserver</span><br/><span class="rvts30">SERVER_NAME=bbserver</span><br/><span class="rvts30">MEGA_EXIST_FILE_NAME=.</span><span class="rvts30">mega_dir_file_exist.sh</span><br/><span class="rvts30">MEGA_DEL_OLD_NAME=.</span><span class="rvts30">mega_del_old.sh</span><br/><span class="rvts30">MEGA_MKDIR_FILE_NAME=.</span><span class="rvts30">mega_mkdir.sh</span><br/><span class="rvts30">MEGA_UPLOAD_FILE_NAME=.</span><span class="rvts30">mega_upload_file.sh</span><br/><span class="rvts30"></span><br/><span class="rvts30">[MEGA_DB_SAVE_UPLOAD]</span><br/><span class="rvts30">DB_USER=bigbyte</span><br/><span class="rvts30">LOG_NAME=mega_db_bigbyte.log</span><br/><span class="rvts30">SYS_LOG_DIR=/home/bigbyte/logs</span></p>
+<p class="rvps12"><span class="rvts32">[MEGA_COMMON]</span><br/><span class="rvts32">GPG_OWNER=bbserver</span><br/><span class="rvts32">SERVER_NAME=bbserver</span><br/><span class="rvts32">MEGA_EXIST_FILE_NAME=.</span><span class="rvts32">mega_dir_file_exist.sh</span><br/><span class="rvts32">MEGA_DEL_OLD_NAME=.</span><span class="rvts32">mega_del_old.sh</span><br/><span class="rvts32">MEGA_MKDIR_FILE_NAME=.</span><span class="rvts32">mega_mkdir.sh</span><br/><span class="rvts32">MEGA_UPLOAD_FILE_NAME=.</span><span class="rvts32">mega_upload_file.sh</span><br/><span class="rvts32"></span><br/><span class="rvts32">[MEGA_DB_SAVE_UPLOAD]</span><br/><span class="rvts32">DB_USER=bigbyte</span><br/><span class="rvts32">LOG=/home/bigbyte/logs/mega_db_save_up.log</span><br/><span class="rvts32">SYS_LOG=/home/bigbyte/logs/mega_db_save_up_sys.log</span></p>
 <h3 class="rvps5"><a name="Example4"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">Example of setting up root user to receive emails for errors executing script </span><a class="rvts13" href="mega_db_save_uploadsh.html">mega_db_save_upload.sh</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18">root@bbserver:~# nano </span><span class="rvts18">.mega_scriptsrc</span></p>
+<p class="rvps9"><span class="rvts19">root@bbserver:~# nano </span><span class="rvts19">.mega_scriptsrc</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps11"><span class="rvts30">[MEGA_COMMON]</span><br/><span class="rvts30">GPG_OWNER=bbserver</span><br/><span class="rvts30">SERVER_NAME=bbserver</span><br/><span class="rvts30"></span><br/><span class="rvts30">[MEGA_DB_SAVE_UPLOAD]</span><br/><span class="rvts30">SEND_EMAIL_ON_ERROR=true</span><br/><span class="rvts30">SEND_EMAIL_FROM=bbservar@example.com</span><br/><span class="rvts30">SEND_EMAIL_TO=admin@example.com</span></p>
+<p class="rvps12"><span class="rvts32">[MEGA_COMMON]</span><br/><span class="rvts32">GPG_OWNER=bbserver</span><br/><span class="rvts32">SERVER_NAME=bbserver</span><br/><span class="rvts32"></span><br/><span class="rvts32">[MEGA_DB_SAVE_UPLOAD]</span><br/><span class="rvts32">SEND_EMAIL_ON_ERROR=true</span><br/><span class="rvts32">SEND_EMAIL_FROM=bbservar@example.com</span><br/><span class="rvts32">SEND_EMAIL_TO=admin@example.com</span></p>
 <p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="mega_db_save_uploadsh.html#configuration_table">mega_db_save_upload.sh - Configuration</a></p>
 <h3 class="rvps5"><a name="Related"></a>
 <span class="rvts0"><span class="rvts14">Related</span></span></h3>

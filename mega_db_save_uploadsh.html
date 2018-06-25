@@ -13,7 +13,7 @@
 
   <title>mega_db_save_upload.sh</title>
   <meta name="description" content="A few scripts to use with megatools and mega.nz" /> 
-  <meta name="keywords" content="Encrypt">
+  <meta name="keywords" content="Encrypt,TEST_USER">
 
 
 
@@ -183,13 +183,13 @@
 <h1 class="rvps4"><a name="top"></a>
 <span class="rvts0"><span class="rvts12">Script: </span></span><span class="rvts0"><span class="rvts12">mega_db_save_upload.sh</span></span></h1>
 <p class="rvps2"><span class="rvts6">In this document:</span></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#Description">Description</a></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#configuration">Configuration</a></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#Parameters">Parameters</a></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#ReturnCodes">Possible codes returned by script</a></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#set_cron">Setting up Cron</a></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#Example">Example</a></p>
-<p class="rvps13"><a class="rvts13" href="mega_db_save_uploadsh.html#Related">Related</a></p>
+<p class="rvps14"><a class="rvts13" href="mega_db_save_uploadsh.html#Description">Description</a></p>
+<p class="rvps14"><a class="rvts13" href="mega_db_save_uploadsh.html#configuration">Configuration</a></p>
+<p class="rvps14"><a class="rvts13" href="mega_db_save_uploadsh.html#Parameters">Parameters</a></p>
+<p class="rvps14"><a class="rvts13" href="mega_db_save_uploadsh.html#ReturnCodes">Possible codes returned by script</a></p>
+<p class="rvps14"><a class="rvts13" href="mega_db_save_uploadsh.html#set_cron">Setting up Cron</a></p>
+<p class="rvps14"><a class="rvts13" href="mega_db_save_uploadsh.html#Example">Example</a></p>
+<p class="rvps14"><a class="rvts13" href="mega_db_save_uploadsh.html#Related">Related</a></p>
 <h2 class="rvps7"><a name="Description"></a>
 <span class="rvts0"><span class="rvts17">Description</span></span></h2>
 <p class="rvps2"><span class="rvts6">This script preforms an encrypted backup of a MySql database dumped to bz2 for a given user and sends that backup to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> account specified and logs the results.</span></p>
@@ -204,21 +204,53 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="configuration"></a>
 <span class="rvts0"><span class="rvts14">Configuration</span></span></h3>
-<p class="rvps2"><span class="rvts6">There are configuration settings that can go into </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> for section </span><span class="rvts6">[MEGA_DB_SAVE_UPLOAD]</span></p>
+<p class="rvps2"><span class="rvts6">There are configuration settings that can go into </span><span class="rvts6">.mega_scriptsrc</span><span class="rvts6"> for section </span><a class="rvts13" href="ConfigurationFile.html#config_mega_db_save_upload">[MEGA_DB_SAVE_UPLOAD]</a></p>
 <p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="ConfigurationFile.html">Configuration file</a><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="ConfigurationFile.html#Example4">Configuration file - Example</a><span class="rvts6"> for an example of setting up to send email.</span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h3 class="rvps5"><a name="Parameters"></a>
 <span class="rvts0"><span class="rvts14">Parameters</span></span></h3>
-<p class="rvps9"><a name="Param1"></a>
-<span class="rvts20">Param 1</span></p>
-<p class="rvps10"><span class="rvts21">Required: The Unix User to do the database backup for.</span></p>
-<p class="rvps9"><a name="Param2"></a>
-<span class="rvts20">Param 2</span></p>
-<p class="rvps10"><span class="rvts21">Required: the name of the database to be backed up to </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts21">.</span></p>
-<p class="rvps9"><a name="Param3"></a>
-<span class="rvts20">Param 3</span></p>
-<p class="rvps10"><span class="rvts21">Optional: The configuration file to use that contain the credentials for the </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts21"> account you want to access.</span><br/><span class="rvts21">See </span><a class="rvts25" href="Setupmegarc.html">Set up .megarc</a><span class="rvts21">.</span></p>
+<p class="rvps10"><a name="_u"></a>
+<span class="rvts21">-u</span></p>
+<p class="rvps11"><span class="rvts22">Required: The Unix User to do the database backup for.</span></p>
+<p class="rvps10"><a name="_d"></a>
+<span class="rvts21">-d</span></p>
+<p class="rvps11"><span class="rvts22">Required: the name of the database to be backed up to </span><a class="rvts24" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts22">.</span></p>
+<p class="rvps10"><a name="_a"></a>
+<span class="rvts21">-a</span></p>
+<p class="rvps11"><span class="rvts22">Optional: The number of days as a positive integer before todays date to delete files older then from </span><a class="rvts24" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts22">.</span><br/><span class="rvts22">Default is 60 days.</span><br/><span class="rvts22">Setting -a will override </span><a class="rvts26" href="ConfigurationFile.html#MDSU_DAYS_TO_KEEP_BACKUP">DAYS_TO_KEEP_BACKUP</a><span class="rvts22"> set in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span></p>
+<p class="rvps10"><a name="_b"></a>
+<span class="rvts21">-b</span></p>
+<p class="rvps11"><span class="rvts22">Optional: Specify -b for location of backup directory on the local server.</span></p>
+<p class="rvps10"><a name="_i"></a>
+<span class="rvts21">-i</span></p>
+<p class="rvps11"><span class="rvts22">Optional: The configuration file to use that contain the credentials for the </span><a class="rvts24" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts22"> account you want to access.</span><br/><span class="rvts22">See </span><a class="rvts26" href="Setupmegarc.html">Set up .megarc</a><span class="rvts22">.</span></p>
+<p class="rvps10"><a name="_g"></a>
+<span class="rvts21">-g</span></p>
+<p class="rvps11"><span class="rvts22">Optional: -g the gpg owner of the public key to use for encryption.</span><br/><span class="rvts22">If </span><a class="rvts26" href="ConfigurationFile.html#MDSU_ENCRYPT_OUTPUT">ENCRYPT_OUTPUT</a><span class="rvts22"> is set to true and -g option is not set then </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22"> must have the value set for </span><a class="rvts26" href="ConfigurationFile.html#GC_GPG_OWNER">GPG_OWNER</a><span class="rvts22">.</span><br/><span class="rvts22">Setting -g option overrides </span><a class="rvts26" href="ConfigurationFile.html#GC_GPG_OWNER">GPG_OWNER</a><span class="rvts22"> set in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span></p>
+<p class="rvps10"><a name="_o"></a>
+<span class="rvts21">-o</span></p>
+<p class="rvps11"><span class="rvts22">Optional: The Log file to log to results of running </span><span class="rvts22">mega_db_save_upload.sh</span><span class="rvts22">.</span><br/><span class="rvts22">Can be value of </span><span class="rvts27">"t"</span><span class="rvts22"> in which case results are outputted to the terminal window</span><br/><span class="rvts22">Can be value of </span><span class="rvts27">"s"</span><span class="rvts22"> in which case no results are written to a log file or terminal window.</span><br/><span class="rvts22">Defaults to </span><span class="rvts28">/home/${USER}/logs/mega_db.log</span><br/><span class="rvts31">Setting -o option overrides the </span><a class="rvts26" href="ConfigurationFile.html#MDSU_LOG">LOG</a><span class="rvts31"> option </span><a class="rvts26" href="ConfigurationFile.html#config_mega_db_save_upload">[MEGA_DB_SAVE_UPLOAD]</a><span class="rvts22"> of </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span></p>
+<p class="rvps10"><a name="_s"></a>
+<span class="rvts21">-s</span></p>
+<p class="rvps11"><span class="rvts22">Optional: The System Log file to log to results user errors running </span><span class="rvts22">mega_db_save_upload.sh</span><span class="rvts22">.</span><br/><span class="rvts22">Can be value of "n" in which case results are outputted to the terminal window</span><br/><span class="rvts22">Can be value of "s" in which case no results are written to a log file or terminal window.</span><br/><span class="rvts22">Defaults to </span><span class="rvts28">/var/log/mega_db.log </span><span class="rvts29">(requires script be run as root)</span><br/><span class="rvts31">Setting -s option overrides the </span><a class="rvts26" href="ConfigurationFile.html#MDSU_SYS_LOG">SYS_LOG</a><span class="rvts31"> option </span><a class="rvts26" href="ConfigurationFile.html#config_mega_db_save_upload">[MEGA_DB_SAVE_UPLOAD]</a><span class="rvts22"> of </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span><br/><span class="rvts22">-s can be set to the same value as </span><span class="rvts34">-o</span><span class="rvts22">.</span></p>
+<p class="rvps10"><a name="_m"></a>
+<span class="rvts21">-m</span></p>
+<p class="rvps11"><span class="rvts22">Optional: send email on error. y for send on error and n for no send email on error.</span><br/><span class="rvts22">Email options of&nbsp;</span><span class="rvts31"> </span><a class="rvts26" href="ConfigurationFile.html#config_mega_db_save_upload">[MEGA_DB_SAVE_UPLOAD]</a><span class="rvts22"> of </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22"> must be configured.</span><br/><span class="rvts22">Setting -m will override </span><a class="rvts26" href="ConfigurationFile.html#MDSU_SEND_EMAIL_ON_ERROR">SEND_EMAIL_ON_ERROR</a><span class="rvts22"> in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span></p>
+<p class="rvps10"><a name="_n"></a>
+<span class="rvts21">-n</span></p>
+<p class="rvps11"><span class="rvts22">Optional: -n the name of the server used in logs both locally and in path name on </span><a class="rvts24" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts22">.</span><br/><span class="rvts22">If this flag is not set then </span><a class="rvts26" href="ConfigurationFile.html#GC_SERVER_NAME">SERVER_NAME</a><span class="rvts22"> must be set in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span><br/><span class="rvts22">Setting -n will override </span><a class="rvts26" href="ConfigurationFile.html#GC_SERVER_NAME">SERVER_NAME</a><span class="rvts22"> in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span></p>
+<p class="rvps10"><a name="_r"></a>
+<span class="rvts21">-r</span></p>
+<p class="rvps11"><span class="rvts22">Optional: Specify -r the directory on the </span><a class="rvts24" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts22"> server to save the backup in.</span></p>
+<p class="rvps10"><a name="_f"></a>
+<span class="rvts21">-f</span></p>
+<p class="rvps11"><span class="rvts22">Optional -f is a special option that can forget or ignore testing for certain conditions.</span><br/><span class="rvts22"></span><br/><span class="rvts27">-f 'c'</span><span class="rvts22"> skips testing for mysql configuration. If you know that your mysql configuration file is set up properly for mysqldump and your are getting an error 50 then you can use </span><span class="rvts27">-f 'c'</span><span class="rvts22"> to skip the check for &nbsp;mysql configuration. See also </span><a class="rvts26" href="ConfigurationFile.html#MDSU_MYSQL_TEST_CNF">MYSQL_TEST_CNF</a><span class="rvts22"> in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span><br/><span class="rvts22"></span><br/><span class="rvts27">-f 'd'</span><span class="rvts22"> skips testing for mysql database. If for any reason you know that your database exist and you are getting an error 52 then you can use </span><span class="rvts27">-f 'd'</span><span class="rvts22"> to skip the check if the database exist. See also </span><a class="rvts26" href="ConfigurationFile.html#MDSU_MYSQL_TEST_DB">MYSQL_TEST_DB</a><span class="rvts22"> in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">. </span><br/><span class="rvts22"></span><br/><span class="rvts27">-f 'u'</span><span class="rvts22"> skips testing for unix user. Must override ( </span><a class="rvts26" href="ConfigurationFile.html#MDSU_LOG">LOG</a><span class="rvts22"> or use </span><a class="rvts30" href="mega_db_save_uploadsh.html#_o">-o</a><span class="rvts22">), </span><a class="rvts26" href="ConfigurationFile.html#MDSU_BAK_DIR">BAK_DIR</a><span class="rvts22"> and </span><a class="rvts26" href="ConfigurationFile.html#MDSU_MEGA_BACKUP_DIR">MEGA_BACKUP_DIR</a><span class="rvts22"> in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">. See also </span><a class="rvts26" href="ConfigurationFile.html#MDSU_TEST_USER">TEST_USER</a><span class="rvts22"> in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span><br/><span class="rvts22"></span><br/><span class="rvts27">-f 'g'</span><span class="rvts22"> skips testing if gpg public key exist. If for any reason your are getting an error of 117 and you know your public key is imported then you can use </span><span class="rvts27">-f 'g'</span><span class="rvts22"> to skip the check if public key exist. See also </span><a class="rvts26" href="ConfigurationFile.html#MDSU_TEST_GPG">TEST_GPG</a><span class="rvts22"> in </span><a class="rvts26" href="ConfigurationFile.html">Configuration file</a><span class="rvts22">.</span><br/><span class="rvts22"></span><br/><span class="rvts22">Options for -f can be combined. For example: </span><span class="rvts27">-f 'dc'</span><span class="rvts22"> would skip checking of mysql configuration and database.</span></p>
+<p class="rvps10"><span class="rvts21">-h</span></p>
+<p class="rvps11"><span class="rvts22">Optional: Display Script help</span></p>
+<p class="rvps10"><span class="rvts21">-v</span></p>
+<p class="rvps11"><span class="rvts22">Optional: Display script version</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h3 class="rvps5"><a name="ReturnCodes"></a>
 <span class="rvts0"><span class="rvts14">Possible codes returned by script</span></span></h3>
@@ -233,6 +265,18 @@
 <td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">0</span></p>
 </td>
 <td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Normal Exit script found no issues</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">3</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">No write privileges to create log file.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">4</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Log file exist but no write privileges.</span></p>
 </td>
 </tr>
 <tr valign="top">
@@ -274,13 +318,13 @@
 <tr valign="top">
 <td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">50</span></p>
 </td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts19">~/.my.cnf</span><span class="rvts6"> for mysqldump is not found or script does not have read permissions.</span></p>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts20">~/.my.cnf</span><span class="rvts6"> for mysqldump is not found or script does not have read permissions.</span></p>
 </td>
 </tr>
 <tr valign="top">
 <td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">51</span></p>
 </td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts19">~/.megarc</span><span class="rvts6"> for mega.nz is not found or script does not have read permissions.</span></p>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts20">~/.megarc</span><span class="rvts6"> for mega.nz is not found or script does not have read permissions.</span></p>
 </td>
 </tr>
 <tr valign="top">
@@ -379,6 +423,30 @@
 <td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">megamkdir not found. </span><a class="rvts11" href="https://github.com/megous/megatools" target="_blank">Megtools</a><span class="rvts6"> requires installing</span></p>
 </td>
 </tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">116</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Null value. Config file </span><a class="rvts13" href="ConfigurationFile.html#GC_GPG_OWNER">GPG_OWNER</a><span class="rvts6"> of </span><a class="rvts13" href="ConfigurationFile.html">.mega_scriptrc</a><span class="rvts6"> or </span><a class="rvts25" href="mega_db_save_uploadsh.html#_g">-g</a><span class="rvts6"> option must be set.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">117</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Config file </span><a class="rvts13" href="ConfigurationFile.html#GC_GPG_OWNER">GPG_OWNER</a><span class="rvts6"> of .mega_scriptrc or </span><a class="rvts25" href="mega_db_save_uploadsh.html#_g">-g</a><span class="rvts6"> option must be set and must be a valid GPG Public Key.</span><br/><span class="rvts6">See: </span><a class="rvts13" href="GnuPGEncryptandDecrypt.html">How to Encrypt Files on Linux using GnuPG</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">118</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Unable to create directory to place backup file in. Make sure you have the proper permissions create the directory for specified directory location.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">119</span></p>
+</td>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Unable to write in directory for backup file. There are no write permissions for the backup directory even though the directory exist.</span></p>
+</td>
+</tr>
 </table>
 </div>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
@@ -388,40 +456,40 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">To add an entry into cron as root login to the terminal as root user.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># crontab -e</span></p>
+<p class="rvps9"><span class="rvts19"># crontab -e</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The first time you use cron you may have to choose an editor. I would recommend nano as it is the simplest.</span></p>
 <p class="rvps2"><span class="rvts6">Add your entry at the end of any current cron jobs that exist.</span></p>
-<h4 class="rvps12"><span class="rvts0"><span class="rvts31">Example Cron entry</span></span></h4>
+<h4 class="rvps13"><span class="rvts0"><span class="rvts33">Example Cron entry</span></span></h4>
 <p class="rvps2"><span class="rvts6">The following entry would run once a day at 9:40 PM and upload to the default account </span><a class="rvts13" href="Setupmegarc.html">set in .megarc</a><span class="rvts6">.</span></p>
-<p class="rvps2"><span class="rvts6">This entry would backup database </span><span class="rvts19">"sammy_wordpress"</span><span class="rvts6"> for the user </span><span class="rvts19">"sammy"</span><span class="rvts6">.</span></p>
-<p class="rvps11"><span class="rvts30">40 21 * * * </span><span class="rvts30">/bin/bash</span><span class="rvts30"> </span><span class="rvts30">/usr/local/bin/</span><span class="rvts30">mega_db_save_upload.sh "sammy" "sammy_wordpress" &gt;/dev/null 2&gt;&amp;1</span></p>
-<p class="rvps2"><span class="rvts6">By Default you would find the log entries in </span><span class="rvts19">/home/users/sammy/logs/mega_db.log</span></p>
-<p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts19">"/Root/myserver/backups/sammy/database/2018-06-07-21-40-01_sammy_wordpress.sql.bz2.gpg"</span></p>
+<p class="rvps2"><span class="rvts6">This entry would backup database </span><span class="rvts20">"sammy_wordpress"</span><span class="rvts6"> for the user </span><span class="rvts20">"sammy"</span><span class="rvts6">.</span></p>
+<p class="rvps12"><span class="rvts32">40 21 * * * </span><span class="rvts32">/bin/bash</span><span class="rvts32"> </span><span class="rvts32">/usr/local/bin/</span><span class="rvts32">mega_db_save_upload.sh -u 'sammy' -d 'sammy_wordpress' &gt;/dev/null 2&gt;&amp;1</span></p>
+<p class="rvps2"><span class="rvts6">By Default you would find the log entries in </span><span class="rvts20">/home/users/sammy/logs/mega_db.log</span></p>
+<p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts20">"/Root/myserver/backups/sammy/database/2018-06-07-21-40-01_sammy_wordpress.sql.bz2.gpg"</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The following entry will run once a day at 1:00 AM and use a second mega account that the credentials stored in the </span><span class="rvts19">/.megarc_bob</span></p>
-<p class="rvps2"><span class="rvts6">This entry would backup database </span><span class="rvts19">"bugtracker_bob_db"</span><span class="rvts6"> for the user </span><span class="rvts19">"bob"</span><span class="rvts6">.</span></p>
-<p class="rvps11"><span class="rvts30">0 1 * * * </span><span class="rvts30">/bin/bash</span><span class="rvts30"> </span><span class="rvts30">/usr/local/bin/</span><span class="rvts30">mega_db_save_upload.sh "bob" "bugtracker_bob_db" ~/.megarc_bob &gt;/dev/null 2&gt;&amp;1</span></p>
-<p class="rvps2"><span class="rvts6">By Default you would find the log entries in </span><span class="rvts19">/home/users/bob/logs/mega_db.log</span></p>
-<p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts19">"/Root/myserver/backups/bob/database/2018-06-07-01-00-01_bugtracker_bob_db.sql.bz2.gpg"</span></p>
-<p class="rvps2"><span class="rvts19"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The following entry will run once a day at 1:00 AM and use a second mega account that the credentials stored in the </span><span class="rvts20">/.megarc_bob</span></p>
+<p class="rvps2"><span class="rvts6">This entry would backup database </span><span class="rvts20">"bugtracker_bob_db"</span><span class="rvts6"> for the user </span><span class="rvts20">"bob"</span><span class="rvts6">.</span></p>
+<p class="rvps12"><span class="rvts32">0 1 * * * </span><span class="rvts32">/bin/bash</span><span class="rvts32"> </span><span class="rvts32">/usr/local/bin/</span><span class="rvts32">mega_db_save_upload.sh -u 'bob' -d 'bugtracker_bob_db' -i ~/.megarc_bob &gt;/dev/null 2&gt;&amp;1</span></p>
+<p class="rvps2"><span class="rvts6">By Default you would find the log entries in </span><span class="rvts20">/home/users/bob/logs/mega_db.log</span></p>
+<p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts20">"/Root/myserver/backups/bob/database/2018-06-07-01-00-01_bugtracker_bob_db.sql.bz2.gpg"</span></p>
+<p class="rvps2"><span class="rvts20"><br/></span></p>
 <p class="rvps2"><span class="rvts6">See </span><a class="rvts11" href="https://crontab-generator.org/" target="_blank">Crontab Generator</a><span class="rvts6"> for an online tool to help generate cron entries.</span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h3 class="rvps5"><a name="Example"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The following would backup database </span><span class="rvts19">"sammy_wordpress"</span><span class="rvts6"> for the user </span><span class="rvts19">"sammy"</span><span class="rvts6">. By Default you would find the log entries in </span><span class="rvts19">/home/users/sammy/logs/mega_db.log</span></p>
-<p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts19">"/Root/myserver/backups/sammy/database/2018-06-07-21-40-01_sammy_wordpress.sql.bz2.gpg"</span></p>
+<p class="rvps2"><span class="rvts6">The following would backup database </span><span class="rvts20">"sammy_wordpress"</span><span class="rvts6"> for the user </span><span class="rvts20">"sammy"</span><span class="rvts6">. By Default you would find the log entries in </span><span class="rvts20">/home/users/sammy/logs/mega_db.log</span></p>
+<p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts20">"/Root/myserver/backups/sammy/database/2018-06-07-21-40-01_sammy_wordpress.sql.bz2.gpg"</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># </span><span class="rvts18">/bin/bash</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_db_save_upload.sh</span><span class="rvts18"> "sammy" "sammy_wordpress"</span></p>
+<p class="rvps9"><span class="rvts19"># </span><span class="rvts19">/bin/bash</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_db_save_upload.sh</span><span class="rvts19"> -u 'sammy' -d 'sammy_wordpress'</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">The following entry would backup database </span><span class="rvts19">"bugtracker_bob_db"</span><span class="rvts6"> for the user </span><span class="rvts19">"bob"</span><span class="rvts6">. By Default you would find the log entries in </span><span class="rvts19">/home/users/bob/logs/mega_db.log</span></p>
-<p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts19">"/Root/myserver/backups/bob/database/2018-06-07-01-00-01_bugtracker_bob_db.sql.bz2.gpg"</span></p>
+<p class="rvps2"><span class="rvts6">The following entry would backup database </span><span class="rvts20">"bugtracker_bob_db"</span><span class="rvts6"> for the user </span><span class="rvts20">"bob"</span><span class="rvts6">. By Default you would find the log entries in </span><span class="rvts20">/home/users/bob/logs/mega_db.log</span></p>
+<p class="rvps2"><span class="rvts6">The file path on </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> would look something like this</span><br/><span class="rvts20">"/Root/myserver/backups/bob/database/2018-06-07-01-00-01_bugtracker_bob_db.sql.bz2.gpg"</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># </span><span class="rvts18">/bin/bash</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_db_save_upload.sh</span><span class="rvts18"> "bob" "bugtracker_bob_db" ~/.megarc_bob</span></p>
+<p class="rvps9"><span class="rvts19"># </span><span class="rvts19">/bin/bash</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_db_save_upload.sh</span><span class="rvts19"> -u 'bob' -d 'bugtracker_bob_db' -i "$HOME/.megarc_bob"</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <hr style="height: 1px; color : #000000;  background-color : #000000; border-width : 0px;">
 <h3 class="rvps5"><a name="Related"></a>

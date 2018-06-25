@@ -188,12 +188,16 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="Parameters"></a>
 <span class="rvts0"><span class="rvts14">Parameters</span></span></h3>
-<p class="rvps9"><a name="Param1"></a>
-<span class="rvts20">Param 1</span></p>
-<p class="rvps10"><span class="rvts21">Optional: The path to test if it exist</span><br/><span class="rvts21">Eg: </span><span class="rvts26">"/MyPath/myfile"</span></p>
-<p class="rvps9"><a name="Param2"></a>
-<span class="rvts20">Param 2</span></p>
-<p class="rvps10"><span class="rvts21">Optional: The configuration file to use that contain the credentials for the </span><a class="rvts23" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts21"> account you want to access.</span><br/><span class="rvts21">See </span><a class="rvts25" href="Setupmegarc.html">Set up .megarc</a><span class="rvts21">.</span></p>
+<p class="rvps10"><a name="_p"></a>
+<span class="rvts21">-p</span></p>
+<p class="rvps11"><span class="rvts22">Optional: The path to test if it exist</span><br/><span class="rvts22">Eg: &nbsp;</span><span class="rvts27">-p 'MyPath/myfile'</span></p>
+<p class="rvps10"><a name="_i"></a>
+<span class="rvts21">-i</span></p>
+<p class="rvps11"><span class="rvts22">Optional: The configuration file to use that contain the credentials for the </span><a class="rvts24" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts22"> account you want to access.</span><br/><span class="rvts22">See </span><a class="rvts26" href="Setupmegarc.html">Set up .megarc</a><span class="rvts22">.</span></p>
+<p class="rvps10"><span class="rvts21">-h</span></p>
+<p class="rvps11"><span class="rvts22">Optional: Display Script help</span></p>
+<p class="rvps10"><span class="rvts21">-v</span></p>
+<p class="rvps11"><span class="rvts22">Optional: Display script version</span></p>
 <h3 class="rvps5"><a name="ReturnCodes"></a>
 <span class="rvts0"><span class="rvts14">Possible Codes returned from Script</span></span></h3>
 <div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-width: 0px; border-collapse: collapse;">
@@ -236,7 +240,7 @@
 <tr valign="top">
 <td width="46" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">111</span></p>
 </td>
-<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Optional argument two was passed in but the config can not be found or we do not have read permissions</span></p>
+<td width="1104" style="border-width : 1px; border-color: #969696; border-style: solid; padding: 4px;"><p class="rvps2"><span class="rvts6">Optional argument </span><a class="rvts25" href="mega_dir_file_existsh.html#_i">-i</a><span class="rvts6"> was passed in but the config can not be found or we do not have read permissions</span></p>
 </td>
 </tr>
 </table>
@@ -244,10 +248,10 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps5"><a name="Remarks"></a>
 <span class="rvts0"><span class="rvts14">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">Never pass in the directory Root to </span><span class="rvts22">mega_dir_file_exist.sh</span><span class="rvts6"> as the frist part of the path.</span></p>
-<p class="rvps2"><span class="rvts6">For </span><a class="rvts24" href="mega_dir_file_existsh.html#Param1">Param 1</a><span class="rvts6"> </span><span class="rvts19">"/MyPath/myfile"</span><span class="rvts6"> is fine; however, </span><span class="rvts19">"/Root/MyPath/myfile"</span><span class="rvts6"> will fail.</span></p>
+<p class="rvps2"><span class="rvts6">Never pass in the directory </span><span class="rvts18">Root</span><span class="rvts6"> to </span><span class="rvts23">mega_dir_file_exist.sh</span><span class="rvts6"> as the frist part of the path.</span></p>
+<p class="rvps2"><span class="rvts6">For&nbsp;</span><a class="rvts25" href="mega_dir_file_existsh.html#_p"> -p</a><span class="rvts6"> </span><span class="rvts20">"/MyPath/myfile"</span><span class="rvts6"> is fine; however, </span><span class="rvts20">"/Root/MyPath/myfile"</span><span class="rvts6"> will fail.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">If </span><a class="rvts24" href="mega_dir_file_existsh.html#Param2">Param 2</a><span class="rvts6"> is omitted then you must have </span><span class="rvts22">.megarc </span><span class="rvts6">set in the current users home directory.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts25" href="mega_dir_file_existsh.html#_i">-i</a><span class="rvts6"> is omitted then you must have </span><span class="rvts23">.megarc </span><span class="rvts6">set in the current users home directory.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">The </span><span class="rvts6">mega_dir_file_exist.sh</span><span class="rvts6"> does not have any logging or output to the terminal. Only the Exit code is set.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
@@ -257,20 +261,20 @@
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">Script example to check and see if a file or folder exist on default </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a><span class="rvts6"> account on the command line.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># </span><span class="rvts18">/bin/bash</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_dir_file_exist.sh</span><span class="rvts18"> '/MyPath/myfile'; echo $?</span></p>
+<p class="rvps9"><span class="rvts19"># </span><span class="rvts19">/bin/bash</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_dir_file_exist.sh</span><span class="rvts19"> -p '/MyPath/myfile'; echo $?</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">If the file exsit above then </span><span class="rvts19">3</span><span class="rvts6"> will echo to the command prompt if file does not exsit then </span><span class="rvts19">0</span><span class="rvts6"> will echo.</span></p>
+<p class="rvps2"><span class="rvts6">If the file exsit above then </span><span class="rvts20">3</span><span class="rvts6"> will echo to the command prompt if file does not exsit then </span><span class="rvts20">0</span><span class="rvts6"> will echo.</span></p>
 <h3 class="rvps5"><a name="Example2"></a>
 <span class="rvts0"><span class="rvts14">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6">Script example to check and see if we have access to </span><a class="rvts11" href="https://mega.nz" target="_blank">Mega.nz</a></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># </span><span class="rvts18">/bin/bash</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_dir_file_exist.sh</span><span class="rvts18">; echo $?</span></p>
+<p class="rvps9"><span class="rvts19"># </span><span class="rvts19">/bin/bash</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_dir_file_exist.sh</span><span class="rvts19">; echo $?</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">or to check a non-default account</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps8"><span class="rvts18"># </span><span class="rvts18">/bin/bash</span><span class="rvts18"> </span><span class="rvts18">/usr/local/bin/</span><span class="rvts18">mega_dir_file_exist.sh</span><span class="rvts18"> "" ~/.megarc_other; echo $?</span></p>
+<p class="rvps9"><span class="rvts19"># </span><span class="rvts19">/bin/bash</span><span class="rvts19"> </span><span class="rvts19">/usr/local/bin/</span><span class="rvts19">mega_dir_file_exist.sh</span><span class="rvts19"> -i ~/.megarc_other; echo $?</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">If the file exsit above then </span><span class="rvts19">1</span><span class="rvts6"> will echo to the command prompt if file does not exsit then </span><span class="rvts19">0</span><span class="rvts6"> will echo.</span></p>
+<p class="rvps2"><span class="rvts6">If the file exist above then </span><span class="rvts20">1</span><span class="rvts6"> will echo to the command prompt if file does not exist then </span><span class="rvts20">0</span><span class="rvts6"> will echo.</span></p>
 <h3 class="rvps5"><a name="Related"></a>
 <span class="rvts0"><span class="rvts14">Related</span></span></h3>
 <p class="rvps2"><a class="rvts13" href="Setupmegarc.html">Set up .megarc</a></p>

@@ -101,7 +101,15 @@ fi
 
 
 LOG_ID=${SCRIPT_CONF[LOG_ID]}
-LOG=$(eval echo ${SCRIPT_CONF[LOG]})
+LOG=${SCRIPT_CONF[LOG]}
+MEGA_DEFAULT_ROOT="/Root"
+FILE_TO_UPLOAD=''
+LOCK_FILE="/tmp/mega_upload_file_lock"
+CURRENT_MEGA_FOLDER=''
+CURRENT_CONFIG=''
+CURRENT_SPACE=''
+MEGA_FULL_PATH=''
+HAS_CONFIG=0
 
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 [ $# -eq 0 ] && usage
@@ -134,14 +142,10 @@ while getopts ":hvp:l:i:o:d:" arg; do
   esac
 done
 
-MEGA_DEFAULT_ROOT="/Root"
-FILE_TO_UPLOAD=''
-LOCK_FILE="/tmp/mega_upload_file_lock"
-CURRENT_MEGA_FOLDER=''
-CURRENT_CONFIG=''
-CURRENT_SPACE=''
-MEGA_FULL_PATH=''
-HAS_CONFIG=0
+# the follow vars are eval in case they contain other expandable vars such as $HOME or ${USER}
+LOG=$(eval echo ${LOG})
+CURRENT_CONFIG=$(eval echo ${CURRENT_CONFIG})
+FILE_TO_UPLOAD=$(eval echo ${FILE_TO_UPLOAD})
 
 if [[ -n "${LOG}" ]]; then
     if [[ "${LOG}" = 't' ]]; then

@@ -80,6 +80,9 @@ while getopts ":hvp:i:" arg; do
         ;;
   esac
 done
+# the follow vars are eval in case they contain other expandable vars such as $HOME or ${USER}
+CURRENT_CONFIG=$(eval echo ${CURRENT_CONFIG})
+
 if [[ -z "${MEGA_SERVER_PATH}" ]]; then
     # No argument for user supplied mega server path
     MEGA_SERVER_PATH="${MEGA_DEFAULT_ROOT}"

@@ -126,6 +126,10 @@ while getopts ":hvp:i:" arg; do
   esac
 done
 
+# the follow vars are eval in case they contain other expandable vars such as $HOME or ${USER}
+DIR=$(eval echo ${DIR})
+CURRENT_CONFIG=$(eval echo ${CURRENT_CONFIG})
+
 if [ -z "$DIR" ]; then
     # No argument supplied for path! Exiting
     exit 40

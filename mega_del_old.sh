@@ -148,6 +148,10 @@ while getopts ":hvp:a:o:d:i:" arg; do
   esac
 done
 
+# the follow vars are eval in case they contain other expandable vars such as $HOME or ${USER}
+LOG=$(eval echo ${LOG})
+CURRENT_CONFIG=$(eval echo ${CURRENT_CONFIG})
+
 if [[ -n "${LOG}" ]]; then
     if [[ "${LOG}" = 't' ]]; then
         # redirect to terminal output

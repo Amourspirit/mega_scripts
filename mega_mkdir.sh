@@ -141,9 +141,9 @@ if [[ -n "$CURRENT_CONFIG" ]]; then
     HAS_CONFIG=1
 fi
 if [[ HAS_CONFIG -eq 1 ]]; then
-    ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "'${DIR}'" -i "'${CURRENT_CONFIG}'"
+    ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "${DIR}" -i "${CURRENT_CONFIG}"
 else
-    ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "'${DIR}'"
+    ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "${DIR}"
 fi
 if [[ $? -eq 2 ]]; then
     # Directory already exist
@@ -175,9 +175,9 @@ for i in "${PARTS[@]}"; do
     if [[ -n $i ]]; then
         NEW_DIR="${NEW_DIR}/$i"
         if [[ HAS_CONFIG -eq 1 ]]; then
-            ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "'${NEW_DIR}'" -i "'${CURRENT_CONFIG}'"
+            ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "${NEW_DIR}" -i "${CURRENT_CONFIG}"
         else
-            ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "'${NEW_DIR}'"
+            ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "${NEW_DIR}"
         fi
         EXIST_RESULT=$?
         if [[ $EXIST_RESULT -eq 0 ]]; then

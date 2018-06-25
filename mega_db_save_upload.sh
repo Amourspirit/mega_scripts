@@ -717,10 +717,10 @@ if [[ "$MEGA_ENABLED" = true ]]; then
     echo "${DATELOG} ${LOG_ID} Checking mega.nz path to see if '${MEGA_BACKUP_DIR}' directory exist. Will created if not." >> ${LOG}
     if [[ $HAS_CONFIG -eq 0 ]]; then
         # No argument is given for default configuration for that contains user account and password
-        ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" -p "'${MEGA_BACKUP_DIR}'"
+        ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" -p "${MEGA_BACKUP_DIR}"
     else
         # Argument is given for default configuration that contains user account and password
-        ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" -p "'${MEGA_BACKUP_DIR}'" -i "'${CURRENT_CONFIG}'"
+        ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" -p "${MEGA_BACKUP_DIR}" -i "${CURRENT_CONFIG}"
     fi
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]; then
@@ -738,10 +738,10 @@ if [[ "$MEGA_ENABLED" = true ]]; then
          # Remove any expired database backup files
         if [[ $HAS_CONFIG -eq 0 ]]; then
             # No argument is given for default configuration for that contains user account and password
-            ${BASH} "${MEGA_DEL_OLD_SCRIPT}" -p "'${MEGA_BACKUP_DIR}'" -a "${DAYS_TO_KEEP_BACKUP}" -o "'${LOG}'" -d "'${DATELOG}'"
+            ${BASH} "${MEGA_DEL_OLD_SCRIPT}" -p "${MEGA_BACKUP_DIR}" -a "${DAYS_TO_KEEP_BACKUP}" -o "${LOG}" -d "${DATELOG}"
         else
             # Argument is given for default configuration that contains user account and password
-            ${BASH} "${MEGA_DEL_OLD_SCRIPT}" -p "'${MEGA_BACKUP_DIR}'" -a "${DAYS_TO_KEEP_BACKUP}" -o "'${LOG}'" -d "'${DATELOG}'" -i "'${CURRENT_CONFIG}'"
+            ${BASH} "${MEGA_DEL_OLD_SCRIPT}" -p "${MEGA_BACKUP_DIR}" -a "${DAYS_TO_KEEP_BACKUP}" -o "${LOG}" -d "${DATELOG}" -i "${CURRENT_CONFIG}"
         fi
         EXIT_CODE=$?
         if [[ $EXIT_CODE -ne 0 ]]; then
@@ -759,10 +759,10 @@ if [[ "$MEGA_ENABLED" = true ]]; then
     # Send new backup to mega.nz
     if [[ $HAS_CONFIG -eq 0 ]]; then
         # No argument is given for default configuration for that contains user account and password
-        ${BASH} "${MEGA_UPLOAD_FILE_SCRIPT}" -p "'${MEGA_BACKUP_DIR}'" -l "'${OUTPUT_FILE}'" -o "'${LOG}'" -d "'${DATELOG}'"
+        ${BASH} "${MEGA_UPLOAD_FILE_SCRIPT}" -p "${MEGA_BACKUP_DIR}" -l "${OUTPUT_FILE}" -o "${LOG}" -d "${DATELOG}"
     else
         # Argument is given for default configuration that contains user account and password
-        ${BASH} "${MEGA_UPLOAD_FILE_SCRIPT}" -p "'${MEGA_BACKUP_DIR}'" -l "'${OUTPUT_FILE}'" -o "'${LOG}'" -d "'${DATELOG}'" -i "'${CURRENT_CONFIG}'"
+        ${BASH} "${MEGA_UPLOAD_FILE_SCRIPT}" -p "${MEGA_BACKUP_DIR}" -l "${OUTPUT_FILE}" -o "${LOG}" -d "${DATELOG}" -i "${CURRENT_CONFIG}"
     fi
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 0 ]]; then
@@ -780,10 +780,10 @@ if [[ "$MEGA_ENABLED" = true ]]; then
     echo "${DATELOG} ${LOG_ID} Checking mega.nz to see if backup has made it." >> ${LOG}
     if [[ -z "$CURRENT_CONFIG" ]]; then
         # No argument is given for default configuration for that contains user account and password
-        ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "'${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}'"
+        ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}"
     else
         # Argument is given for default configuration that contains user account and password
-        ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "'${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}'" -i "'${CURRENT_CONFIG}'"
+        ${BASH} "${MEGA_EXIST_FILE_SCRIPT}" -p "${MEGA_BACKUP_DIR}/${OUTPUT_FILE_NAME}" -i "${CURRENT_CONFIG}"
     fi
     EXIT_CODE=$?
     if [[ $EXIT_CODE -ne 3 ]]; then

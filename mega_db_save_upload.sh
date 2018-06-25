@@ -284,7 +284,7 @@ while getopts ":hvu:d:a:b:g:i:o:s:f:m:n:r:" arg; do
     a) # Optional: Specify -a for age that represents the number of days as a positive integer before todays date to delete files older then from Mega.nz.
         DAYS_TO_KEEP_BACKUP="${OPTARG}"
         ;;
-    b) # optional: Spedify -b for location of backup directory on the local server
+    b) # Optional: Specify -b for location of backup directory on the local server
         BAK_DIR="${OPTARG}"
         ;;
     g) # Optional: Specify -g the gpg owner of the publick key to use for encryption. If encryption is turned on and -g option is not set then .mega_scriptsrc must have the value set for GPG_OWNER

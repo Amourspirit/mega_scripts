@@ -20,14 +20,18 @@ SEND_EMAIL_ON_ERROR=false
 SEND_EMAIL_TO=
 SEND_EMAIL_FROM=noreply@myserver.com
 DB_USER=root
-LOG_NAME=mega_db.log
+LOG=/home/${USER}/logs/mega_db.log
 LOG_ID=MEGA DATABASE:
 LOG_SEP= =========================================${DATELOG}=========================================
-SYS_LOG_DIR=/var/log
+SYS_LOG=/var/log/mega_db.log
 MYSQL_DIR=/var/lib/mysql
 SYS_LOG_DIR=/var/log
 BAK_DIR=/home/${USER}/tmp
 MEGA_BACKUP_DIR=/$SERVER_NAME/backups/${USER}/database
+MYSQL_TEST_DB=true
+MYSQL_TEST_CNF=true
+TEST_GPG=true
+TEST_USER=true
 
 [MEGA_DELETE_OLD]
 LOG_ID=MEGA DELETE OLD:

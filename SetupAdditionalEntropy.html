@@ -210,12 +210,8 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h4 class="rvps13"><span class="rvts0"><span class="rvts33">Run on Startup</span></span></h4>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts19"># nano /etc/crontab</span></p>
+<p class="rvps9"><span class="rvts19"># update-rc.d haveged defaults</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Add following to crontab</span></p>
-<p class="rvps12"><span class="rvts32">@reboot root /usr/sbin/haveged -w 1024</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Save the changes and exit nano.</span></p>
 <p class="rvps2"><span class="rvts6">On the next reboot haveged will start with the system.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h4 class="rvps13"><a name="rng_tools_install"></a>
@@ -228,26 +224,33 @@
 <p class="rvps2"><span class="rvts6">If not installed the output should look similar to:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps9"><span class="rvts19"># dpkg -l rng-tools</span></p>
-<p class="rvps9"><span class="rvts19">Desired=Unknown/Install/Remove/Purge/Hold</span></p>
-<p class="rvps9"><span class="rvts19">| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend</span></p>
-<p class="rvps9"><span class="rvts19">|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)</span></p>
-<p class="rvps9"><span class="rvts19">||/ Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Version &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Architecture &nbsp; &nbsp; &nbsp;Description</span></p>
-<p class="rvps9"><span class="rvts19">+++-========================-=================-=================-=====================================================</span></p>
-<p class="rvps9"><span class="rvts19">un &nbsp;rng-tools &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;none&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;none&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(no description available)</span></p>
+<p class="rvps9"><span class="rvts19">Desired=Unknown/Install/Remove/Purge/Hold</span><br/><span class="rvts19">| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend</span><br/><span class="rvts19">|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)</span><br/><span class="rvts19">||/ Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Version &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Architecture &nbsp; &nbsp; &nbsp;Description</span><br/><span class="rvts19">+++-========================-=================-=================-=====================================================</span><br/><span class="rvts19">un &nbsp;rng-tools &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;none&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;none&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(no description available)</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">If installed the output should look similar to:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps9"><span class="rvts19"># dpkg -l rng-tools</span></p>
-<p class="rvps9"><span class="rvts19">Desired=Unknown/Install/Remove/Purge/Hold</span></p>
-<p class="rvps9"><span class="rvts19">| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend</span></p>
-<p class="rvps9"><span class="rvts19">|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)</span></p>
-<p class="rvps9"><span class="rvts19">||/ Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Version &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Architecture &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Description</span></p>
-<p class="rvps9"><span class="rvts19">+++-=================================-=====================-=====================-=====================================</span></p>
-<p class="rvps9"><span class="rvts19">ii &nbsp;rng-tools &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2-unofficial-mt.14-1+ amd64 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Daemon to use a Hardware TRNG</span></p>
+<p class="rvps9"><span class="rvts19">Desired=Unknown/Install/Remove/Purge/Hold</span><br/><span class="rvts19">| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend</span><br/><span class="rvts19">|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)</span><br/><span class="rvts19">||/ Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Version &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Architecture &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Description</span><br/><span class="rvts19">+++-=================================-=====================-=====================-=====================================</span><br/><span class="rvts19">ii &nbsp;rng-tools &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2-unofficial-mt.14-1+ amd64 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Daemon to use a Hardware TRNG</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">If you require to install rng-tools</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts19"># apt-get update</span><br/><span class="rvts19"># apg-get install rng-tools</span></p>
+<p class="rvps9"><span class="rvts19"># apt-get update</span><br/><span class="rvts19"># apt-get install rng-tools</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Note: If you start the service, you will see that it fails:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps9"><span class="rvts19"># systemctl start rng-tools</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Add the </span><span class="rvts20">/dev/urandom</span><span class="rvts6"> path to the rng config file</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps9"><span class="rvts19"># echo "HRNGDEVICE=/dev/urandom" &gt;&gt; /etc/default/rng-tools</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Start the service again</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps9"><span class="rvts19"># systemctl start rng-tools</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Check the Status</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps9"><span class="rvts19"># service rng-tools status</span><br/><span class="rvts19">● rng-tools.service</span><br/><span class="rvts19"> &nbsp; Loaded: loaded (/etc/init.d/rng-tools; generated; vendor preset: enabled)</span><br/><span class="rvts19"> &nbsp; Active: </span><span class="rvts40">active (running)</span><span class="rvts19"> since Mon 2018-06-25 10:48:31 EDT; 7s ago</span><br/><span class="rvts19"> &nbsp; &nbsp; Docs: man:systemd-sysv-generator(8)</span><br/><span class="rvts19"> &nbsp;Process: 4194 ExecStart=/etc/init.d/rng-tools start (code=exited, status=0/SUCCESS)</span><br/><span class="rvts19"> &nbsp; &nbsp;Tasks: 4 (limit: 19660)</span><br/><span class="rvts19"> &nbsp; CGroup: /system.slice/rng-tools.service</span><br/><span class="rvts19"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; └─4196 /usr/sbin/rngd -r /dev/urandom</span><br/><span class="rvts19"></span><br/><span class="rvts19">Jun 25 10:48:30 bigbyte systemd[1]: Starting rng-tools.service...</span><br/><span class="rvts19">Jun 25 10:48:31 bigbyte rng-tools[4194]: Starting Hardware RNG entropy gatherer daemon: rngd.</span><br/><span class="rvts19">Jun 25 10:48:31 bigbyte systemd[1]: Started rng-tools.service.</span><br/><span class="rvts19">Jun 25 10:48:31 bigbyte rngd[4196]: rngd 2-unofficial-mt.14 starting up...</span><br/><span class="rvts19">Jun 25 10:48:31 bigbyte rngd[4196]: entropy feed to the kernel ready</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h4 class="rvps13"><a name="test_entropy"></a>
 <span class="rvts0"><span class="rvts33">Testing Availability of Entropy &amp; Quality of Random Data</span></span></h4>
@@ -256,35 +259,10 @@
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">Output:</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts19">rngtest: starting FIPS tests...</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: bits received from input: 20000032</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: FIPS 140-2 successes: 1000</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: FIPS 140-2 failures: 0</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Monobit: 0</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Poker: 0</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Runs: 0</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Long run: 0</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Continuous run: 0</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: input channel speed: (min=2.413; avg=13.646; max=16.629)Mibits/s</span></p>
-<p class="rvps9"><span class="rvts19">rngtest: FIPS tests speed: (min=57.974; avg=73.134; max=79.473)Mibits/s</span></p>
+<p class="rvps9"><span class="rvts19">rngtest: starting FIPS tests...</span><br/><span class="rvts19">rngtest: bits received from input: 20000032</span><br/><span class="rvts19">rngtest: FIPS 140-2 successes: 1000</span><br/><span class="rvts19">rngtest: FIPS 140-2 failures: 0</span><br/><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Monobit: 0</span><br/><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Poker: 0</span><br/><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Runs: 0</span><br/><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Long run: 0</span><br/><span class="rvts19">rngtest: FIPS 140-2(2001-10-10) Continuous run: 0</span><br/><span class="rvts19">rngtest: input channel speed: (min=2.413; avg=13.646; max=16.629)Mibits/s</span><br/><span class="rvts19">rngtest: FIPS tests speed: (min=57.974; avg=73.134; max=79.473)Mibits/s</span></p>
 <p class="rvps9"><span class="rvts19">rngtest: Program run time: 1660174 microseconds</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">You may get an error the first time your run "rngtest"</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps9"><span class="rvts19">Setting up rng-tools (2-unofficial-mt.14-1+b2) ...</span></p>
-<p class="rvps9"><span class="rvts19">Job for rng-tools.service failed because the control process exited with error code.</span></p>
-<p class="rvps9"><span class="rvts19">See "systemctl status rng-tools.service" and "journalctl -xe" for details.</span></p>
-<p class="rvps9"><span class="rvts19">invoke-rc.d: initscript rng-tools, action "start" failed.</span></p>
-<p class="rvps9"><span class="rvts19">● rng-tools.service</span></p>
-<p class="rvps9"><span class="rvts19"> &nbsp; Loaded: loaded (/etc/init.d/rng-tools; generated; vendor preset: enabled)</span></p>
-<p class="rvps9"><span class="rvts19"> &nbsp; Active: failed (Result: exit-code) since Thu 2018-05-17 02:42:33 UTC; 8ms ago</span></p>
-<p class="rvps9"><span class="rvts19"> &nbsp; &nbsp; Docs: man:systemd-sysv-generator(8)</span></p>
-<p class="rvps9"><span class="rvts19"> &nbsp;Process: 1649 ExecStart=/etc/init.d/rng-tools start (code=exited, status=1/FAILURE)</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
-<p class="rvps2"><span class="rvts6">Don't worry about this error. It is be cause we are running in a VPC.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps2"><span class="rvts6">A very small amount of failures is acceptable in any random number generator, but you can expect to see 998-1000 successes very often when using hovered.</span></p>
-<p class="rvps2"><span class="rvts6"><br/></span></p>
 <h5 class="rvps16"><span class="rvts0"><span class="rvts39">To test the amount of available entropy, you can run the following command:</span></span></h5>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <p class="rvps9"><span class="rvts19"># cat /proc/sys/kernel/random/entropy_avail</span></p>
@@ -292,6 +270,8 @@
 <p class="rvps2"><span class="rvts6">The idea of haveged is to fill this pool back up whenever the available bits gets near 1024. So while this number will fluctuate, it shouldn't drop below 1000 or so unless you're really demanding lots of randomness (SSH key generation, etc).</span></p>
 <h3 class="rvps5"><span class="rvts0"><span class="rvts14">Related</span></span></h3>
 <p class="rvps2"><a class="rvts13" href="GnuPGEncryptandDecrypt.html">How to Encrypt Files on Linux using GnuPG</a></p>
+<p class="rvps2"><a class="rvts11" href="https://enterpriseadmins.blogspot.com/2017/10/how-to-enable-rng-tools-on-ubuntu-vps.html" target="_blank">HOW TO: Enable rng-tools on Ubuntu VPS Server 16.04 for more "random" data</a><span class="rvts6"> </span></p>
+<p class="rvps2"><a class="rvts11" href="https://www.digitalocean.com/community/tutorials/how-to-setup-additional-entropy-for-cloud-servers-using-haveged" target="_blank">Digital Ocean</a></p>
 
             </div>
             

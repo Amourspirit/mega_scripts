@@ -54,6 +54,7 @@
 # 100   There is another mega process running. Can not continue.
 # 101   megarm not found. Megtools requires installing
 # 102   megals not found. Megtools requires installing
+# 105   megadf not found. Megtools requires installing
 # 111   Optional argument Param 3 was passed in but the config can not be found or we do not have read permissions
 
 MS_VERSION='1.3.2.0'
@@ -74,6 +75,9 @@ SCRIPT_CONF=( # set default values in config array
     [LOG_ID]='MEGA DELETE OLD:'
     [MAX_DAYS_DEFAULT]=60
     [LOG]="${LOG}"
+    [MT_MEGA_LS]='megals'
+    [MT_MEGA_RM]='megarm'
+    [MT_MEGA_DF]='megadf'
 )
 
 # It is not necessary to have .mega_scriptsrc for this script
@@ -117,6 +121,13 @@ MEGA_FILES=''
 IN_ROOT=0
 MEGA_SERVER_PATH=''
 HAS_CONFIG=0
+MT_MEGA_LS=${SCRIPT_CONF[MT_MEGA_LS]}
+MT_MEGA_RM=${SCRIPT_CONF[MT_MEGA_RM]}
+MT_MEGA_DF=${SCRIPT_CONF[MT_MEGA_DF]}
+
+MT_MEGA_LS=$(eval echo ${MT_MEGA_LS})
+MT_MEGA_RM=$(eval echo ${MT_MEGA_RM})
+MT_MEGA_DF=$(eval echo ${MT_MEGA_DF})
 
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 while getopts ":hvp:a:o:d:i:" arg; do
@@ -196,17 +207,23 @@ if [[ -z $LOG ]]; then
 fi
 
 # https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
-if ! [ -x "$(command -v megarm)" ]; then
+if ! [ -x "$(command -v ${MT_MEGA_RM})" ]; then
     echo "${DATELOG} ${LOG_ID} You have not enabled MEGA remove." >> ${LOG}
-    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com! Exit Code: 101" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com or properly configure .mega_scriptsrc to point to the megarm location! Exit Code: 101" >> ${LOG}
     echo "${DATELOG} ${LOG_ID} MEGA remove failed" >> ${LOG}
     exit 101
 fi
-if ! [ -x "$(command -v megals)" ]; then
+if ! [ -x "$(command -v ${MT_MEGA_LS})" ]; then
     echo "${DATELOG} ${LOG_ID} You have not enabled MEGA list." >> ${LOG}
-    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com! Exit Code: 102" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com or properly configure .mega_scriptsrc to point to the megals location! Exit Code: 102" >> ${LOG}
     echo "${DATELOG} ${LOG_ID} MEGA list failed" >> ${LOG}
     exit 102
+fi
+if ! [ -x "$(command -v ${MT_MEGA_DF})" ]; then
+    echo "${DATELOG} ${LOG_ID} You have not enabled MEGA Storage usage." >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com or properly configure .mega_scriptsrc to point to the megadf location! Exit Code: 105" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} MEGA storage usage failed" >> ${LOG}
+    exit 105
 fi
 
 # test days input for valid number
@@ -256,10 +273,10 @@ fi
 
 if [[ $HAS_CONFIG -eq 0 ]]; then
     # No argument is given for default configuration for that contains user account and password
-    MEGA_FILES=$(megals -l "$CURRENT_MEGA_FOLDER")
+    MEGA_FILES=$(${MT_MEGA_LS} -l "$CURRENT_MEGA_FOLDER")
 else
     # Argument is given for default configuration that contains user account and password
-    MEGA_FILES=$(megals --config "$CURRENT_CONFIG" -l "$CURRENT_MEGA_FOLDER")
+    MEGA_FILES=$(${MT_MEGA_LS} --config "$CURRENT_CONFIG" -l "$CURRENT_MEGA_FOLDER")
 fi
 
 FROM_DATESTAMP=$(date -d "@$MAX_AGE")
@@ -296,10 +313,10 @@ do
             
             if [[ $HAS_CONFIG -eq 0 ]]; then
                 # No argument is given for default configuration for that contains user account and password
-                megarm "${FILE_PATH}" >> ${LOG}
+                ${MT_MEGA_RM} "${FILE_PATH}" >> ${LOG}
             else
                 # Argument is given for default configuration that contains user account and password
-                megarm --config "${CURRENT_CONFIG}" "${FILE_PATH}" >> ${LOG}
+                ${MT_MEGA_RM} --config "${CURRENT_CONFIG}" "${FILE_PATH}" >> ${LOG}
             fi
             echo "${DATELOG} ${LOG_ID} Deleted '${FILE_PATH}' with modifed date of: ${FILE_STR_DATE}" >> ${LOG}
 
@@ -323,10 +340,10 @@ echo "${DATELOG} ${LOG_ID} Deleted Files: ${FILE_COUNT_DELETED}" >> ${LOG}
 if [ $HAS_CONFIG -eq 0 ]; then
     # No argument is given for default configuration for that contains user account and password
     # tr will remove the line breaks in this case and replace with a space to get the output on one line
-    CURRENT_SPACE=$(megadf --human | tr '\n' ' ')
+    CURRENT_SPACE=$(${MT_MEGA_DF} --human | tr '\n' ' ')
 else
     # Argument is given for default configuration that contains user account and password
-    CURRENT_SPACE=$(megadf --config "$CURRENT_CONFIG" --human | tr '\n' ' ')
+    CURRENT_SPACE=$(${MT_MEGA_DF} --config "$CURRENT_CONFIG" --human | tr '\n' ' ')
 fi
 echo "${DATELOG} ${LOG_ID} ${CURRENT_SPACE}" >> ${LOG}
 rm -f "${LOCK_FILE}"

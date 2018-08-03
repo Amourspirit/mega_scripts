@@ -72,6 +72,7 @@ typeset -A SCRIPT_CONF # init array
 SCRIPT_CONF=( # set default values in config array
     [LOG_ID]='MEGA PUT:'
     [LOG]="${LOG}"
+    [MT_MEGA_PUT]='megaput'
 )
 # It is not necessary to have .mega_scriptsrc for thi script
 if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
@@ -110,6 +111,8 @@ CURRENT_CONFIG=''
 CURRENT_SPACE=''
 MEGA_FULL_PATH=''
 HAS_CONFIG=0
+MT_MEGA_PUT=${SCRIPT_CONF[MT_MEGA_PUT]}
+MT_MEGA_PUT=$(eval echo ${MT_MEGA_PUT})
 
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 [ $# -eq 0 ] && usage
@@ -217,9 +220,9 @@ if [[ -n "${CURRENT_CONFIG}" ]]; then
 fi
 
 # https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
-if ! [ -x "$(command -v megaput)" ]; then
+if ! [ -x "$(command -v ${MT_MEGA_PUT})" ]; then
     echo "${DATELOG} ${LOG_ID} You have not enabled MEGA put." >> ${LOG}
-    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com  or properly configure .mega_scriptsrc to point to the megaput location." >> ${LOG}
     echo "${DATELOG} ${LOG_ID} MEGA put failed" >> ${LOG}
     exit 103
 fi
@@ -237,14 +240,14 @@ echo "${DATELOG} ${LOG_ID} Uploading '${FILE_TO_UPLOAD}' to directory '${MEGA_FU
 if [[ $HAS_CONFIG -eq 0 ]]; then
     # No argument is given for default configuration for that contains user account and password
     # remove escape char that is at the beginning by only printing printable chars | tr -dc '[[:print:]]'
-    MEGAPUT_RESULT=$(megaput --path "${MEGA_FULL_PATH}" "${FILE_TO_UPLOAD}" | tr -dc '[[:print:]]')
+    MEGAPUT_RESULT=$(${MT_MEGA_PUT} --path "${MEGA_FULL_PATH}" "${FILE_TO_UPLOAD}" | tr -dc '[[:print:]]')
     if [ ! -z "$MEGAPUT_RESULT" ]; then
         echo "${DATELOG} ${LOG_ID} Upload result: ${MEGAPUT_RESULT}" >> ${LOG}
     fi
 else
     # Argument is given for default configuration that contains user account and password
     # remove escape char that is at the beginning by only printing printable chars | tr -dc '[[:print:]]'
-    MEGAPUT_RESULT=$(megaput --config "${CURRENT_CONFIG}" --path "${MEGA_FULL_PATH}" "${FILE_TO_UPLOAD}" | tr -dc '[[:print:]]')
+    MEGAPUT_RESULT=$(${MT_MEGA_PUT} --config "${CURRENT_CONFIG}" --path "${MEGA_FULL_PATH}" "${FILE_TO_UPLOAD}" | tr -dc '[[:print:]]')
     if [ ! -z "$MEGAPUT_RESULT" ]; then
         echo "${DATELOG} ${LOG_ID} Upload result: ${MEGAPUT_RESULT}" >> ${LOG}
     fi

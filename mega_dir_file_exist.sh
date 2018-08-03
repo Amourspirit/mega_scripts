@@ -50,7 +50,7 @@
 # 102   megals not found. Megtools requires installing
 # 111   Optional argument two was passed in but the config can not be foud or we do not have read permissions
 
-MS_VERSION='1.3.1.0'
+MS_VERSION='1.3.2.0'
 MEGA_DEFAULT_ROOT="/Root"
 MEGA_SERVER_PATH=''
 CURRENT_CONFIG=''

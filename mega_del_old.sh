@@ -56,7 +56,7 @@
 # 102   megals not found. Megtools requires installing
 # 111   Optional argument Param 3 was passed in but the config can not be found or we do not have read permissions
 
-MS_VERSION='1.3.1.0'
+MS_VERSION='1.3.2.0'
 # trims white space from input
 function trim () {
     local var=$1;
@@ -76,7 +76,7 @@ SCRIPT_CONF=( # set default values in config array
     [LOG]="${LOG}"
 )
 
-# It is not necessary to have .mega_scriptsrc for thi script
+# It is not necessary to have .mega_scriptsrc for this script
 if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
     # make tmp file to hold section of config.ini style section in
     TMP_CONFIG_FILE=$(mktemp)

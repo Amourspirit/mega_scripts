@@ -51,7 +51,7 @@
 # 115   megamkdir not found. Megtools requires installing
 
 # trims white space from input
-MS_VERSION='1.3.1.0'
+MS_VERSION='1.3.2.0'
 function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
@@ -59,15 +59,12 @@ function trim () {
     echo -n "$var";
 }
 
-if ! [ -x "$(command -v megamkdir)" ]; then
-   exit 115
-fi
-
 # create an array that contains configuration values
 # put values that need to be evaluated using eval in single quotes
 typeset -A SCRIPT_CONF # init array
 SCRIPT_CONF=( # set default values in config array
     [MEGA_EXIST_FILE_NAME]="mega_dir_file_exist.sh"
+    [MT_MEGA_MKDIR]='megamkdir'
 )
 if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
     # make tmp file to hold section of config.ini style section in
@@ -104,6 +101,14 @@ HAS_CONFIG=0
 DIR=""
 NEW_DIR=""
 EXIT_CODE=0
+MT_MEGA_MKDIR=${SCRIPT_CONF[MT_MEGA_MKDIR]}
+MT_MEGA_MKDIR=$(eval echo ${MT_MEGA_MKDIR})
+
+# test to see if megamkdir is installed or exsit the location set in the .mega_scriptsrc file
+if ! [[ -x "$(command -v ${MT_MEGA_MKDIR})" ]]; then
+   exit 115
+fi
+
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
 [ $# -eq 0 ] && usage
 while getopts ":hvp:i:" arg; do
@@ -186,9 +191,9 @@ for i in "${PARTS[@]}"; do
         EXIST_RESULT=$?
         if [[ $EXIST_RESULT -eq 0 ]]; then
             if [[ HAS_CONFIG -eq 1 ]]; then
-                megamkdir --config "${CURRENT_CONFIG}" "${MEGA_DEFAULT_ROOT}/${NEW_DIR}"
+                ${MT_MEGA_MKDIR} --config "${CURRENT_CONFIG}" "${MEGA_DEFAULT_ROOT}/${NEW_DIR}"
             else
-                megamkdir "${MEGA_DEFAULT_ROOT}/${NEW_DIR}"
+                ${MT_MEGA_MKDIR} "${MEGA_DEFAULT_ROOT}/${NEW_DIR}"
             fi
             EXIT_CODE=$?
             if [[ EXIT_CODE -ne 0 ]]; then

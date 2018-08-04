@@ -83,7 +83,6 @@
 #  52     The database passed in to the script does not exist
 #  53     The user passed in to the script does not exist
 #  60     bzip2 not found
-#  70     Configuration file for mega scripts does not exist
 #  71     No read permissions for configuration file
 #  72     It seems that no values have been set in the configuration file for section [MEGA_DB_SAVE_UPLOAD]
 #  73     Invalid value in configuration
@@ -92,6 +91,7 @@
 # 102     megals not found. Megtools requires installing
 # 103     megaput not found. Megtools requires installing
 # 104     No argument supplied for Mega Server Path
+# 105     megadf not found. Megtools requires installing
 # 110     No mega server path specified
 # 111     Config can not be found or we do not have read permissions.
 # 112     The file to upload does not exist or can not gain read access.
@@ -137,15 +137,21 @@ function GpgPubKeyExist () {
 }
 THIS_SCRIPT=`basename "$0"`
 CONFIG_FILE="$HOME/.mega_scriptsrc"
+# it is not currently necessary to test for config file are there a no required settings from version 1.3.1.0
+# test -e "${CONFIG_FILE}"
+# if [ $? -ne 0 ];then
+#     echo "Configuration '$HOME/.mega_scriptsrc' file has does not exist"
+#     exit 70
+# fi
+#
+# Check for a config file and if it exist then test to see if we can read it.
 test -e "${CONFIG_FILE}"
-if [ $? -ne 0 ];then
-    echo "Configuration '$HOME/.mega_scriptsrc' file has does not exist"
-    exit 70
-fi
-test -r "${CONFIG_FILE}"
-if [ $? -ne 0 ];then
-    echo "No read permissions for configuration '$HOME/.mega_scriptsrc'"
-    exit 71
+if [ $? -eq 0 ];then
+    test -r "${CONFIG_FILE}"
+    if [[ $? -ne 0 ]];then
+        echo "No read permissions for configuration '$HOME/.mega_scriptsrc'"
+        exit 71
+    fi
 fi
 
 DATELOG=$(date +'%Y-%m-%d-%H-%M-%S')
@@ -173,6 +179,7 @@ SCRIPT_CONF=( # set default values in config array
     [MEGA_UPLOAD_FILE_NAME]='mega_upload_file.sh'
     [MEGA_EXIST_FILE_NAME]='mega_dir_file_exist.sh'
     [MEGA_MKDIR_FILE_NAME]='mega_mkdir.sh'
+    [MT_MEGA_DF]='megadf'
     [SYS_LOG]='/var/log/mega_db.log'
     [MYSQL_DIR]='/var/lib/mysql'
     [BAK_DIR]='/home/${USER}/tmp'
@@ -257,6 +264,7 @@ MEGA_DEL_OLD_NAME=${SCRIPT_CONF[MEGA_DEL_OLD_NAME]}
 MEGA_UPLOAD_FILE_NAME=${SCRIPT_CONF[MEGA_UPLOAD_FILE_NAME]}
 MEGA_EXIST_FILE_NAME=${SCRIPT_CONF[MEGA_EXIST_FILE_NAME]}
 MEGA_MKDIR_FILE_NAME=${SCRIPT_CONF[MEGA_MKDIR_FILE_NAME]}
+MT_MEGA_DF=${SCRIPT_CONF[MT_MEGA_DF]}
 SYS_LOG=${SCRIPT_CONF[SYS_LOG]}
 LOG=${SCRIPT_CONF[LOG]}
 BAK_DIR=${SCRIPT_CONF[BAK_DIR]}
@@ -332,6 +340,7 @@ OPT_EMAIL=$(eval echo ${OPT_EMAIL})
 MEGA_BACKUP_DIR=$(eval echo ${MEGA_BACKUP_DIR})
 CURRENT_CONFIG=$(eval echo ${CURRENT_CONFIG})
 LOG_SEP=$(eval echo ${LOG_SEP})
+MT_MEGA_DF=$(eval echo ${MT_MEGA_DF})
 
 if [[ -n "${SYS_LOG}" ]]; then
     if [[ "${SYS_LOG}" = 't' ]]; then
@@ -805,14 +814,25 @@ if [[ "$MEGA_ENABLED" = true ]]; then
         rm -f "${OUTPUT_FILE}"
         echo "${DATELOG} ${LOG_ID} Local file ${OUTPUT_FILE_NAME} has been deleted." >> ${LOG}
     fi
+    if ! [ -x "$(command -v ${MT_MEGA_DF})" ]; then
+        echo "${DATELOG} ${LOG_ID} You have not enabled MEGA Storage usage." >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} You need to install megatools from http://megatools.megous.com or properly configure .mega_scriptsrc to point to the megadf location! Exit Code: 105" >> ${LOG}
+        echo "${DATELOG} ${LOG_ID} MEGA storage usage failed" >> ${LOG}
+        echo "${LOG_SEP}" >> ${LOG}
+        echo "" >> ${LOG}
+        # Clean up and exit
+        # remove lock file
+        rm -f "${LOCK_FILE}"
+        exit 105
+    fi
     # log the current space on mega.nz account
     if [[ $HAS_CONFIG -eq 0 ]]; then
         # No argument is given for default configuration for that contains user account and password
         # tr will remove the line breaks in this case and replace with a space to get the output on one line
-        CURRENT_SPACE=$(megadf --human | tr '\n' ' ')
+        CURRENT_SPACE=$(${MT_MEGA_DF} --human | tr '\n' ' ')
     else
         # Argument is given for default configuration that contains user account and password
-        CURRENT_SPACE=$(megadf --config "$CURRENT_CONFIG" --human | tr '\n' ' ')
+        CURRENT_SPACE=$(${MT_MEGA_DF} --config "$CURRENT_CONFIG" --human | tr '\n' ' ')
     fi
     echo "${DATELOG} ${LOG_ID} ${CURRENT_SPACE}" >> ${LOG}
 else

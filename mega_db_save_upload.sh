@@ -135,7 +135,7 @@ function GpgPubKeyExist () {
     fi
     return 0
 }
-SDB='y'
+SDB=true
 THIS_SCRIPT=$(basename "$0")
 CONFIG_FILE="$HOME/.mega_scriptsrc"
 # it is not currently necessary to test for config file are there a no required settings from version 1.3.1.0
@@ -725,9 +725,9 @@ fi
 # Create the path to upload to on mega if it does not exist
 if [[ "$MEGA_ENABLED" = true ]]; then
     echo "${DATELOG} ${LOG_ID} Checking mega.nz path to see if '${MEGA_BACKUP_DIR}' directory exist. Will created if not." >> ${LOG}
-    if [[ ${SDB} = 'y' ]]
-        echo "Script Directory is ${SCRIPT_DIR}"
-        echo "Current directory ${PWD}"
+    if [[ "$SDB" = true ]];else
+        echo "Script Directory is ${SCRIPT_DIR}" >> ${LOG}
+        echo "Current directory ${PWD}" >> ${LOG}
     fi
     if [[ $HAS_CONFIG -eq 0 ]]; then
         # No argument is given for default configuration for that contains user account and password

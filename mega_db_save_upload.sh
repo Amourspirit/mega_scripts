@@ -649,7 +649,7 @@ fi
 if [[ "$MEGA_ENABLED" = true && $HAS_CONFIG -eq 0 ]]; then
     # no config has been passed into script. check and see if the default exist
     test -r ~/.megarc
-    if [ $? -ne 0 ];then
+    if [ $? -ne 0 ]; then
         echo "${DATELOG} ${LOG_ID} ~/.megarc must be set up and readable by current to upload to mega when -i is omitted. Unable to continue: Exit Code: 51" >> ${LOG}
         echo "${LOG_SEP}" >> ${LOG}
         echo "" >> ${LOG}
@@ -678,7 +678,7 @@ else
     mkdir -p "$BAK_DIR" 2>/dev/null
     if [[ $? -ne 0 ]]; then
         # there was a problem creating backup directory. Critical error
-        if [ $? -ne 0 ];then
+        if [ $? -ne 0 ]; then
             echo "${DATELOG} ${LOG_ID} Criticial error, unable to create or access directory to place backup in. Unable to continue: Exit Code: 118" >> ${LOG}
             echo "${LOG_SEP}" >> ${LOG}
             echo "" >> ${LOG}
@@ -693,7 +693,7 @@ fi
 
 # Checking lock file
 test -r "${LOCK_FILE}"
-if [ $? -eq 0 ];then
+if [ $? -eq 0 ]; then
     echo "${DATELOG} ${LOG_ID} There is another mega backup database process running! Exit Code: 100" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
     echo "" >> ${LOG}
@@ -725,7 +725,7 @@ fi
 # Create the path to upload to on mega if it does not exist
 if [[ "$MEGA_ENABLED" = true ]]; then
     echo "${DATELOG} ${LOG_ID} Checking mega.nz path to see if '${MEGA_BACKUP_DIR}' directory exist. Will created if not." >> ${LOG}
-    if [[ "$SDB" = true ]];else
+    if [[ "$SDB" = true ]]; then
         echo "Script Directory is ${SCRIPT_DIR}" >> ${LOG}
         echo "Current directory ${PWD}" >> ${LOG}
     fi

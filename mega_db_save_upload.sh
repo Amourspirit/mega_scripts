@@ -597,6 +597,7 @@ fi
 if [ ! -z "$CURRENT_CONFIG" ]; then
   HAS_CONFIG=1
 fi
+
 if [[ -z $SERVER_NAME ]] ; then
     echo "${DATELOG} ${LOG_ID} SERVER_NAME is absent or empty from configuration! Exit Code: 73" >> ${LOG}
     echo "${LOG_SEP}" >> ${LOG}
@@ -691,6 +692,16 @@ else
             exit 118
         fi
     fi
+fi
+
+if [[ "$SDB" = true ]]; then
+    echo "${DATELOG} ${LOG_ID} SCRIPT_DIR: ${SCRIPT_DIR}" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} MT_MEGA_DF: ${MT_MEGA_DF}" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} MEGA_DEL_OLD_SCRIPT: ${MEGA_DEL_OLD_SCRIPT}" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} MEGA_UPLOAD_FILE_SCRIPT: ${MEGA_UPLOAD_FILE_SCRIPT}" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} MEGA_EXIST_FILE_SCRIPT: ${MEGA_EXIST_FILE_SCRIPT}" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} MEGA_MKDIR_FILE_SCRIPT: ${MEGA_MKDIR_FILE_SCRIPT}" >> ${LOG}
+    echo "${DATELOG} ${LOG_ID} HAS_CONFIG: ${HAS_CONFIG}" >> ${LOG}
 fi
 
 # Checking lock file

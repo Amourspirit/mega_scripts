@@ -528,6 +528,7 @@ DB_FILE_SQL=${BAK_DIR}/${DB_NAME_NEW}".sql"
 DB_FILE=${DB_FILE_SQL}".bz2"
 LOCK_FILE="/tmp/mega_backup_db_lock"
 #SCRIPT_DIR=$(dirname "$0")
+# See Also: https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 MEGA_DEL_OLD_SCRIPT=${SCRIPT_DIR}"/"${MEGA_DEL_OLD_NAME}
 MEGA_UPLOAD_FILE_SCRIPT=${SCRIPT_DIR}"/"${MEGA_UPLOAD_FILE_NAME}

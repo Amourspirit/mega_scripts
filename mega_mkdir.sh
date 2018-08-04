@@ -92,7 +92,9 @@ if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
 fi
 
 BASH="$(command -v bash)"
-SCRIPT_DIR=$(dirname "$0")
+#SCRIPT_DIR=$(dirname "$0")
+# See Also: https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 MEGA_DEFAULT_ROOT="/Root"
 MEGA_EXIST_FILE_NAME=${SCRIPT_CONF[MEGA_EXIST_FILE_NAME]}
 MEGA_EXIST_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_EXIST_FILE_NAME

@@ -135,7 +135,8 @@ function GpgPubKeyExist () {
     fi
     return 0
 }
-THIS_SCRIPT=`basename "$0"`
+SDB='y'
+THIS_SCRIPT=$(basename "$0")
 CONFIG_FILE="$HOME/.mega_scriptsrc"
 # it is not currently necessary to test for config file are there a no required settings from version 1.3.1.0
 # test -e "${CONFIG_FILE}"
@@ -522,21 +523,21 @@ if [ -z "$DB_NAME" ]; then
 fi
 
 
-DB_NAME_NEW=$DATELOG"_$DB_NAME"
-DB_FILE_SQL=$BAK_DIR/$DB_NAME_NEW".sql"
-DB_FILE=$DB_FILE_SQL".bz2"
+DB_NAME_NEW=${DATELOG}"_${DB_NAME}"
+DB_FILE_SQL=${BAK_DIR}/${DB_NAME_NEW}".sql"
+DB_FILE=${DB_FILE_SQL}".bz2"
 LOCK_FILE="/tmp/mega_backup_db_lock"
 SCRIPT_DIR=$(dirname "$0")
-MEGA_DEL_OLD_SCRIPT=$SCRIPT_DIR"/"$MEGA_DEL_OLD_NAME
-MEGA_UPLOAD_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_UPLOAD_FILE_NAME
-MEGA_EXIST_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_EXIST_FILE_NAME
-MEGA_MKDIR_FILE_SCRIPT=$SCRIPT_DIR"/"$MEGA_MKDIR_FILE_NAME
+MEGA_DEL_OLD_SCRIPT=${SCRIPT_DIR}"/"${MEGA_DEL_OLD_NAME}
+MEGA_UPLOAD_FILE_SCRIPT=${SCRIPT_DIR}"/"${MEGA_UPLOAD_FILE_NAME}
+MEGA_EXIST_FILE_SCRIPT=${SCRIPT_DIR}"/"${MEGA_EXIST_FILE_NAME}
+MEGA_MKDIR_FILE_SCRIPT=${SCRIPT_DIR}"/"${MEGA_MKDIR_FILE_NAME}
 MSD="$(command -v mysqldump)"
 BASH="$(command -v bash)"
 MYSQL_DIR="/var/lib/mysql"
 CURRENT_CONFIG=""
 HAS_CONFIG=0
-OUTPUT_FILE=$DB_FILE
+OUTPUT_FILE=${DB_FILE}
 
 RE_INTEGER='^[0-9]+$'
 
@@ -724,6 +725,10 @@ fi
 # Create the path to upload to on mega if it does not exist
 if [[ "$MEGA_ENABLED" = true ]]; then
     echo "${DATELOG} ${LOG_ID} Checking mega.nz path to see if '${MEGA_BACKUP_DIR}' directory exist. Will created if not." >> ${LOG}
+    if [[ ${SDB} = 'y' ]]
+        echo "Script Directory is ${SCRIPT_DIR}"
+        echo "Current directory ${PWD}"
+    fi
     if [[ $HAS_CONFIG -eq 0 ]]; then
         # No argument is given for default configuration for that contains user account and password
         ${BASH} "${MEGA_MKDIR_FILE_SCRIPT}" -p "${MEGA_BACKUP_DIR}"

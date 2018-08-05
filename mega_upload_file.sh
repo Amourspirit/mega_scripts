@@ -76,7 +76,32 @@ SCRIPT_CONF=( # set default values in config array
 )
 # It is not necessary to have .mega_scriptsrc for thi script
 if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
-    # make tmp file to hold section of config.ini style section in
+    # Read Common Section
+    # make tmp file to hold section MEGA_COMMON of config.ini style section in
+    TMP_CONFIG_COMMON_FILE=$(mktemp)
+    # SECTION_NAME is a var to hold which section of config you want to read
+    SECTION_NAME="MEGA_COMMON"
+    # sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
+
+    # test tmp file to to see if it is greater then 0 in size
+    test -s "${TMP_CONFIG_COMMON_FILE}"
+    if [ $? -eq 0 ]; then
+    # read the input of the tmp config file line by line
+        while read line; do
+            if [[ "$line" =~ ^[^#]*= ]]; then
+                setting_name=$(trim "${line%%=*}");
+                setting_value=$(trim "${line#*=}");
+                SCRIPT_CONF[$setting_name]=$setting_value
+            fi
+        done < "$TMP_CONFIG_COMMON_FILE"
+    fi
+
+    # release the tmp file that is contains the current section values
+    unlink $TMP_CONFIG_COMMON_FILE
+
+    # Read Mega Delete Old Section
+    # make tmp file to hold section MEGA_UPLOAD_FILE of config.ini style section in
     TMP_CONFIG_FILE=$(mktemp)
     # SECTION_NAME is a var to hold which section of config you want to read
     SECTION_NAME="MEGA_UPLOAD_FILE"

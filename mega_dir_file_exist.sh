@@ -63,7 +63,43 @@ function trim () {
     var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
     echo -n "$var";
 }
-if ! [ -x "$(command -v megals)" ]; then
+# create an array that contains configuration values
+# put values that need to be evaluated using eval in single quotes
+typeset -A SCRIPT_CONF # init array
+SCRIPT_CONF=( # set default values in config array
+    [MT_MEGA_LS]='megals'
+)
+if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
+    # make tmp file to hold section of config.ini style section in
+    TMP_CONFIG_COMMON_FILE=$(mktemp)
+    # SECTION_NAME is a var to hold which section of config you want to read
+    SECTION_NAME="MEGA_COMMON"
+    # sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
+    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
+
+    # test tmp file to to see if it is greater then 0 in size
+    test -s "${TMP_CONFIG_COMMON_FILE}"
+    if [ $? -eq 0 ]; then
+    # read the input of the tmp config file line by line
+        while read line; do
+            if [[ "$line" =~ ^[^#]*= ]]; then
+                setting_name=$(trim "${line%%=*}");
+                setting_value=$(trim "${line#*=}");
+                SCRIPT_CONF[$setting_name]=$setting_value
+            fi
+        done < "$TMP_CONFIG_COMMON_FILE"
+    fi
+
+    # release the tmp file that is contains the current section values
+    unlink $TMP_CONFIG_COMMON_FILE
+fi
+MT_MEGA_LS=${SCRIPT_CONF[MT_MEGA_LS]}
+MT_MEGA_LS=$(eval echo ${MT_MEGA_LS})
+
+# done with config array so lets free up the memory
+unset SCRIPT_CONF
+
+if ! [ -x "$(command -v ${MT_MEGA_LS})" ]; then
    exit 102
 fi
 usage() { echo "$(basename $0) usage:" && grep "[[:space:]].)\ #" $0 | sed 's/#//' | sed -r 's/([a-z])\)/-\1/'; exit 0; }
@@ -106,10 +142,10 @@ fi
 
 if [[ -z "${CURRENT_CONFIG}" ]]; then
     # No argument is given for default configuration for that contains user account and password
-    MEGA_FILES=$(megals -l "${MEGA_SERVER_PATH}")
+    MEGA_FILES=$(${MT_MEGA_LS} -l "${MEGA_SERVER_PATH}")
 else
     # Argument is given for default configuration that contains user account and password
-    MEGA_FILES=$(megals --config "${CURRENT_CONFIG}" -l "${MEGA_SERVER_PATH}")
+    MEGA_FILES=$(${MT_MEGA_LS} --config "${CURRENT_CONFIG}" -l "${MEGA_SERVER_PATH}")
 fi
 
 if [[ -z "${MEGA_FILES}" ]]; then

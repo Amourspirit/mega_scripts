@@ -56,7 +56,7 @@
 # 112   The file to upload does not exist or can not gain read access.
 
 # trims white space from input
-MS_VERSION='1.3.2.0'
+MS_VERSION='1.3.3.0'
 function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters

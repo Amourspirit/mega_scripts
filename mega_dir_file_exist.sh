@@ -50,13 +50,19 @@
 # 102   megals not found. Megtools requires installing
 # 111   Optional argument two was passed in but the config can not be foud or we do not have read permissions
 
-MS_VERSION='1.3.2.0'
+MS_VERSION='1.3.3.0'
 MEGA_DEFAULT_ROOT="/Root"
 MEGA_SERVER_PATH=''
 CURRENT_CONFIG=''
 MEGA_FILES=''
 IN_ROOT=0
 FINAL_STATUS=0
+function trim () {
+    local var=$1;
+    var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
+    var="${var%"${var##*[![:space:]]}"}";   # remove trailing whitespace characters
+    echo -n "$var";
+}
 if ! [ -x "$(command -v megals)" ]; then
    exit 102
 fi

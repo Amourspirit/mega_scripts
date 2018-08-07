@@ -427,23 +427,28 @@ if [[ -z $LOG ]]; then
 fi
 
 if [[ -n $FORGET_OPT ]]; then
-    case "$FORGET_OPT" in 
-    c | C)
-        # do not check for mysql config file exist
-        MYSQL_TEST_CNF=false
-        ;;
-    d | D)
-        # do not check for mysql database exist
-        MYSQL_TEST_DB=false
-        ;;
-    u | U)
-        # do not check for mysql database exist
-        TEST_USER=false
-        ;;
-    g | G)
-        # do not check for gpg
-        TEST_GPG=false
-    esac
+    FORGET_OPT_TMP=''
+    for (( i=0; i<${#FORGET_OPT}; i++ )); do
+        FORGET_OPT_TMP="${FORGET_OPT:$i:1}"
+        case "$FORGET_OPT_TMP" in 
+        c | C)
+            # do not check for mysql config file exist
+            MYSQL_TEST_CNF=false
+            ;;
+        d | D)
+            # do not check for mysql database exist
+            MYSQL_TEST_DB=false
+            ;;
+        u | U)
+            # do not check for mysql database exist
+            TEST_USER=false
+            ;;
+        g | G)
+            # do not check for gpg
+            TEST_GPG=false
+        esac
+    done
+    FORGET_OPT_TMP=''
 fi
 
 SEND_MAIL_CLIENT="$(command -v sendmail)"

@@ -276,6 +276,7 @@ MYSQL_TEST_CNF=${SCRIPT_CONF[MYSQL_TEST_CNF]}
 TEST_USER=${SCRIPT_CONF[TEST_USER]}
 TEST_GPG=${SCRIPT_CONF[TEST_USER]}
 OPT_EMAIL='y'
+CURRENT_CONFIG=''
 
 # done with config array so lets free up the memory
 unset SCRIPT_CONF
@@ -537,7 +538,6 @@ MEGA_MKDIR_FILE_SCRIPT=${SCRIPT_DIR}"/"${MEGA_MKDIR_FILE_NAME}
 MSD="$(command -v mysqldump)"
 BASH="$(command -v bash)"
 MYSQL_DIR="/var/lib/mysql"
-CURRENT_CONFIG=""
 HAS_CONFIG=0
 OUTPUT_FILE=${DB_FILE}
 

@@ -57,7 +57,7 @@
 # 105   megadf not found. Megtools requires installing
 # 111   Optional argument Param 3 was passed in but the config can not be found or we do not have read permissions
 
-MS_VERSION='1.3.4.0'
+MS_VERSION='1.3.5.0'
 # trims white space from input
 function trim () {
     local var=$1;

@@ -51,7 +51,7 @@
 # 115   megamkdir not found. Megtools requires installing
 
 # trims white space from input
-MS_VERSION='1.3.4.0'
+MS_VERSION='1.3.5.0'
 function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters

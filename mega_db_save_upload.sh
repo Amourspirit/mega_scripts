@@ -101,7 +101,7 @@
 # 118     Unable to create directory to place backup file in.
 # 119     Unable to write in directory for backup file.
 
-MS_VERSION='1.3.4.0'
+MS_VERSION='1.3.5.0'
 # function: trim
 # Param 1: the variable to trim whitespace from
 # Usage:

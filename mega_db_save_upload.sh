@@ -3,7 +3,7 @@
 # The content of this file are licensed under the MIT License (https://opensource.org/licenses/MIT)
 # MIT License
 #
-# Copyright (c) 2018 Paul Moss
+# Copyright (c) 2018-2019 Paul Moss
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -137,7 +137,7 @@ function GpgPubKeyExist () {
 }
 SDB=false
 THIS_SCRIPT=$(basename "$0")
-CONFIG_FILE="$HOME/.mega_scriptsrc"
+MEGA_SCRIPTS_CONFIG="'${HOME}/.mega_scriptsrc'"
 # it is not currently necessary to test for config file are there a no required settings from version 1.3.1.0
 # test -e "${CONFIG_FILE}"
 # if [ $? -ne 0 ];then
@@ -146,11 +146,11 @@ CONFIG_FILE="$HOME/.mega_scriptsrc"
 # fi
 #
 # Check for a config file and if it exist then test to see if we can read it.
-test -e "${CONFIG_FILE}"
+test -e "${MEGA_SCRIPTS_CONFIG}"
 if [ $? -eq 0 ];then
-    test -r "${CONFIG_FILE}"
+    test -r "${MEGA_SCRIPTS_CONFIG}"
     if [[ $? -ne 0 ]];then
-        echo "No read permissions for configuration '$HOME/.mega_scriptsrc'"
+        echo "No read permissions for configuration ${MEGA_SCRIPTS_CONFIG}"
         exit 71
     fi
 fi

@@ -52,6 +52,7 @@
 
 # trims white space from input
 MS_VERSION='1.3.5.0'
+MEGA_SCRIPTS_CONFIG="'${HOME}/.mega_scriptsrc'"
 function trim () {
     local var=$1;
     var="${var#"${var%%[![:space:]]*}"}";   # remove leading whitespace characters
@@ -66,13 +67,13 @@ SCRIPT_CONF=( # set default values in config array
     [MEGA_EXIST_FILE_NAME]="mega_dir_file_exist.sh"
     [MT_MEGA_MKDIR]='megamkdir'
 )
-if [[ -f "${HOME}/.mega_scriptsrc" ]]; then
+if [[ -f "${MEGA_SCRIPTS_CONFIG}" ]]; then
     # make tmp file to hold section of config.ini style section in
     TMP_CONFIG_COMMON_FILE=$(mktemp)
     # SECTION_NAME is a var to hold which section of config you want to read
     SECTION_NAME="MEGA_COMMON"
     # sed in this case takes the value of SECTION_NAME and reads the setion from ~/config.ini
-    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "$HOME/.mega_scriptsrc" > $TMP_CONFIG_COMMON_FILE
+    sed -n '0,/'"$SECTION_NAME"'/d;/\[/,$d;/^$/d;p' "" > $TMP_CONFIG_COMMON_FILE
 
     # test tmp file to to see if it is greater then 0 in size
     test -s "${TMP_CONFIG_COMMON_FILE}"
